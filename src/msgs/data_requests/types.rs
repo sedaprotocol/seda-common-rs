@@ -123,6 +123,9 @@ pub struct DataResult {
     pub payback_address: Vec<u8>,
     /// Payload set by SEDA Protocol (e.g. OEV-enabled data requests)
     pub seda_payload:    Vec<u8>,
+
+    ///  Represents Whether or not the result was in consensus or not (≥ 66%)
+    consensus: bool,
 }
 
 impl HashSelf for DataResult {
@@ -133,8 +136,10 @@ impl HashSelf for DataResult {
         hasher.update(self.block_height.to_be_bytes());
         hasher.update(self.exit_code.to_be_bytes());
         hasher.update(self.result.hash());
+        hasher.update(&self.gas_used);
         hasher.update(&self.payback_address);
         hasher.update(self.seda_payload.hash());
+        hasher.update([self.consensus.into()]);
         hasher.finalize().into()
     }
 }
