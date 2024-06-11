@@ -76,6 +76,9 @@ pub struct DataRequest {
     pub commits:         HashMap<String, Hash>,
     /// Reveals submitted by executors
     pub reveals:         HashMap<String, RevealBody>,
+
+    /// The height data request was posted. Used for commitment.
+    pub height: u64,
 }
 
 impl DataRequest {
