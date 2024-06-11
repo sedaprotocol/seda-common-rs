@@ -16,7 +16,7 @@ pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, RevealBody>))]
     GetDataRequestReveals { dr_id: Hash },
     #[cfg_attr(feature = "cosmwasm", returns(DataResult))]
-    GetResolvedDataRequest { dr_id: Hash },
+    GetDataResult { dr_id: Hash },
     #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, DR>))]
     GetDataRequestsByStatus {
         status: DataRequestStatus,
