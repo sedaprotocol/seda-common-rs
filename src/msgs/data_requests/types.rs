@@ -25,7 +25,6 @@ impl<'a> cw_storage_plus::PrimaryKey<'a> for &'a DataRequestStatus {
                 DataRequestStatus::Committing => "committing",
                 DataRequestStatus::Revealing => "revealing",
                 DataRequestStatus::Tallying => "tallying",
-                DataRequestStatus::Resolved => "resolved",
             }
             .as_bytes(),
         )]
