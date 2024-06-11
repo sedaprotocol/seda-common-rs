@@ -10,13 +10,6 @@ pub enum DataRequestStatus {
     Committing,
     Revealing,
     Tallying,
-    Resolved,
-}
-
-impl DataRequestStatus {
-    pub fn is_resolved(&self) -> bool {
-        matches!(self, DataRequestStatus::Resolved)
-    }
 }
 
 #[cfg(feature = "cosmwasm")]
