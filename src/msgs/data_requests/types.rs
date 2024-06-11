@@ -125,7 +125,7 @@ pub struct DataResult {
     pub seda_payload:    Vec<u8>,
 
     ///  Represents Whether or not the result was in consensus or not (≥ 66%)
-    consensus: bool,
+    pub consensus: bool,
 }
 
 impl HashSelf for DataResult {
