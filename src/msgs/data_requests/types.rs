@@ -166,7 +166,7 @@ impl HashSelf for DataResult {
 
 /// A revealed data request result that is hashed and signed by the executor
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone))]
 pub struct RevealBody {
     pub salt:      [u8; 32],
     pub exit_code: u8,
