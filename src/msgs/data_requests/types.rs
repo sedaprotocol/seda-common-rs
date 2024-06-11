@@ -136,7 +136,15 @@ impl HashSelf for DataResult {
         hasher.update(self.block_height.to_be_bytes());
         hasher.update(self.exit_code.to_be_bytes());
         hasher.update(self.result.hash());
-        hasher.update(&self.gas_used);
+        #[cfg(feature = "cosmwasm")]
+        hasher.update(self.gas_used.to_be_bytes());
+        #[cfg(not(feature = "cosmwasm"))]
+        hasher.update(
+            self.gas_used
+                .parse::<u128>()
+                .expect("`gas_used` should be parseable to u128")
+                .to_be_bytes(),
+        );
         hasher.update(&self.payback_address);
         hasher.update(self.seda_payload.hash());
         hasher.update([self.consensus.into()]);
@@ -147,6 +155,7 @@ impl HashSelf for DataResult {
 /// A revealed data request result that is hashed and signed by the executor
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone))]
+#[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct RevealBody {
     pub salt:      [u8; 32],
     pub exit_code: u8,
@@ -175,6 +184,7 @@ impl HashSelf for RevealBody {
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct PostDataRequestArgs {
     pub version:            Version,
     pub dr_binary_id:       Hash,
