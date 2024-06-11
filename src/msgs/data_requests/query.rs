@@ -18,7 +18,11 @@ pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm", returns(DataResult))]
     GetResolvedDataRequest { dr_id: Hash },
     #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, DR>))]
-    GetDataRequestsByStatus { status: DataRequestStatus },
+    GetDataRequestsByStatus {
+        status: DataRequestStatus,
+        page:   u32,
+        limit:  u32,
+    },
 }
 
 impl From<QueryMsg> for super::QueryMsg {
