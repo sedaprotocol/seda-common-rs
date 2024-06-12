@@ -1,3 +1,5 @@
+#[cfg(feature = "cosmwasm")]
+use cw_storage_plus::{Key, Prefixer, PrimaryKey};
 use semver::Version;
 use sha3::{Digest, Keccak256};
 
@@ -13,14 +15,14 @@ pub enum DataRequestStatus {
 }
 
 #[cfg(feature = "cosmwasm")]
-impl<'a> cw_storage_plus::PrimaryKey<'a> for &'a DataRequestStatus {
+impl<'a> PrimaryKey<'a> for DataRequestStatus {
     type Prefix = ();
     type SubPrefix = ();
     type Suffix = &'static str;
     type SuperSuffix = &'static str;
 
-    fn key(&self) -> Vec<cw_storage_plus::Key> {
-        vec![cw_storage_plus::Key::Ref(
+    fn key(&self) -> Vec<Key> {
+        vec![Key::Ref(
             match self {
                 DataRequestStatus::Committing => "committing",
                 DataRequestStatus::Revealing => "revealing",
@@ -28,6 +30,13 @@ impl<'a> cw_storage_plus::PrimaryKey<'a> for &'a DataRequestStatus {
             }
             .as_bytes(),
         )]
+    }
+}
+
+#[cfg(feature = "cosmwasm")]
+impl<'a> Prefixer<'a> for DataRequestStatus {
+    fn prefix(&self) -> Vec<Key> {
+        self.key()
     }
 }
 
