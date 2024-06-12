@@ -20,7 +20,7 @@ pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, DataRequest>))]
     GetDataRequestsByStatus {
         status: DataRequestStatus,
-        offset: u64,
+        offset: u32,
         limit:  u32,
     },
 }

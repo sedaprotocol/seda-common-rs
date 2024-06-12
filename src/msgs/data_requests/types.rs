@@ -33,7 +33,7 @@ impl<'a> cw_storage_plus::PrimaryKey<'a> for &'a DataRequestStatus {
 
 /// Represents a data request at creation time
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DataRequest {
     /// Identifier
