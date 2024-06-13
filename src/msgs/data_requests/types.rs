@@ -22,14 +22,11 @@ impl<'a> PrimaryKey<'a> for DataRequestStatus {
     type SuperSuffix = &'static str;
 
     fn key(&self) -> Vec<Key> {
-        vec![Key::Ref(
-            match self {
-                DataRequestStatus::Committing => "committing",
-                DataRequestStatus::Revealing => "revealing",
-                DataRequestStatus::Tallying => "tallying",
-            }
-            .as_bytes(),
-        )]
+        vec![Key::Val8(match self {
+            DataRequestStatus::Committing => [0],
+            DataRequestStatus::Revealing => [1],
+            DataRequestStatus::Tallying => [2],
+        })]
     }
 }
 
