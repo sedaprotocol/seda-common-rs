@@ -6,17 +6,17 @@ use super::*;
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm", returns(DataRequest))]
-    GetDataRequest { dr_id: Hash },
-    #[cfg_attr(feature = "cosmwasm",  returns(Option<Hash>))]
-    GetDataRequestCommitment { dr_id: Hash, public_key: PublicKey },
-    #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, Hash>))]
-    GetDataRequestCommitments { dr_id: Hash },
+    GetDataRequest { dr_id: String },
+    #[cfg_attr(feature = "cosmwasm",  returns(Option<String>))]
+    GetDataRequestCommitment { dr_id: String, public_key: String },
+    #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, String>))]
+    GetDataRequestCommitments { dr_id: String },
     #[cfg_attr(feature = "cosmwasm",  returns(Option<RevealBody>))]
-    GetDataRequestReveal { dr_id: Hash, public_key: PublicKey },
+    GetDataRequestReveal { dr_id: String, public_key: String },
     #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, RevealBody>))]
-    GetDataRequestReveals { dr_id: Hash },
+    GetDataRequestReveals { dr_id: String },
     #[cfg_attr(feature = "cosmwasm", returns(DataResult))]
-    GetDataResult { dr_id: Hash },
+    GetDataResult { dr_id: String },
     #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, DataRequest>))]
     GetDataRequestsByStatus {
         status: DataRequestStatus,

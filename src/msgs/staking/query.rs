@@ -6,13 +6,13 @@ use super::*;
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm", returns(Option<Staker>))]
-    GetStaker { public_key: PublicKey },
+    GetStaker { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(U128))]
-    GetAccountSeq { public_key: PublicKey },
+    GetAccountSeq { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(StakerAndSeq))]
-    GetStakerAndSeq { public_key: PublicKey },
+    GetStakerAndSeq { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(bool))]
-    IsExecutorEligible { public_key: PublicKey },
+    IsExecutorEligible { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(StakingConfig))]
     GetStakingConfig {},
 }

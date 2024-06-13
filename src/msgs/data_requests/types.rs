@@ -63,7 +63,7 @@ pub struct DataRequest {
     /// Maximum of gas units to be used by data request executors to resolve a data request
     pub gas_limit:          U128,
     /// Public info attached to DR
-    pub memo:               Memo,
+    pub memo:               Bytes,
 
     // Execution Information
     /// Payback address set by the relayer
@@ -193,14 +193,14 @@ impl HashSelf for RevealBody {
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct PostDataRequestArgs {
     pub version:            Version,
-    pub dr_binary_id:       Hash,
+    pub dr_binary_id:       String,
     pub dr_inputs:          Bytes,
-    pub tally_binary_id:    Hash,
+    pub tally_binary_id:    String,
     pub tally_inputs:       Bytes,
     pub replication_factor: u16,
     pub gas_price:          U128,
     pub gas_limit:          U128,
-    pub memo:               Memo,
+    pub memo:               Bytes,
 }
 
 impl HashSelf for PostDataRequestArgs {
@@ -221,9 +221,9 @@ impl HashSelf for PostDataRequestArgs {
         // hash data request
         let mut dr_hasher = Keccak256::new();
         dr_hasher.update(self.version.hash());
-        dr_hasher.update(self.dr_binary_id);
+        dr_hasher.update(hex::decode(&self.dr_binary_id).expect("cannot decode dr binary id into bytes"));
         dr_hasher.update(dr_inputs_hash);
-        dr_hasher.update(self.tally_binary_id);
+        dr_hasher.update(hex::decode(&self.tally_binary_id).expect("cannot decode tally binary id into bytes"));
         dr_hasher.update(tally_inputs_hash);
         dr_hasher.update(self.replication_factor.to_be_bytes());
         #[cfg(feature = "cosmwasm")]

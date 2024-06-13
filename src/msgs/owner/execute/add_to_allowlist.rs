@@ -5,7 +5,7 @@ use super::*;
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Execute {
     /// The public key of the person.
-    pub public_key: PublicKey,
+    pub public_key: String,
 }
 
 impl From<Execute> for crate::msgs::ExecuteMsg {

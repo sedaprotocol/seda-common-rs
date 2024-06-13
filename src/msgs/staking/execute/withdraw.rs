@@ -4,8 +4,8 @@ use super::*;
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Execute {
-    pub public_key: PublicKey,
-    pub proof:      Vec<u8>,
+    pub public_key: String,
+    pub proof:      String,
     pub amount:     U128,
 }
 

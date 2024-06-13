@@ -1,16 +1,17 @@
+use semver::Version;
+use sha3::{Digest, Keccak256};
+
 #[cfg(feature = "cosmwasm")]
 pub(crate) type U128 = cosmwasm_std::Uint128;
 #[cfg(not(feature = "cosmwasm"))]
 pub(crate) type U128 = String;
 
-use semver::Version;
-use sha3::{Digest, Keccak256};
+#[cfg(feature = "cosmwasm")]
+pub(crate) type Bytes = cosmwas_std::Binary;
+#[cfg(not(feature = "cosmwasm"))]
+pub(crate) type Bytes = String;
 
-pub type Bytes = Vec<u8>;
-// pub type Commitment = Hash;
-pub type Memo = Vec<u8>;
 pub type Hash = [u8; 32];
-pub type PublicKey = Vec<u8>;
 
 pub trait ToHexStr: AsRef<[u8]> {
     fn to_hex(&self) -> String {
