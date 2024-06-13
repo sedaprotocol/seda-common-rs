@@ -6,7 +6,7 @@ use super::*;
 pub struct Execute {
     pub public_key: String,
     pub proof:      String,
-    pub memo:       Option<String>,
+    pub memo:       Option<Bytes>,
 }
 
 impl From<Execute> for crate::msgs::ExecuteMsg {

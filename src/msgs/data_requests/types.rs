@@ -43,17 +43,17 @@ impl<'a> Prefixer<'a> for DataRequestStatus {
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DataRequest {
     /// Identifier
-    pub id: Hash,
+    pub id: String,
 
     // DR definition
     /// Semantic Version String
     pub version:            Version,
     /// Identifier of DR WASM binary
-    pub dr_binary_id:       Hash,
+    pub dr_binary_id:       String,
     /// Inputs for DR WASM binary
     pub dr_inputs:          Bytes,
     /// Identifier of Tally WASM binary
-    pub tally_binary_id:    Hash,
+    pub tally_binary_id:    String,
     /// Inputs for Tally WASM binary
     pub tally_inputs:       Bytes,
     /// Amount of required DR executors
@@ -71,7 +71,7 @@ pub struct DataRequest {
     /// Payload set by SEDA Protocol (e.g. OEV-enabled data requests)
     pub seda_payload:    Bytes,
     /// Commitments submitted by executors
-    pub commits:         HashMap<String, Hash>,
+    pub commits:         HashMap<String, String>,
     /// Reveals submitted by executors
     pub reveals:         HashMap<String, RevealBody>,
 
@@ -84,8 +84,8 @@ impl DataRequest {
         self.commits.contains_key(public_key)
     }
 
-    pub fn get_commitment(&self, public_key: &str) -> Option<&Hash> {
-        self.commits.get(public_key)
+    pub fn get_commitment(&self, public_key: &str) -> Option<&str> {
+        self.commits.get(public_key).map(|s| s.as_str())
     }
 
     pub fn has_revealer(&self, public_key: &str) -> bool {
@@ -115,20 +115,20 @@ pub struct DataResult {
     pub version: Version,
 
     /// Data Request Identifier
-    pub dr_id:        Hash,
+    pub dr_id:        String,
     /// Block Height at which data request was finalized
     pub block_height: u64,
     /// Exit code of Tally WASM binary execution
     pub exit_code:    u8,
     pub gas_used:     U128,
     /// Result from Tally WASM binary execution
-    pub result:       Vec<u8>,
+    pub result:       Bytes,
 
     // Fields from Data Request Execution
     /// Payback address set by the relayer
-    pub payback_address: Vec<u8>,
+    pub payback_address: Bytes,
     /// Payload set by SEDA Protocol (e.g. OEV-enabled data requests)
-    pub seda_payload:    Vec<u8>,
+    pub seda_payload:    Bytes,
 
     ///  Represents Whether or not the result was in consensus or not (≥ 66%)
     pub consensus: bool,
@@ -136,12 +136,27 @@ pub struct DataResult {
 
 impl HashSelf for DataResult {
     fn hash(&self) -> Hash {
+        let mut result_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        result_hasher.update(&self.result.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
+        result_hasher.update(&self.result);
+        let result_hash = result_hasher.finalize();
+
+        let mut seda_payload_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        #[cfg(feature = "cosmwasm")]
+        seda_payload_hasher.update(&self.seda_payload.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
+        seda_payload_hasher.update(&self.seda_payload);
+        let seda_payload_hash = seda_payload_hasher.finalize();
+
         let mut hasher = Keccak256::new();
         hasher.update(self.version.hash());
-        hasher.update(self.dr_id);
+        hasher.update(&self.dr_id);
         hasher.update(self.block_height.to_be_bytes());
         hasher.update(self.exit_code.to_be_bytes());
-        hasher.update(self.result.hash());
+        hasher.update(result_hash);
         #[cfg(feature = "cosmwasm")]
         hasher.update(self.gas_used.to_be_bytes());
         #[cfg(not(feature = "cosmwasm"))]
@@ -151,8 +166,11 @@ impl HashSelf for DataResult {
                 .expect("`gas_used` should be parseable to u128")
                 .to_be_bytes(),
         );
+        #[cfg(feature = "cosmwasm")]
+        hasher.update(&self.payback_address.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
         hasher.update(&self.payback_address);
-        hasher.update(self.seda_payload.hash());
+        hasher.update(seda_payload_hash);
         hasher.update([self.consensus.into()]);
         hasher.finalize().into()
     }
@@ -163,16 +181,23 @@ impl HashSelf for DataResult {
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct RevealBody {
-    pub salt:      [u8; 32],
+    pub salt:      String,
     pub exit_code: u8,
     pub gas_used:  U128,
-    pub reveal:    Vec<u8>,
+    pub reveal:    Bytes,
 }
 
 impl HashSelf for RevealBody {
     fn hash(&self) -> Hash {
+        let mut reveal_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        reveal_hasher.update(&self.reveal.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
+        reveal_hasher.update(&self.reveal);
+        let reveal_hash = reveal_hasher.finalize();
+
         let mut hasher = Keccak256::new();
-        hasher.update(self.salt);
+        hasher.update(&self.salt);
         hasher.update(self.exit_code.to_be_bytes());
         #[cfg(feature = "cosmwasm")]
         hasher.update(self.gas_used.to_be_bytes());
@@ -183,7 +208,7 @@ impl HashSelf for RevealBody {
                 .expect("`gas_used` should be parseable to u128")
                 .to_be_bytes(),
         );
-        hasher.update(self.reveal.hash());
+        hasher.update(reveal_hash);
         hasher.finalize().into()
     }
 }
@@ -207,23 +232,33 @@ impl HashSelf for PostDataRequestArgs {
     fn hash(&self) -> Hash {
         // hash non-fixed-length inputs
         let mut dr_inputs_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        dr_inputs_hasher.update(&self.dr_inputs.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
         dr_inputs_hasher.update(&self.dr_inputs);
         let dr_inputs_hash = dr_inputs_hasher.finalize();
 
         let mut tally_inputs_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        tally_inputs_hasher.update(&self.tally_inputs.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
         tally_inputs_hasher.update(&self.tally_inputs);
         let tally_inputs_hash = tally_inputs_hasher.finalize();
 
         let mut memo_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        memo_hasher.update(&self.memo.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
         memo_hasher.update(&self.memo);
         let memo_hash = memo_hasher.finalize();
 
         // hash data request
         let mut dr_hasher = Keccak256::new();
         dr_hasher.update(self.version.hash());
-        dr_hasher.update(hex::decode(&self.dr_binary_id).expect("cannot decode dr binary id into bytes"));
+        // I don't think we should decode to hash... expensive in cosmwasm no?
+        dr_hasher.update(&self.dr_binary_id);
         dr_hasher.update(dr_inputs_hash);
-        dr_hasher.update(hex::decode(&self.tally_binary_id).expect("cannot decode tally binary id into bytes"));
+        dr_hasher.update(&self.tally_binary_id);
         dr_hasher.update(tally_inputs_hash);
         dr_hasher.update(self.replication_factor.to_be_bytes());
         #[cfg(feature = "cosmwasm")]

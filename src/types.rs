@@ -7,7 +7,7 @@ pub(crate) type U128 = cosmwasm_std::Uint128;
 pub(crate) type U128 = String;
 
 #[cfg(feature = "cosmwasm")]
-pub(crate) type Bytes = cosmwas_std::Binary;
+pub(crate) type Bytes = cosmwasm_std::Binary;
 #[cfg(not(feature = "cosmwasm"))]
 pub(crate) type Bytes = String;
 
@@ -19,7 +19,13 @@ pub trait ToHexStr: AsRef<[u8]> {
     }
 }
 
-impl ToHexStr for Hash {
+impl ToHexStr for Vec<u8> {
+    fn to_hex(&self) -> String {
+        hex::encode(self)
+    }
+}
+
+impl<const N: usize> ToHexStr for [u8; N] {
     fn to_hex(&self) -> String {
         hex::encode(self)
     }

@@ -5,7 +5,7 @@ use super::*;
 #[cfg_attr(not(feature = "cosmwasm"), derive(Debug, Serialize, Deserialize))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Staker {
-    pub memo:                      Option<String>,
+    pub memo:                      Option<Bytes>,
     pub tokens_staked:             U128,
     pub tokens_pending_withdrawal: U128,
 }
