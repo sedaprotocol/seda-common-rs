@@ -38,3 +38,11 @@ pub struct InstantiateMsg {
     pub owner:    String,
     pub chain_id: String,
 }
+
+#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
+#[serde(untagged)]
+pub enum SudoMsg {
+    DataRequest(data_requests::sudo::SudoMsg),
+}
