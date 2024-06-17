@@ -4,7 +4,7 @@ use super::{query::QueryMsg as OwnerQueryMsg, QueryMsg};
 use crate::msgs::assert_json_ok;
 
 #[test]
-fn json_query_get_owner() {
+fn json_get_owner() {
     let expected_json = json!(
     {
       "get_owner": {}
@@ -14,7 +14,7 @@ fn json_query_get_owner() {
 }
 
 #[test]
-fn json_query_get_pending_owner() {
+fn json_get_pending_owner() {
     let expected_json = json!(
     {
         "get_pending_owner": {}

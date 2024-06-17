@@ -4,7 +4,7 @@ use super::{query::QueryMsg as StakingQueryMsg, QueryMsg};
 use crate::msgs::assert_json_ok;
 
 #[test]
-fn json_query_get_staker() {
+fn json_get_staker() {
     let expected_json = json!({
       "get_staker": {
         "public_key": "public_key"
@@ -18,7 +18,7 @@ fn json_query_get_staker() {
 }
 
 #[test]
-fn json_query_get_account_seq() {
+fn json_get_account_seq() {
     let expected_json = json!({
       "get_account_seq": {
         "public_key": "public_key"
@@ -32,7 +32,7 @@ fn json_query_get_account_seq() {
 }
 
 #[test]
-fn json_query_get_staker_and_seq() {
+fn json_get_staker_and_seq() {
     let expected_json = json!({
       "get_staker_and_seq": {
         "public_key": "public_key"
@@ -46,7 +46,7 @@ fn json_query_get_staker_and_seq() {
 }
 
 #[test]
-fn json_query_is_executor_eligible() {
+fn json_is_executor_eligible() {
     let expected_json = json!({
     "is_executor_eligible": {
       "public_key": "public_key"
@@ -60,7 +60,7 @@ fn json_query_is_executor_eligible() {
 }
 
 #[test]
-fn json_query_get_staking_config() {
+fn json_get_staking_config() {
     let expected_json = json!({
       "get_staking_config": {}
     });

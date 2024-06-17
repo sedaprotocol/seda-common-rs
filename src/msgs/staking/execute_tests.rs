@@ -4,7 +4,7 @@ use super::{execute::*, ExecuteMsg};
 use crate::msgs::assert_json_ok;
 
 #[test]
-fn json_execute_stake() {
+fn json_stake() {
     let serialized_no_memo = json!({
       "stake": {
         "memo": null,
@@ -42,7 +42,7 @@ fn json_execute_stake() {
 }
 
 #[test]
-fn json_execute_unstake() {
+fn json_unstake() {
     #[cfg(not(feature = "cosmwasm"))]
     let amount = "100".to_string();
     #[cfg(feature = "cosmwasm")]
@@ -64,7 +64,7 @@ fn json_execute_unstake() {
 }
 
 #[test]
-fn json_execute_withdraw() {
+fn json_withdraw() {
     #[cfg(not(feature = "cosmwasm"))]
     let amount = "100".to_string();
     #[cfg(feature = "cosmwasm")]
