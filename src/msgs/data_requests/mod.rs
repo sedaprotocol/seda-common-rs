@@ -15,4 +15,5 @@ mod test {
     use super::*;
     mod execute_tests;
     mod query_tests;
+    mod sudo_tests;
 }
