@@ -16,3 +16,9 @@ pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm", returns(StakingConfig))]
     GetStakingConfig {},
 }
+
+impl From<QueryMsg> for super::QueryMsg {
+    fn from(value: QueryMsg) -> Self {
+        Self::Staking(value)
+    }
+}
