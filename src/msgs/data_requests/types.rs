@@ -71,7 +71,7 @@ pub struct DataRequest {
     /// Payload set by SEDA Protocol (e.g. OEV-enabled data requests)
     pub seda_payload:    Bytes,
     /// Commitments submitted by executors
-    pub commits:         HashMap<String, String>,
+    pub commits:         HashMap<String, Hash>,
     /// Reveals submitted by executors
     pub reveals:         HashMap<String, RevealBody>,
 
@@ -84,8 +84,8 @@ impl DataRequest {
         self.commits.contains_key(public_key)
     }
 
-    pub fn get_commitment(&self, public_key: &str) -> Option<&str> {
-        self.commits.get(public_key).map(|s| s.as_str())
+    pub fn get_commitment(&self, public_key: &str) -> Option<&Hash> {
+        self.commits.get(public_key)
     }
 
     pub fn has_revealer(&self, public_key: &str) -> bool {
