@@ -33,7 +33,7 @@ jobs:
 
       - name: 🧪 Run cosmwasm unit tests 
         if: always()
-        run: cargo nextest run --locked --fail-fast --package cosmwasm 
+        run: cargo nextest run --locked --fail-fast --features cosmwasm 
         env:
           RUST_BACKTRACE: 1
         
