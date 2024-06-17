@@ -9,6 +9,11 @@ pub mod data_requests;
 pub mod owner;
 pub mod staking;
 
+#[cfg(test)]
+mod assert_json;
+#[cfg(test)]
+pub use assert_json::assert_json_ok;
+
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
