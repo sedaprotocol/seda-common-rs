@@ -96,7 +96,7 @@ impl DataRequest {
         self.commits.len() >= self.replication_factor as usize
     }
 
-    pub fn reveal_over(&self) -> bool {
+    pub fn is_tallying(&self) -> bool {
         self.reveals.len() >= self.replication_factor as usize
     }
 
