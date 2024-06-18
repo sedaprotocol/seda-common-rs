@@ -17,7 +17,7 @@ pub enum QueryMsg {
     GetDataRequestReveals { dr_id: String },
     #[cfg_attr(feature = "cosmwasm", returns(DataResult))]
     GetDataResult { dr_id: String },
-    #[cfg_attr(feature = "cosmwasm",  returns(HashMap<String, DataRequest>))]
+    #[cfg_attr(feature = "cosmwasm",  returns(Vec<DataRequest>))]
     GetDataRequestsByStatus {
         status: DataRequestStatus,
         offset: u32,
