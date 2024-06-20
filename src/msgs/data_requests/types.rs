@@ -58,6 +58,8 @@ pub struct DataRequest {
     pub tally_inputs:       Bytes,
     /// Amount of required DR executors
     pub replication_factor: u16,
+    /// Filter applied before tally execution
+    pub consensus_filter:   Bytes,
     /// Amount of SEDA tokens per gas unit
     pub gas_price:          U128,
     /// Maximum of gas units to be used by data request executors to resolve a data request
@@ -116,22 +118,22 @@ pub struct DataResult {
 
     /// Data Request Identifier
     pub dr_id:        String,
-    /// Block Height at which data request was finalized
-    pub block_height: u64,
+    ///  Represents whether the result was in consensus or not (≥ 66%)
+    pub consensus:    bool,
     /// Exit code of Tally WASM binary execution
     pub exit_code:    u8,
-    pub gas_used:     U128,
     /// Result from Tally WASM binary execution
     pub result:       Bytes,
+    /// Block Height at which data request was finalized
+    pub block_height: u64,
+    /// Gas used by the complete data request execution
+    pub gas_used:     U128,
 
     // Fields from Data Request Execution
     /// Payback address set by the relayer
     pub payback_address: Bytes,
     /// Payload set by SEDA Protocol (e.g. OEV-enabled data requests)
     pub seda_payload:    Bytes,
-
-    ///  Represents Whether or not the result was in consensus or not (≥ 66%)
-    pub consensus: bool,
 }
 
 impl HashSelf for DataResult {
@@ -154,9 +156,10 @@ impl HashSelf for DataResult {
         let mut hasher = Keccak256::new();
         hasher.update(self.version.hash());
         hasher.update(&self.dr_id);
-        hasher.update(self.block_height.to_be_bytes());
+        hasher.update([self.consensus.into()]);
         hasher.update(self.exit_code.to_be_bytes());
         hasher.update(result_hash);
+        hasher.update(self.block_height.to_be_bytes());
         #[cfg(feature = "cosmwasm")]
         hasher.update(self.gas_used.to_be_bytes());
         #[cfg(not(feature = "cosmwasm"))]
@@ -171,7 +174,6 @@ impl HashSelf for DataResult {
         #[cfg(not(feature = "cosmwasm"))]
         hasher.update(&self.payback_address);
         hasher.update(seda_payload_hash);
-        hasher.update([self.consensus.into()]);
         hasher.finalize().into()
     }
 }
@@ -223,6 +225,7 @@ pub struct PostDataRequestArgs {
     pub tally_binary_id:    String,
     pub tally_inputs:       Bytes,
     pub replication_factor: u16,
+    pub consensus_filter:   Bytes,
     pub gas_price:          U128,
     pub gas_limit:          U128,
     pub memo:               Bytes,
@@ -245,6 +248,13 @@ impl HashSelf for PostDataRequestArgs {
         tally_inputs_hasher.update(&self.tally_inputs);
         let tally_inputs_hash = tally_inputs_hasher.finalize();
 
+        let mut consensus_filter_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        consensus_filter_hasher.update(&self.consensus_filter.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
+        consensus_filter_hasher.update(&self.consensus_filter);
+        let consensus_filter_hash = consensus_filter_hasher.finalize();
+
         let mut memo_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
         memo_hasher.update(&self.memo.to_base64());
@@ -261,6 +271,7 @@ impl HashSelf for PostDataRequestArgs {
         dr_hasher.update(&self.tally_binary_id);
         dr_hasher.update(tally_inputs_hash);
         dr_hasher.update(self.replication_factor.to_be_bytes());
+        dr_hasher.update(consensus_filter_hash);
         #[cfg(feature = "cosmwasm")]
         dr_hasher.update(self.gas_price.to_be_bytes());
         #[cfg(not(feature = "cosmwasm"))]
