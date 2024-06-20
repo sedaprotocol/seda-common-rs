@@ -1,3 +1,4 @@
+use hex::FromHexError;
 use thiserror::Error;
 use vrf_rs::error::VrfError;
 
@@ -5,6 +6,9 @@ use vrf_rs::error::VrfError;
 #[derive(Error, Debug, PartialEq)]
 #[cfg_attr(feature = "test-utils", derive(Clone))]
 pub enum Error {
+    #[error(transparent)]
+    FromHexError(#[from] FromHexError),
+
     #[cfg(not(feature = "test-utils"))]
     #[error(transparent)]
     Prove(#[from] VrfError),

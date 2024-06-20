@@ -1,6 +1,8 @@
 use semver::Version;
 use sha3::{Digest, Keccak256};
 
+use crate::error::Result;
+
 #[cfg(feature = "cosmwasm")]
 pub(crate) type U128 = cosmwasm_std::Uint128;
 #[cfg(not(feature = "cosmwasm"))]
@@ -29,6 +31,10 @@ impl<const N: usize> ToHexStr for [u8; N] {
     fn to_hex(&self) -> String {
         hex::encode(self)
     }
+}
+
+pub trait TryHashSelf {
+    fn try_hash(&self) -> Result<Hash>;
 }
 
 pub trait HashSelf {

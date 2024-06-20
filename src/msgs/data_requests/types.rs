@@ -136,8 +136,8 @@ pub struct DataResult {
     pub seda_payload:    Bytes,
 }
 
-impl HashSelf for DataResult {
-    fn hash(&self) -> Hash {
+impl TryHashSelf for DataResult {
+    fn try_hash(&self) -> Result<Hash> {
         let mut result_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
         result_hasher.update(&self.result.to_base64());
@@ -155,7 +155,7 @@ impl HashSelf for DataResult {
 
         let mut hasher = Keccak256::new();
         hasher.update(self.version.hash());
-        hasher.update(&self.dr_id);
+        hasher.update(hex::decode(&self.dr_id)?);
         hasher.update([self.consensus.into()]);
         hasher.update(self.exit_code.to_be_bytes());
         hasher.update(result_hash);
@@ -174,7 +174,8 @@ impl HashSelf for DataResult {
         #[cfg(not(feature = "cosmwasm"))]
         hasher.update(&self.payback_address);
         hasher.update(seda_payload_hash);
-        hasher.finalize().into()
+
+        Ok(hasher.finalize().into())
     }
 }
 
@@ -231,8 +232,8 @@ pub struct PostDataRequestArgs {
     pub memo:               Bytes,
 }
 
-impl HashSelf for PostDataRequestArgs {
-    fn hash(&self) -> Hash {
+impl TryHashSelf for PostDataRequestArgs {
+    fn try_hash(&self) -> Result<Hash> {
         // hash non-fixed-length inputs
         let mut dr_inputs_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
@@ -266,9 +267,9 @@ impl HashSelf for PostDataRequestArgs {
         let mut dr_hasher = Keccak256::new();
         dr_hasher.update(self.version.hash());
         // I don't think we should decode to hash... expensive in cosmwasm no?
-        dr_hasher.update(&self.dr_binary_id);
+        dr_hasher.update(hex::decode(&self.dr_binary_id)?);
         dr_hasher.update(dr_inputs_hash);
-        dr_hasher.update(&self.tally_binary_id);
+        dr_hasher.update(hex::decode(&self.tally_binary_id)?);
         dr_hasher.update(tally_inputs_hash);
         dr_hasher.update(self.replication_factor.to_be_bytes());
         dr_hasher.update(consensus_filter_hash);
@@ -291,6 +292,7 @@ impl HashSelf for PostDataRequestArgs {
                 .to_be_bytes(),
         );
         dr_hasher.update(memo_hash);
-        dr_hasher.finalize().into()
+
+        Ok(dr_hasher.finalize().into())
     }
 }
