@@ -39,6 +39,11 @@ fn json_post_request() {
     let tally_inputs: Bytes = "tally_inputs".as_bytes().into();
 
     #[cfg(not(feature = "cosmwasm"))]
+    let consensus_filter = "consensus_filter".to_string();
+    #[cfg(feature = "cosmwasm")]
+    let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
+
+    #[cfg(not(feature = "cosmwasm"))]
     let gas_price = "100".to_string();
     #[cfg(feature = "cosmwasm")]
     let gas_price: U128 = 100u128.into();
@@ -70,6 +75,7 @@ fn json_post_request() {
         tally_binary_id:    "tally_binary_id".to_string(),
         tally_inputs:       tally_inputs.clone(),
         replication_factor: 1,
+        consensus_filter:   consensus_filter.clone(),
         gas_price:          gas_price.clone(),
         gas_limit:          gas_limit.clone(),
         memo:               memo.clone(),
@@ -83,6 +89,7 @@ fn json_post_request() {
           "tally_binary_id": "tally_binary_id",
           "tally_inputs": tally_inputs,
           "replication_factor": 1,
+          "consensus_filter": consensus_filter,
           "gas_price": gas_price,
           "gas_limit": gas_limit,
           "memo": memo
