@@ -145,8 +145,14 @@ impl TryHashSelf for DataResult {
         result_hasher.update(&self.result);
         let result_hash = result_hasher.finalize();
 
-        let mut seda_payload_hasher = Keccak256::new();
+        let mut payback_address_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
+        payback_address_hasher.update(&self.payback_address.to_base64());
+        #[cfg(not(feature = "cosmwasm"))]
+        payback_address_hasher.update(&self.payback_address);
+        let payback_address_hash = payback_address_hasher.finalize();
+
+        let mut seda_payload_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
         seda_payload_hasher.update(&self.seda_payload.to_base64());
         #[cfg(not(feature = "cosmwasm"))]
@@ -169,10 +175,7 @@ impl TryHashSelf for DataResult {
                 .expect("`gas_used` should be parseable to u128")
                 .to_be_bytes(),
         );
-        #[cfg(feature = "cosmwasm")]
-        hasher.update(&self.payback_address.to_base64());
-        #[cfg(not(feature = "cosmwasm"))]
-        hasher.update(&self.payback_address);
+        hasher.update(payback_address_hash);
         hasher.update(seda_payload_hash);
 
         Ok(hasher.finalize().into())
