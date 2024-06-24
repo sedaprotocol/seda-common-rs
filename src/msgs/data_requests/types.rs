@@ -1,3 +1,4 @@
+#[cfg(not(feature = "cosmwasm"))]
 use base64::{prelude::BASE64_STANDARD, Engine};
 #[cfg(feature = "cosmwasm")]
 use cw_storage_plus::{Key, Prefixer, PrimaryKey};
@@ -203,13 +204,13 @@ pub struct RevealBody {
     pub reveal:    Bytes,
 }
 
-impl HashSelf for RevealBody {
-    fn hash(&self) -> Hash {
+impl TryHashSelf for RevealBody {
+    fn try_hash(&self) -> Result<Hash> {
         let mut reveal_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        reveal_hasher.update(&self.reveal.to_base64());
+        reveal_hasher.update(self.reveal.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        reveal_hasher.update(&self.reveal);
+        reveal_hasher.update(BASE64_STANDARD.decode(&self.reveal)?);
         let reveal_hash = reveal_hasher.finalize();
 
         let mut hasher = Keccak256::new();
@@ -225,7 +226,8 @@ impl HashSelf for RevealBody {
                 .to_be_bytes(),
         );
         hasher.update(reveal_hash);
-        hasher.finalize().into()
+
+        Ok(hasher.finalize().into())
     }
 }
 
@@ -250,30 +252,30 @@ impl TryHashSelf for PostDataRequestArgs {
         // hash non-fixed-length inputs
         let mut dr_inputs_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        dr_inputs_hasher.update(&self.dr_inputs.to_base64());
+        dr_inputs_hasher.update(self.dr_inputs.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        dr_inputs_hasher.update(&self.dr_inputs);
+        dr_inputs_hasher.update(BASE64_STANDARD.decode(&self.dr_inputs)?);
         let dr_inputs_hash = dr_inputs_hasher.finalize();
 
         let mut tally_inputs_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        tally_inputs_hasher.update(&self.tally_inputs.to_base64());
+        tally_inputs_hasher.update(self.tally_inputs.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        tally_inputs_hasher.update(&self.tally_inputs);
+        tally_inputs_hasher.update(BASE64_STANDARD.decode(&self.tally_inputs)?);
         let tally_inputs_hash = tally_inputs_hasher.finalize();
 
         let mut consensus_filter_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        consensus_filter_hasher.update(&self.consensus_filter.to_base64());
+        consensus_filter_hasher.update(self.consensus_filter.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        consensus_filter_hasher.update(&self.consensus_filter);
+        consensus_filter_hasher.update(BASE64_STANDARD.decode(&self.consensus_filter)?);
         let consensus_filter_hash = consensus_filter_hasher.finalize();
 
         let mut memo_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        memo_hasher.update(&self.memo.to_base64());
+        memo_hasher.update(self.memo.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        memo_hasher.update(&self.memo);
+        memo_hasher.update(BASE64_STANDARD.decode(&self.memo)?);
         let memo_hash = memo_hasher.finalize();
 
         // hash data request
