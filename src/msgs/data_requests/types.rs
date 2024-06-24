@@ -1,3 +1,4 @@
+use base64::{prelude::BASE64_STANDARD, Engine};
 #[cfg(feature = "cosmwasm")]
 use cw_storage_plus::{Key, Prefixer, PrimaryKey};
 use semver::Version;
@@ -138,47 +139,56 @@ pub struct DataResult {
 
 impl TryHashSelf for DataResult {
     fn try_hash(&self) -> Result<Hash> {
+        let version = self.version.hash();
+        let dr_id = hex::decode(&self.dr_id)?;
+        let consensus: [u8; 1] = [self.consensus.into()];
+        let exit_code = self.exit_code.to_be_bytes();
+
         let mut result_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        result_hasher.update(&self.result.to_base64());
+        result_hasher.update(self.result.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        result_hasher.update(&self.result);
+        result_hasher.update(BASE64_STANDARD.decode(&self.result)?);
         let result_hash = result_hasher.finalize();
 
-        let mut payback_address_hasher = Keccak256::new();
+        let block_height = self.block_height.to_be_bytes();
         #[cfg(feature = "cosmwasm")]
-        payback_address_hasher.update(&self.payback_address.to_base64());
+        let gas_used = self.gas_used.to_be_bytes();
         #[cfg(not(feature = "cosmwasm"))]
-        payback_address_hasher.update(&self.payback_address);
-        let payback_address_hash = payback_address_hasher.finalize();
+        let gas_used = self
+            .gas_used
+            .parse::<u128>()
+            .expect("gas used should be parseable to u128")
+            .to_be_bytes();
+
+        let mut payback_hasher = Keccak256::new();
+        #[cfg(feature = "cosmwasm")]
+        payback_hasher.update(self.payback_address.as_slice());
+        #[cfg(not(feature = "cosmwasm"))]
+        payback_hasher.update(BASE64_STANDARD.decode(&self.payback_address)?);
+        let seda_payback_hash = payback_hasher.finalize();
 
         let mut seda_payload_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        seda_payload_hasher.update(&self.seda_payload.to_base64());
+        seda_payload_hasher.update(self.seda_payload.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        seda_payload_hasher.update(&self.seda_payload);
+        seda_payload_hasher.update(BASE64_STANDARD.decode(&self.seda_payload)?);
         let seda_payload_hash = seda_payload_hasher.finalize();
 
-        let mut hasher = Keccak256::new();
-        hasher.update(self.version.hash());
-        hasher.update(hex::decode(&self.dr_id)?);
-        hasher.update([self.consensus.into()]);
-        hasher.update(self.exit_code.to_be_bytes());
-        hasher.update(result_hash);
-        hasher.update(self.block_height.to_be_bytes());
-        #[cfg(feature = "cosmwasm")]
-        hasher.update(self.gas_used.to_be_bytes());
-        #[cfg(not(feature = "cosmwasm"))]
-        hasher.update(
-            self.gas_used
-                .parse::<u128>()
-                .expect("`gas_used` should be parseable to u128")
-                .to_be_bytes(),
-        );
-        hasher.update(payback_address_hash);
-        hasher.update(seda_payload_hash);
+        let bytes = [
+            version.as_slice(),
+            &dr_id,
+            &consensus,
+            &exit_code,
+            &result_hash,
+            &block_height,
+            &gas_used,
+            &seda_payback_hash,
+            &seda_payload_hash,
+        ]
+        .concat();
 
-        Ok(hasher.finalize().into())
+        Ok(Keccak256::digest(bytes).into())
     }
 }
 

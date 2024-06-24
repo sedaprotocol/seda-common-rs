@@ -7,7 +7,10 @@ use vrf_rs::error::VrfError;
 #[cfg_attr(feature = "test-utils", derive(Clone))]
 pub enum Error {
     #[error(transparent)]
-    FromHexError(#[from] FromHexError),
+    FromHex(#[from] FromHexError),
+
+    #[error(transparent)]
+    FromBase64(#[from] base64::DecodeError),
 
     #[cfg(not(feature = "test-utils"))]
     #[error(transparent)]
