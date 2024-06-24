@@ -4,12 +4,12 @@ version = "0.0.0"
 edition = "2021"
 
 [features]
-default = ["serde"]
+default = ["serde", "base64"]
 cosmwasm = ["cosmwasm-schema", "cosmwasm-std"]
 test-utils = []
 
 [dependencies]
-base64 = "0.22.1"
+base64 = { version = "0.22.1", optional = true }
 cosmwasm-schema = { version = "1.5.5", optional = true }
 cosmwasm-std = { version = "1.5.5", optional = true }
 cw-storage-plus = "1.2.0"
