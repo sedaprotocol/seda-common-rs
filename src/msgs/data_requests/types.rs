@@ -301,7 +301,7 @@ impl TryHashSelf for PostDataRequestArgs {
         dr_hasher.update(self.gas_limit.to_be_bytes());
         #[cfg(not(feature = "cosmwasm"))]
         dr_hasher.update(
-            self.gas_price
+            self.gas_limit
                 .parse::<u128>()
                 .expect("`gas_limit` should be parseable to u128")
                 .to_be_bytes(),
