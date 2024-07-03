@@ -55,7 +55,7 @@ fn json_post_result() {
       "exit_code": 0,
     }
     });
-    let msg: SudoMsg = post_result::Sudo {
+    let msg: SudoMsg = PostResult {
         dr_id: "dr_id".to_string(),
         result,
         exit_code: 0,
