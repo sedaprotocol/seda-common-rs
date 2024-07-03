@@ -8,6 +8,8 @@ pub struct Execute {
     pub reveal_body: RevealBody,
     pub public_key:  String,
     pub proof:       String,
+    pub stderr:      Vec<String>,
+    pub stdout:      Vec<String>,
 }
 
 impl From<Execute> for crate::msgs::ExecuteMsg {

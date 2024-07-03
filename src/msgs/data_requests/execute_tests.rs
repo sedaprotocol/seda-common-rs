@@ -135,7 +135,9 @@ fn json_reveal_result() {
           "reveal": reveal,
         },
         "public_key": "public_key",
-        "proof": "proof"
+        "proof": "proof",
+        "stderr": vec!["error".to_string()],
+        "stdout": vec!["some-output".to_string()],
       }
     });
     let msg: ExecuteMsg = reveal_result::Execute {
@@ -143,6 +145,8 @@ fn json_reveal_result() {
         reveal_body,
         public_key: "public_key".to_string(),
         proof: "proof".to_string(),
+        stderr: vec!["error".to_string()],
+        stdout: vec!["some-output".to_string()],
     }
     .into();
     assert_json_ok(&msg, &expected_json);
