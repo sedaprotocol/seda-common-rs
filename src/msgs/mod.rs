@@ -3,7 +3,7 @@ use cosmwasm_schema::{cw_serde, QueryResponses};
 #[cfg(not(feature = "cosmwasm"))]
 use serde::{Deserialize, Serialize};
 
-use crate::{error::*, types::*};
+use crate::{crypto::hash, error::*, types::*};
 
 pub mod data_requests;
 pub mod owner;
