@@ -14,7 +14,6 @@ impl SignSelf for Execute {
         Ok(hash([
             "stake".as_bytes(),
             &self.memo.hash(),
-            &chain_height.to_be_bytes(),
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
             // todo sequence number

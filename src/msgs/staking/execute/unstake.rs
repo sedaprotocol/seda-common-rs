@@ -18,7 +18,6 @@ impl SignSelf for Execute {
             self.amount.as_bytes(),
             #[cfg(feature = "cosmwasm")]
             &self.amount.to_be_bytes(),
-            &chain_height.to_be_bytes(),
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
             // todo sequence number
