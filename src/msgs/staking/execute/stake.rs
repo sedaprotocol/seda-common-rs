@@ -10,13 +10,15 @@ pub struct Execute {
 }
 
 impl SignSelf for Execute {
-    fn msg_hash(&self, chain_height: u64, chain_id: &str, contract_addr: &str) -> Result<Hash> {
+    type Extra = u128;
+
+    fn msg_hash(&self, chain_id: &str, contract_addr: &str, sequence: Self::Extra) -> Result<Hash> {
         Ok(hash([
             "stake".as_bytes(),
             &self.memo.hash(),
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
-            // todo sequence number
+            &sequence.to_be_bytes(),
         ]))
     }
 }

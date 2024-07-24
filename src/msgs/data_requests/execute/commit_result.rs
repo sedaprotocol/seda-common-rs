@@ -11,11 +11,13 @@ pub struct Execute {
 }
 
 impl SignSelf for Execute {
-    fn msg_hash(&self, chain_height: u64, chain_id: &str, contract_addr: &str) -> Result<Hash> {
+    type Extra = u64;
+
+    fn msg_hash(&self, chain_id: &str, contract_addr: &str, dr_height: Self::Extra) -> Result<Hash> {
         Ok(hash([
             "commit_data_result".as_bytes(),
             self.dr_id.as_bytes(),
-            &chain_height.to_be_bytes(),
+            &dr_height.to_be_bytes(),
             self.commitment.as_bytes(),
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
