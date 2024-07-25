@@ -16,7 +16,6 @@ impl SignSelf for Execute {
     fn msg_hash(&self, chain_id: &str, contract_addr: &str, sequence: Self::Extra) -> Result<Hash> {
         Ok(hash([
             "withdraw".as_bytes(),
-            // todo in overlay this is an u128 converted to a string we don't want to have to reparse it...
             #[cfg(not(feature = "cosmwasm"))]
             &self.amount.to_be_bytes(),
             #[cfg(feature = "cosmwasm")]

@@ -13,10 +13,14 @@ pub struct Execute {
 }
 
 impl SignSelf for Execute {
-    type Extra = u64;
+    type Extra = (u64, Hash);
 
-    fn msg_hash(&self, chain_id: &str, contract_addr: &str, dr_height: Self::Extra) -> Result<Hash> {
-        let reveal_body_hash = self.reveal_body.try_hash()?;
+    fn msg_hash(
+        &self,
+        chain_id: &str,
+        contract_addr: &str,
+        (dr_height, reveal_body_hash): Self::Extra,
+    ) -> Result<Hash> {
         Ok(hash([
             "reveal_data_result".as_bytes(),
             self.dr_id.as_bytes(),

@@ -7,11 +7,9 @@ pub trait SignSelf {
     type Extra;
     fn msg_hash(&self, chain_id: &str, contract_addr: &str, extra: Self::Extra) -> Result<Hash>;
 
-    fn sign(&mut self, signing_key: &[u8], chain_id: &str, contract_addr: &str, extra: Self::Extra) -> Result<Vec<u8>> {
-        let msg_hash = self.msg_hash(chain_id, contract_addr, extra)?;
-
+    fn sign(&self, signing_key: &[u8], msg_hash: &[u8]) -> Result<Vec<u8>> {
         let vrf = Secp256k1Sha256::default();
-        let proof = vrf.prove(signing_key, &msg_hash)?;
+        let proof = vrf.prove(signing_key, msg_hash)?;
 
         Ok(proof)
     }
@@ -24,6 +22,7 @@ pub trait SignSelf {
         contract_addr: &str,
         extra: Self::Extra,
     ) -> Result<()> {
-        verify_proof(public_key, proof, self.msg_hash(chain_id, contract_addr, extra)?)
+        let msg_hash = self.msg_hash(chain_id, contract_addr, extra)?;
+        verify_proof(public_key, proof, msg_hash)
     }
 }
