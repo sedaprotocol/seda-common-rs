@@ -14,7 +14,7 @@ fn json_get_staker() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -28,7 +28,7 @@ fn json_get_account_seq() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -42,7 +42,7 @@ fn json_get_staker_and_seq() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -56,7 +56,7 @@ fn json_is_executor_eligible() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -65,5 +65,5 @@ fn json_get_staking_config() {
       "get_staking_config": {}
     });
     let msg: QueryMsg = StakingQueryMsg::GetStakingConfig {}.into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }

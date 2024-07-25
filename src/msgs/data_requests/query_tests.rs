@@ -14,7 +14,7 @@ fn json_get_data_request() {
         dr_id: "dr_id".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -30,7 +30,7 @@ fn json_get_data_request_commitment() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -44,7 +44,7 @@ fn json_get_data_request_commitments() {
         dr_id: "dr_id".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -60,7 +60,7 @@ fn json_get_data_request_reveal() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -74,7 +74,7 @@ fn json_get_data_request_reveals() {
         dr_id: "dr_id".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -88,7 +88,7 @@ fn json_get_data_result() {
         dr_id: "dr_id".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -106,5 +106,5 @@ fn json_get_data_requests_by_status() {
         limit:  10,
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }

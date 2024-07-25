@@ -8,7 +8,7 @@ use sha3::{Digest, Keccak256};
 use super::*;
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum DataRequestStatus {
     Committing,
@@ -41,7 +41,7 @@ impl<'a> Prefixer<'a> for DataRequestStatus {
 
 /// Represents a data request at creation time
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DataRequest {
     /// Identifier
@@ -111,7 +111,7 @@ impl DataRequest {
 
 /// Represents a resolved data result
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DataResult {
     // DR Result
@@ -192,7 +192,7 @@ impl TryHashSelf for DataResult {
 
 /// A revealed data request result that is hashed and signed by the executor
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct RevealBody {
     pub salt:      String,
@@ -225,7 +225,7 @@ impl TryHashSelf for RevealBody {
 }
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct PostDataRequestArgs {
     pub version:            Version,

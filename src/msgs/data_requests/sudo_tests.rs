@@ -61,5 +61,5 @@ fn json_post_result() {
         exit_code: 0,
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }

@@ -6,7 +6,7 @@ pub mod remove_from_allowlist;
 pub mod transfer_ownership;
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum ExecuteMsg {
     TransferOwnership(transfer_ownership::Execute),

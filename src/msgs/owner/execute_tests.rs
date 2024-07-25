@@ -10,7 +10,7 @@ fn json_accept_ownership() {
         "accept_ownership": {}
     });
     let msg: ExecuteMsg = accept_ownership::Execute {}.into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -24,7 +24,7 @@ fn json_add_to_allowlist() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -38,7 +38,7 @@ fn json_remove_from_allowlist() {
         public_key: "public_key".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -52,5 +52,5 @@ fn json_transfer_ownership() {
         new_owner: "new_owner".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }

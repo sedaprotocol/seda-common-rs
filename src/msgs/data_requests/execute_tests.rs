@@ -23,7 +23,7 @@ fn json_commit_result() {
         proof:      "proof".to_string(),
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -69,16 +69,16 @@ fn json_post_request() {
     let payback_address: Bytes = "payback_address".as_bytes().into();
 
     let args = PostDataRequestArgs {
-        version:            Version::new(1, 0, 0),
-        dr_binary_id:       "dr_binary_id".to_string(),
-        dr_inputs:          dr_inputs.clone(),
-        tally_binary_id:    "tally_binary_id".to_string(),
-        tally_inputs:       tally_inputs.clone(),
+        version: Version::new(1, 0, 0),
+        dr_binary_id: "dr_binary_id".to_string(),
+        dr_inputs: dr_inputs.clone(),
+        tally_binary_id: "tally_binary_id".to_string(),
+        tally_inputs: tally_inputs.clone(),
         replication_factor: 1,
-        consensus_filter:   consensus_filter.clone(),
+        consensus_filter: consensus_filter.clone(),
         gas_price,
         gas_limit,
-        memo:               memo.clone(),
+        memo: memo.clone(),
     };
     let expected_json = json!({
       "post_data_request": {
@@ -104,7 +104,7 @@ fn json_post_request() {
         payback_address,
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -149,5 +149,5 @@ fn json_reveal_result() {
         stdout: vec!["some-output".to_string()],
     }
     .into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }

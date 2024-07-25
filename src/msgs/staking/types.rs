@@ -2,7 +2,7 @@ use super::*;
 
 /// A data request executor with staking info and optional p2p multi address
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Debug, Serialize, Deserialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Staker {
     pub memo:                      Option<Bytes>,
@@ -14,7 +14,7 @@ pub struct Staker {
 
 /// Governance-controlled configuration parameters
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Debug, Serialize, Deserialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct StakingConfig {
     /// Minimum amount of SEDA tokens required to register as a data request executor
@@ -34,7 +34,7 @@ impl From<StakingConfig> for crate::msgs::ExecuteMsg {
 }
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Debug, Serialize, Deserialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct StakerAndSeq {
     pub staker: Option<Staker>,

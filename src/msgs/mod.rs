@@ -15,7 +15,7 @@ mod assert_json;
 pub use assert_json::assert_json_ok;
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 #[serde(untagged)]
 pub enum ExecuteMsg {
@@ -28,7 +28,7 @@ pub enum ExecuteMsg {
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
 #[cfg_attr(feature = "cosmwasm", derive(QueryResponses))]
 #[cfg_attr(feature = "cosmwasm", query_responses(nested))]
-#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 #[serde(untagged)]
 pub enum QueryMsg {
@@ -45,7 +45,7 @@ pub struct InstantiateMsg {
 }
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 #[serde(untagged)]
 pub enum SudoMsg {

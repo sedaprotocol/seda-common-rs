@@ -1,6 +1,6 @@
 use serde_json::json;
 
-use super::{execute::*, ExecuteMsg};
+use super::{execute::*, ExecuteMsg, U128};
 use crate::msgs::assert_json_ok;
 
 #[test]
@@ -18,7 +18,7 @@ fn json_stake() {
         memo:       None,
     }
     .into();
-    assert_json_ok(&msg_no_memo, &serialized_no_memo);
+    assert_json_ok(msg_no_memo, serialized_no_memo);
 
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -38,15 +38,15 @@ fn json_stake() {
         memo:       Some(memo),
     }
     .into();
-    assert_json_ok(&msg_with_memo, &serialized_with_memo);
+    assert_json_ok(msg_with_memo, serialized_with_memo);
 }
 
 #[test]
 fn json_unstake() {
     #[cfg(not(feature = "cosmwasm"))]
-    let amount = 0;
+    let amount: U128 = 0;
     #[cfg(feature = "cosmwasm")]
-    let amount = 0u128.into();
+    let amount: U128 = 0u128.into();
     let serialized = json!({
       "unstake": {
         "proof": "proof",
@@ -60,15 +60,15 @@ fn json_unstake() {
         amount,
     }
     .into();
-    assert_json_ok(&msg, &serialized);
+    assert_json_ok(msg, serialized);
 }
 
 #[test]
 fn json_withdraw() {
     #[cfg(not(feature = "cosmwasm"))]
-    let amount = 0;
+    let amount: U128 = 0;
     #[cfg(feature = "cosmwasm")]
-    let amount = 0u128.into();
+    let amount: U128 = 0u128.into();
     let serialized = json!({
       "withdraw": {
         "proof": "proof",
@@ -82,5 +82,5 @@ fn json_withdraw() {
         amount,
     }
     .into();
-    assert_json_ok(&msg, &serialized);
+    assert_json_ok(msg, serialized);
 }

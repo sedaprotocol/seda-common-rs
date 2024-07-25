@@ -10,7 +10,7 @@ fn json_get_owner() {
       "get_owner": {}
     });
     let msg: QueryMsg = OwnerQueryMsg::GetOwner {}.into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
 
 #[test]
@@ -20,5 +20,5 @@ fn json_get_pending_owner() {
         "get_pending_owner": {}
     });
     let msg: QueryMsg = OwnerQueryMsg::GetPendingOwner {}.into();
-    assert_json_ok(&msg, &expected_json);
+    assert_json_ok(msg, expected_json);
 }
