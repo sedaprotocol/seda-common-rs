@@ -1,4 +1,5 @@
 use super::*;
+use crate::error::Result;
 
 pub trait TryHashSelf {
     fn try_hash(&self) -> Result<Hash>;

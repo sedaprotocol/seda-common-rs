@@ -6,6 +6,7 @@ use super::*;
 pub struct Execute {
     pub public_key: String,
     pub proof:      String,
+    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub amount:     U128,
 }
 
@@ -17,7 +18,7 @@ impl SignSelf for Execute {
             "withdraw".as_bytes(),
             // todo in overlay this is an u128 converted to a string we don't want to have to reparse it...
             #[cfg(not(feature = "cosmwasm"))]
-            self.amount.as_bytes(),
+            &self.amount.to_be_bytes(),
             #[cfg(feature = "cosmwasm")]
             &self.amount.to_be_bytes(),
             chain_id.as_bytes(),

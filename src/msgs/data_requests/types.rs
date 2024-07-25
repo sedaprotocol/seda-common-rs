@@ -129,6 +129,7 @@ pub struct DataResult {
     /// Block Height at which data request was finalized
     pub block_height: u64,
     /// Gas used by the complete data request execution
+    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_used:     U128,
 
     // Fields from Data Request Execution
@@ -156,11 +157,7 @@ impl TryHashSelf for DataResult {
         #[cfg(feature = "cosmwasm")]
         let gas_used = self.gas_used.to_be_bytes();
         #[cfg(not(feature = "cosmwasm"))]
-        let gas_used = self
-            .gas_used
-            .parse::<u128>()
-            .expect("gas used should be parseable to u128")
-            .to_be_bytes();
+        let gas_used = self.gas_used.to_be_bytes();
 
         let mut payback_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
@@ -200,6 +197,7 @@ impl TryHashSelf for DataResult {
 pub struct RevealBody {
     pub salt:      String,
     pub exit_code: u8,
+    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_used:  U128,
     pub reveal:    Bytes,
 }
@@ -219,12 +217,7 @@ impl TryHashSelf for RevealBody {
         #[cfg(feature = "cosmwasm")]
         hasher.update(self.gas_used.to_be_bytes());
         #[cfg(not(feature = "cosmwasm"))]
-        hasher.update(
-            self.gas_used
-                .parse::<u128>()
-                .expect("`gas_used` should be parseable to u128")
-                .to_be_bytes(),
-        );
+        hasher.update(self.gas_used.to_be_bytes());
         hasher.update(reveal_hash);
 
         Ok(hasher.finalize().into())
@@ -242,7 +235,9 @@ pub struct PostDataRequestArgs {
     pub tally_inputs:       Bytes,
     pub replication_factor: u16,
     pub consensus_filter:   Bytes,
+    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_price:          U128,
+    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_limit:          U128,
     pub memo:               Bytes,
 }
@@ -291,21 +286,11 @@ impl TryHashSelf for PostDataRequestArgs {
         #[cfg(feature = "cosmwasm")]
         dr_hasher.update(self.gas_price.to_be_bytes());
         #[cfg(not(feature = "cosmwasm"))]
-        dr_hasher.update(
-            self.gas_price
-                .parse::<u128>()
-                .expect("`gas_price` should be parseable to u128")
-                .to_be_bytes(),
-        );
+        dr_hasher.update(self.gas_price.to_be_bytes());
         #[cfg(feature = "cosmwasm")]
         dr_hasher.update(self.gas_limit.to_be_bytes());
         #[cfg(not(feature = "cosmwasm"))]
-        dr_hasher.update(
-            self.gas_limit
-                .parse::<u128>()
-                .expect("`gas_limit` should be parseable to u128")
-                .to_be_bytes(),
-        );
+        dr_hasher.update(self.gas_limit.to_be_bytes());
         dr_hasher.update(memo_hash);
 
         Ok(dr_hasher.finalize().into())

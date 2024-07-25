@@ -1,7 +1,7 @@
 use vrf_rs::Secp256k1Sha256;
 
 use super::*;
-use crate::crypto::verify_proof;
+use crate::{crypto::verify_proof, error::Result};
 
 pub trait SignSelf {
     type Extra;

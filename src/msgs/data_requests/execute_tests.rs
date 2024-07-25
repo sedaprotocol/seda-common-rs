@@ -44,12 +44,12 @@ fn json_post_request() {
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
 
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_price = "100".to_string();
+    let gas_price = 100;
     #[cfg(feature = "cosmwasm")]
     let gas_price: U128 = 100u128.into();
 
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_limit = "100".to_string();
+    let gas_limit = 100;
     #[cfg(feature = "cosmwasm")]
     let gas_limit: U128 = 100u128.into();
 
@@ -76,8 +76,8 @@ fn json_post_request() {
         tally_inputs:       tally_inputs.clone(),
         replication_factor: 1,
         consensus_filter:   consensus_filter.clone(),
-        gas_price:          gas_price.clone(),
-        gas_limit:          gas_limit.clone(),
+        gas_price,
+        gas_limit,
         memo:               memo.clone(),
     };
     let expected_json = json!({
@@ -90,8 +90,8 @@ fn json_post_request() {
           "tally_inputs": tally_inputs,
           "replication_factor": 1,
           "consensus_filter": consensus_filter,
-          "gas_price": gas_price,
-          "gas_limit": gas_limit,
+          "gas_price": gas_price.to_string(),
+          "gas_limit": gas_limit.to_string(),
           "memo": memo
         },
         "seda_payload": seda_payload,
@@ -110,7 +110,7 @@ fn json_post_request() {
 #[test]
 fn json_reveal_result() {
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_used = "100".to_string();
+    let gas_used = 100;
     #[cfg(feature = "cosmwasm")]
     let gas_used: U128 = 100u128.into();
 
@@ -120,10 +120,10 @@ fn json_reveal_result() {
     let reveal: Bytes = "reveal".as_bytes().into();
 
     let reveal_body = RevealBody {
-        salt:      "salt".to_string(),
+        salt: "salt".to_string(),
         exit_code: 0,
-        gas_used:  gas_used.clone(),
-        reveal:    reveal.clone(),
+        gas_used,
+        reveal: reveal.clone(),
     };
     let expected_json = json!({
       "reveal_data_result": {
@@ -131,7 +131,7 @@ fn json_reveal_result() {
         "reveal_body": {
           "salt": "salt",
           "exit_code": 0,
-          "gas_used": gas_used,
+          "gas_used": gas_used.to_string(),
           "reveal": reveal,
         },
         "public_key": "public_key",

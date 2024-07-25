@@ -44,14 +44,14 @@ fn json_stake() {
 #[test]
 fn json_unstake() {
     #[cfg(not(feature = "cosmwasm"))]
-    let amount = "100".to_string();
+    let amount = 0;
     #[cfg(feature = "cosmwasm")]
     let amount = 0u128.into();
     let serialized = json!({
       "unstake": {
         "proof": "proof",
         "public_key": "public",
-        "amount": amount,
+        "amount": amount.to_string(),
       }
     });
     let msg: ExecuteMsg = unstake::Execute {
@@ -66,14 +66,14 @@ fn json_unstake() {
 #[test]
 fn json_withdraw() {
     #[cfg(not(feature = "cosmwasm"))]
-    let amount = "100".to_string();
+    let amount = 0;
     #[cfg(feature = "cosmwasm")]
     let amount = 0u128.into();
     let serialized = json!({
       "withdraw": {
         "proof": "proof",
         "public_key": "public",
-        "amount": amount,
+        "amount": amount.to_string(),
       }
     });
     let msg: ExecuteMsg = withdraw::Execute {

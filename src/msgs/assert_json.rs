@@ -4,6 +4,7 @@ use serde_json::to_value;
 
 // assert that the msg M serializes to the expected json J
 // if cosmwasm feature is enabled, also assert that we can deserialize the json back to the msg
+#[track_caller]
 pub fn assert_json_ok<M, J>(msg: &M, json: &J)
 where
     M: serde::Serialize,
