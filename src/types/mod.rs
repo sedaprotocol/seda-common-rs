@@ -8,7 +8,7 @@ mod hash_self;
 pub use hash_self::{HashSelf, TryHashSelf};
 
 mod sign_self;
-pub use sign_self::SignSelf;
+pub(crate) use sign_self::SignSelf;
 use vrf_rs::Secp256k1Sha256;
 
 #[cfg(feature = "cosmwasm")]

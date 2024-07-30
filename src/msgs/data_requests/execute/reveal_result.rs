@@ -15,6 +15,10 @@ pub struct Execute {
 impl SignSelf for Execute {
     type Extra = (u64, Hash);
 
+    fn proof(&self) -> Result<Vec<u8>> {
+        Ok(hex::decode(&self.proof)?)
+    }
+
     fn msg_hash(
         &self,
         chain_id: &str,
@@ -29,6 +33,47 @@ impl SignSelf for Execute {
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
         ]))
+    }
+}
+
+impl Execute {
+    #[allow(clippy::too_many_arguments)]
+    pub fn new(
+        dr_id: String,
+        reveal_body: RevealBody,
+        public_key: String,
+        stderr: Vec<String>,
+        stdout: Vec<String>,
+        signing_key: &[u8],
+        chain_id: &str,
+        contract_addr: &str,
+        dr_height: u64,
+        reveal_body_hash: Hash,
+    ) -> Result<Self> {
+        let mut ex = Self {
+            dr_id,
+            reveal_body,
+            public_key,
+            stderr,
+            stdout,
+            proof: Default::default(),
+        };
+        ex.proof = ex
+            .sign(signing_key, chain_id, contract_addr, (dr_height, reveal_body_hash))?
+            .to_hex();
+
+        Ok(ex)
+    }
+
+    pub fn verify(
+        &self,
+        public_key: &[u8],
+        chain_id: &str,
+        contract_addr: &str,
+        dr_height: u64,
+        reveal_body_hash: Hash,
+    ) -> Result<()> {
+        self.verify_inner(public_key, chain_id, contract_addr, (dr_height, reveal_body_hash))
     }
 }
 
