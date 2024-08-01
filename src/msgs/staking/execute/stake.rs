@@ -9,7 +9,19 @@ pub struct Execute {
     pub memo:       Option<Bytes>,
 }
 
-impl SignSelf for Execute {
+impl Execute {
+    fn generate_hash(memo: Option<&Bytes>, chain_id: &str, contract_addr: &str, sequence: u128) -> Hash {
+        hash([
+            "stake".as_bytes(),
+            &memo.hash(),
+            chain_id.as_bytes(),
+            contract_addr.as_bytes(),
+            &sequence.to_be_bytes(),
+        ])
+    }
+}
+
+impl VerifySelf for Execute {
     type Extra = u128;
 
     fn proof(&self) -> Result<Vec<u8>> {
@@ -17,33 +29,45 @@ impl SignSelf for Execute {
     }
 
     fn msg_hash(&self, chain_id: &str, contract_addr: &str, sequence: Self::Extra) -> Result<Hash> {
-        Ok(hash([
-            "stake".as_bytes(),
-            &self.memo.hash(),
-            chain_id.as_bytes(),
-            contract_addr.as_bytes(),
-            &sequence.to_be_bytes(),
-        ]))
+        Ok(Self::generate_hash(
+            self.memo.as_ref(),
+            chain_id,
+            contract_addr,
+            sequence,
+        ))
+    }
+}
+
+pub struct ExectueFactory {
+    public_key: String,
+    memo:       Option<Bytes>,
+    hash:       Hash,
+}
+
+impl ExectueFactory {
+    pub fn get_hash(&self) -> &[u8] {
+        &self.hash
+    }
+
+    pub fn create_message(self, proof: Vec<u8>) -> Execute {
+        Execute {
+            public_key: self.public_key,
+            proof:      proof.to_hex(),
+            memo:       self.memo,
+        }
     }
 }
 
 impl Execute {
-    pub fn new(
+    pub fn factory(
         public_key: String,
         memo: Option<Bytes>,
-        signing_key: &[u8],
         chain_id: &str,
         contract_addr: &str,
         sequence: u128,
-    ) -> Result<Self> {
-        let mut ex = Self {
-            public_key,
-            memo,
-            proof: Default::default(),
-        };
-        ex.proof = ex.sign(signing_key, chain_id, contract_addr, sequence)?.to_hex();
-
-        Ok(ex)
+    ) -> ExectueFactory {
+        let hash = Self::generate_hash(memo.as_ref(), chain_id, contract_addr, sequence);
+        ExectueFactory { public_key, memo, hash }
     }
 
     pub fn verify(&self, public_key: &[u8], chain_id: &str, contract_addr: &str, sequence: u128) -> Result<()> {

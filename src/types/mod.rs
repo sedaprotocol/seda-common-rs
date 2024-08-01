@@ -7,8 +7,8 @@ pub use to_hex::ToHexStr;
 mod hash_self;
 pub use hash_self::{HashSelf, TryHashSelf};
 
-mod sign_self;
-pub(crate) use sign_self::SignSelf;
+mod verify_self;
+pub(crate) use verify_self::VerifySelf;
 use vrf_rs::Secp256k1Sha256;
 
 #[cfg(feature = "cosmwasm")]

@@ -10,7 +10,20 @@ pub struct Execute {
     pub proof:      String,
 }
 
-impl SignSelf for Execute {
+impl Execute {
+    fn generate_hash(dr_id: &str, commitment: &str, chain_id: &str, contract_addr: &str, dr_height: u64) -> Hash {
+        hash([
+            "commit_data_result".as_bytes(),
+            dr_id.as_bytes(),
+            &dr_height.to_be_bytes(),
+            commitment.as_bytes(),
+            chain_id.as_bytes(),
+            contract_addr.as_bytes(),
+        ])
+    }
+}
+
+impl VerifySelf for Execute {
     type Extra = u64;
 
     fn proof(&self) -> Result<Vec<u8>> {
@@ -18,36 +31,54 @@ impl SignSelf for Execute {
     }
 
     fn msg_hash(&self, chain_id: &str, contract_addr: &str, dr_height: Self::Extra) -> Result<Hash> {
-        Ok(hash([
-            "commit_data_result".as_bytes(),
-            self.dr_id.as_bytes(),
-            &dr_height.to_be_bytes(),
-            self.commitment.as_bytes(),
-            chain_id.as_bytes(),
-            contract_addr.as_bytes(),
-        ]))
+        Ok(Self::generate_hash(
+            &self.dr_id,
+            &self.commitment,
+            chain_id,
+            contract_addr,
+            dr_height,
+        ))
+    }
+}
+
+pub struct ExectueFactory {
+    dr_id:      String,
+    commitment: String,
+    public_key: String,
+    hash:       Hash,
+}
+
+impl ExectueFactory {
+    pub fn get_hash(&self) -> &[u8] {
+        &self.hash
+    }
+
+    pub fn create_message(self, proof: Vec<u8>) -> Execute {
+        Execute {
+            dr_id:      self.dr_id,
+            commitment: self.commitment,
+            public_key: self.public_key,
+            proof:      proof.to_hex(),
+        }
     }
 }
 
 impl Execute {
-    pub fn new(
+    pub fn factory(
         dr_id: String,
         commitment: String,
         public_key: String,
-        signing_key: &[u8],
         chain_id: &str,
         contract_addr: &str,
         dr_height: u64,
-    ) -> Result<Self> {
-        let mut ex = Self {
+    ) -> ExectueFactory {
+        let hash = Self::generate_hash(&dr_id, &commitment, chain_id, contract_addr, dr_height);
+        ExectueFactory {
             dr_id,
             commitment,
             public_key,
-            proof: Default::default(),
-        };
-        ex.proof = ex.sign(signing_key, chain_id, contract_addr, dr_height)?.to_hex();
-
-        Ok(ex)
+            hash,
+        }
     }
 
     pub fn verify(&self, public_key: &[u8], chain_id: &str, contract_addr: &str, dr_height: u64) -> Result<()> {

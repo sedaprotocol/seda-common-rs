@@ -10,7 +10,19 @@ pub struct Execute {
     pub amount:     U128,
 }
 
-impl SignSelf for Execute {
+impl Execute {
+    fn generate_hash(amount: U128, chain_id: &str, contract_addr: &str, sequence: u128) -> Hash {
+        hash([
+            "withdraw".as_bytes(),
+            &amount.to_be_bytes(),
+            chain_id.as_bytes(),
+            contract_addr.as_bytes(),
+            &sequence.to_be_bytes(),
+        ])
+    }
+}
+
+impl VerifySelf for Execute {
     type Extra = u128;
 
     fn proof(&self) -> Result<Vec<u8>> {
@@ -28,23 +40,40 @@ impl SignSelf for Execute {
     }
 }
 
+pub struct ExectueFactory {
+    public_key: String,
+    amount:     U128,
+    hash:       Hash,
+}
+
+impl ExectueFactory {
+    pub fn get_hash(&self) -> &[u8] {
+        &self.hash
+    }
+
+    pub fn create_message(self, proof: Vec<u8>) -> Execute {
+        Execute {
+            public_key: self.public_key,
+            proof:      proof.to_hex(),
+            amount:     self.amount,
+        }
+    }
+}
+
 impl Execute {
-    pub fn new(
+    pub fn factory(
         public_key: String,
         amount: U128,
-        signing_key: &[u8],
         chain_id: &str,
         contract_addr: &str,
         sequence: u128,
-    ) -> Result<Self> {
-        let mut ex = Self {
+    ) -> ExectueFactory {
+        let hash = Self::generate_hash(amount, chain_id, contract_addr, sequence);
+        ExectueFactory {
             public_key,
             amount,
-            proof: Default::default(),
-        };
-        ex.proof = ex.sign(signing_key, chain_id, contract_addr, sequence)?.to_hex();
-
-        Ok(ex)
+            hash,
+        }
     }
 
     pub fn verify(&self, public_key: &[u8], chain_id: &str, contract_addr: &str, sequence: u128) -> Result<()> {

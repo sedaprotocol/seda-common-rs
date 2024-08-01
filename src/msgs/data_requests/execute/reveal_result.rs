@@ -12,7 +12,20 @@ pub struct Execute {
     pub stdout:      Vec<String>,
 }
 
-impl SignSelf for Execute {
+impl Execute {
+    fn generate_hash(dr_id: &str, chain_id: &str, contract_addr: &str, dr_height: u64, reveal_body_hash: Hash) -> Hash {
+        hash([
+            "reveal_data_result".as_bytes(),
+            dr_id.as_bytes(),
+            &dr_height.to_be_bytes(),
+            &reveal_body_hash,
+            chain_id.as_bytes(),
+            contract_addr.as_bytes(),
+        ])
+    }
+}
+
+impl VerifySelf for Execute {
     type Extra = (u64, Hash);
 
     fn proof(&self) -> Result<Vec<u8>> {
@@ -25,44 +38,65 @@ impl SignSelf for Execute {
         contract_addr: &str,
         (dr_height, reveal_body_hash): Self::Extra,
     ) -> Result<Hash> {
-        Ok(hash([
-            "reveal_data_result".as_bytes(),
-            self.dr_id.as_bytes(),
-            &dr_height.to_be_bytes(),
-            &reveal_body_hash,
-            chain_id.as_bytes(),
-            contract_addr.as_bytes(),
-        ]))
+        Ok(Self::generate_hash(
+            &self.dr_id,
+            chain_id,
+            contract_addr,
+            dr_height,
+            reveal_body_hash,
+        ))
+    }
+}
+
+pub struct ExectueFactory {
+    dr_id:       String,
+    reveal_body: RevealBody,
+    public_key:  String,
+    stderr:      Vec<String>,
+    stdout:      Vec<String>,
+    hash:        Hash,
+}
+
+impl ExectueFactory {
+    pub fn get_hash(&self) -> &[u8] {
+        &self.hash
+    }
+
+    pub fn create_message(self, proof: Vec<u8>) -> Execute {
+        Execute {
+            dr_id:       self.dr_id,
+            reveal_body: self.reveal_body,
+            public_key:  self.public_key,
+            proof:       proof.to_hex(),
+            stderr:      self.stderr,
+            stdout:      self.stdout,
+        }
     }
 }
 
 impl Execute {
     #[allow(clippy::too_many_arguments)]
-    pub fn new(
+    pub fn factory(
         dr_id: String,
         reveal_body: RevealBody,
         public_key: String,
         stderr: Vec<String>,
         stdout: Vec<String>,
-        signing_key: &[u8],
         chain_id: &str,
         contract_addr: &str,
         dr_height: u64,
         reveal_body_hash: Hash,
-    ) -> Result<Self> {
-        let mut ex = Self {
+    ) -> ExectueFactory {
+        let hash = Self::generate_hash(&dr_id, chain_id, contract_addr, dr_height, reveal_body_hash);
+
+        ExectueFactory {
             dr_id,
             reveal_body,
             public_key,
             stderr,
             stdout,
-            proof: Default::default(),
-        };
-        ex.proof = ex
-            .sign(signing_key, chain_id, contract_addr, (dr_height, reveal_body_hash))?
-            .to_hex();
-
-        Ok(ex)
+            hash,
+        }
     }
 
     pub fn verify(
