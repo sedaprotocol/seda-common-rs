@@ -9,7 +9,6 @@ pub use hash_self::{HashSelf, TryHashSelf};
 
 mod verify_self;
 pub(crate) use verify_self::VerifySelf;
-use vrf_rs::Secp256k1Sha256;
 
 #[cfg(feature = "cosmwasm")]
 pub(crate) type U128 = cosmwasm_std::Uint128;
@@ -30,7 +29,3 @@ pub(crate) type Bytes = cosmwasm_std::Binary;
 pub(crate) type Bytes = String;
 
 pub type Hash = [u8; 32];
-
-lazy_static::lazy_static! {
-    pub static ref VRF: Secp256k1Sha256 = Secp256k1Sha256::default();
-}
