@@ -41,14 +41,14 @@ impl VerifySelf for Execute {
     }
 }
 
-pub struct ExectueFactory {
+pub struct ExecuteFactory {
     dr_id:      String,
     commitment: String,
     public_key: String,
     hash:       Hash,
 }
 
-impl ExectueFactory {
+impl ExecuteFactory {
     pub fn get_hash(&self) -> &[u8] {
         &self.hash
     }
@@ -71,9 +71,9 @@ impl Execute {
         chain_id: &str,
         contract_addr: &str,
         dr_height: u64,
-    ) -> ExectueFactory {
+    ) -> ExecuteFactory {
         let hash = Self::generate_hash(&dr_id, &commitment, chain_id, contract_addr, dr_height);
-        ExectueFactory {
+        ExecuteFactory {
             dr_id,
             commitment,
             public_key,
