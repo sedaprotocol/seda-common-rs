@@ -49,11 +49,13 @@ fn json_get_staker_and_seq() {
 fn json_is_executor_eligible() {
     let expected_json = json!({
     "is_executor_eligible": {
-      "public_key": "public_key"
+      "proof": "public_key",
+      "dr_id": "dr_id"
     }
     });
     let msg: QueryMsg = StakingQueryMsg::IsExecutorEligible {
-        public_key: "public_key".to_string(),
+        proof: "public_key".to_string(),
+        dr_id: "dr_id".to_string(),
     }
     .into();
     assert_json_ok(msg, expected_json);

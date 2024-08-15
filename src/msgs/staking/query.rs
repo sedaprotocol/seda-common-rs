@@ -12,7 +12,7 @@ pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm", returns(StakerAndSeq))]
     GetStakerAndSeq { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(bool))]
-    IsExecutorEligible { public_key: String },
+    IsExecutorEligible { proof: String, dr_id: String },
     #[cfg_attr(feature = "cosmwasm", returns(StakingConfig))]
     GetStakingConfig {},
 }
