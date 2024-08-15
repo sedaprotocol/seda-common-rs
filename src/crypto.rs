@@ -8,10 +8,10 @@ lazy_static::lazy_static! {
 }
 
 pub fn verify_proof(public_key: &[u8], proof: &[u8], hash: Hash) -> Result<()> {
-    let verifed = VRF.verify(public_key, proof, &hash);
+    let verified = VRF.verify(public_key, proof, &hash);
 
     // If we don't get an error it's always ok
-    verifed?;
+    verified?;
 
     Ok(())
 }
