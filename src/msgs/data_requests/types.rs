@@ -194,10 +194,11 @@ impl TryHashSelf for DataResult {
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct RevealBody {
-    pub salt:      String,
-    pub exit_code: u8,
-    pub gas_used:  U128,
-    pub reveal:    Bytes,
+    pub salt:              String,
+    pub exit_code:         u8,
+    pub gas_used:          U128,
+    pub reveal:            Bytes,
+    pub proxy_public_keys: Vec<String>,
 }
 
 impl TryHashSelf for RevealBody {
@@ -217,6 +218,8 @@ impl TryHashSelf for RevealBody {
         #[cfg(not(feature = "cosmwasm"))]
         hasher.update(self.gas_used.to_be_bytes());
         hasher.update(reveal_hash);
+        let proxy_public_keys: &[String] = &self.proxy_public_keys;
+        hasher.update(proxy_public_keys.hash());
 
         Ok(hasher.finalize().into())
     }

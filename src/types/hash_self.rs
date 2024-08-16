@@ -38,6 +38,19 @@ impl HashSelf for Vec<u8> {
     }
 }
 
+impl<'a, T> HashSelf for &'a [T]
+where
+    T: HashSelf,
+{
+    fn hash(&self) -> Hash {
+        let mut hasher = Keccak256::new();
+        for item in *self {
+            hasher.update(item.hash());
+        }
+        hasher.finalize().into()
+    }
+}
+
 impl<const N: usize> HashSelf for [u8; N] {
     fn hash(&self) -> Hash {
         let mut hasher = Keccak256::new();
