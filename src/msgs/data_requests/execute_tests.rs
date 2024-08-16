@@ -18,11 +18,10 @@ fn json_commit_result() {
       }
     });
     let msg: ExecuteMsg = commit_result::Execute {
-        dr_id:             "dr_id".to_string(),
-        commitment:        "commitment".to_string(),
-        proxy_public_keys: vec!["proxy_public_key".to_string()],
-        public_key:        "public_key".to_string(),
-        proof:             "proof".to_string(),
+        dr_id:      "dr_id".to_string(),
+        commitment: "commitment".to_string(),
+        public_key: "public_key".to_string(),
+        proof:      "proof".to_string(),
     }
     .into();
     #[cfg(not(feature = "cosmwasm"))]
