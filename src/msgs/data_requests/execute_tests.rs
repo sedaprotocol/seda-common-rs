@@ -12,7 +12,6 @@ fn json_commit_result() {
       "commit_data_result": {
         "dr_id": "dr_id",
         "commitment": "commitment",
-        "proxy_public_keys": ["proxy_public_key"],
         "public_key": "public_key",
         "proof": "proof"
       }
