@@ -12,15 +12,17 @@ fn json_commit_result() {
       "commit_data_result": {
         "dr_id": "dr_id",
         "commitment": "commitment",
+        "proxy_public_keys": ["proxy_public_key"],
         "public_key": "public_key",
         "proof": "proof"
       }
     });
     let msg: ExecuteMsg = commit_result::Execute {
-        dr_id:      "dr_id".to_string(),
-        commitment: "commitment".to_string(),
-        public_key: "public_key".to_string(),
-        proof:      "proof".to_string(),
+        dr_id:             "dr_id".to_string(),
+        commitment:        "commitment".to_string(),
+        proxy_public_keys: vec!["proxy_public_key".to_string()],
+        public_key:        "public_key".to_string(),
+        proof:             "proof".to_string(),
     }
     .into();
     #[cfg(not(feature = "cosmwasm"))]
@@ -121,6 +123,7 @@ fn json_reveal_result() {
         exit_code: 0,
         gas_used,
         reveal: reveal.clone(),
+        proxy_public_keys: vec!["proxy_public_key".to_string()],
     };
     let expected_json = json!({
       "reveal_data_result": {
@@ -130,6 +133,7 @@ fn json_reveal_result() {
           "exit_code": 0,
           "gas_used": gas_used.to_string(),
           "reveal": reveal,
+          "proxy_public_keys": ["proxy_public_key"]
         },
         "public_key": "public_key",
         "proof": "proof",
