@@ -12,4 +12,5 @@ mod test {
     use super::*;
     mod execute_tests;
     mod query_tests;
+    mod types_tests;
 }
