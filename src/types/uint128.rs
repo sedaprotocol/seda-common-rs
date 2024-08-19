@@ -1,4 +1,4 @@
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Uint128(pub u128);
 
 impl Uint128 {
@@ -7,9 +7,23 @@ impl Uint128 {
     }
 }
 
+impl std::ops::Deref for Uint128 {
+    type Target = u128;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
 impl core::fmt::Display for Uint128 {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         write!(f, "{}", self.0)
+    }
+}
+
+impl PartialEq<u128> for Uint128 {
+    fn eq(&self, other: &u128) -> bool {
+        self.0 == *other
     }
 }
 

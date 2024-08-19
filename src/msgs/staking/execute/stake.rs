@@ -10,7 +10,7 @@ pub struct Execute {
 }
 
 impl Execute {
-    fn generate_hash(memo: Option<&Bytes>, chain_id: &str, contract_addr: &str, sequence: u128) -> Hash {
+    fn generate_hash(memo: Option<&Bytes>, chain_id: &str, contract_addr: &str, sequence: U128) -> Hash {
         hash([
             "stake".as_bytes(),
             &memo.hash(),
@@ -22,7 +22,7 @@ impl Execute {
 }
 
 impl VerifySelf for Execute {
-    type Extra = u128;
+    type Extra = U128;
 
     fn proof(&self) -> Result<Vec<u8>> {
         Ok(hex::decode(&self.proof)?)
@@ -49,12 +49,13 @@ impl ExecuteFactory {
         &self.hash
     }
 
-    pub fn create_message(self, proof: Vec<u8>) -> Execute {
+    pub fn create_message(self, proof: Vec<u8>) -> crate::msgs::ExecuteMsg {
         Execute {
             public_key: self.public_key,
             proof:      proof.to_hex(),
             memo:       self.memo,
         }
+        .into()
     }
 }
 
@@ -64,13 +65,13 @@ impl Execute {
         memo: Option<Bytes>,
         chain_id: &str,
         contract_addr: &str,
-        sequence: u128,
+        sequence: U128,
     ) -> ExecuteFactory {
         let hash = Self::generate_hash(memo.as_ref(), chain_id, contract_addr, sequence);
         ExecuteFactory { public_key, memo, hash }
     }
 
-    pub fn verify(&self, public_key: &[u8], chain_id: &str, contract_addr: &str, sequence: u128) -> Result<()> {
+    pub fn verify(&self, public_key: &[u8], chain_id: &str, contract_addr: &str, sequence: U128) -> Result<()> {
         self.verify_inner(public_key, chain_id, contract_addr, sequence)
     }
 }

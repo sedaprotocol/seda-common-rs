@@ -53,13 +53,14 @@ impl ExecuteFactory {
         &self.hash
     }
 
-    pub fn create_message(self, proof: Vec<u8>) -> Execute {
+    pub fn create_message(self, proof: Vec<u8>) -> crate::msgs::ExecuteMsg {
         Execute {
             dr_id:      self.dr_id,
             commitment: self.commitment,
             public_key: self.public_key,
             proof:      proof.to_hex(),
         }
+        .into()
     }
 }
 

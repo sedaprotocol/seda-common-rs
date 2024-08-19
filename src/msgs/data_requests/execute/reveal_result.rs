@@ -62,7 +62,7 @@ impl ExecuteFactory {
         &self.hash
     }
 
-    pub fn create_message(self, proof: Vec<u8>) -> Execute {
+    pub fn create_message(self, proof: Vec<u8>) -> crate::msgs::ExecuteMsg {
         Execute {
             dr_id:       self.dr_id,
             reveal_body: self.reveal_body,
@@ -71,6 +71,7 @@ impl ExecuteFactory {
             stderr:      self.stderr,
             stdout:      self.stdout,
         }
+        .into()
     }
 }
 
