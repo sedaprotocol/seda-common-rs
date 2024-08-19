@@ -12,7 +12,7 @@ pub mod staking;
 #[cfg(test)]
 mod assert_json;
 #[cfg(test)]
-pub use assert_json::assert_json_ok;
+pub use assert_json::*;
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]

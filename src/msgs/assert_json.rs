@@ -2,8 +2,7 @@
 //! if cosmwasm feature is enabled, also assert that we can deserialize the json back to the msg
 
 #[track_caller]
-#[cfg(not(feature = "cosmwasm"))]
-pub fn assert_json_ok<M>(msg: M, expected_json: serde_json::Value)
+pub fn assert_json_ser<M>(msg: M, expected_json: serde_json::Value)
 where
     M: serde::Serialize + std::fmt::Debug + PartialEq,
 {
@@ -12,8 +11,7 @@ where
 }
 
 #[track_caller]
-#[cfg(feature = "cosmwasm")]
-pub fn assert_json_ok<M>(msg: M, expected_json: serde_json::Value)
+pub fn assert_json_deser<M>(msg: M, expected_json: serde_json::Value)
 where
     M: serde::Serialize + std::fmt::Debug + PartialEq + serde::de::DeserializeOwned,
 {

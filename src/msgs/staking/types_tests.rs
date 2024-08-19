@@ -1,7 +1,7 @@
 use serde_json::json;
 
 use super::{Staker, StakingConfig};
-use crate::msgs::assert_json_ok;
+use crate::msgs::*;
 
 #[test]
 fn json_staker() {
@@ -16,7 +16,7 @@ fn json_staker() {
         tokens_pending_withdrawal: 0u128.into(),
     };
 
-    assert_json_ok(staker_with_no_memo, serialized_with_no_memo);
+    assert_json_deser(staker_with_no_memo, serialized_with_no_memo);
 
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -34,23 +34,23 @@ fn json_staker() {
         tokens_pending_withdrawal: 0u128.into(),
     };
 
-    assert_json_ok(staker_with_memo, serialized_with_memo);
+    assert_json_deser(staker_with_memo, serialized_with_memo);
 }
 
 #[test]
 fn json_staking_config() {
-    let serialized = json!({
+    let expected_json = json!({
       "minimum_stake_to_register": "100",
       "minimum_stake_for_committee_eligibility": "100",
       "allowlist_enabled": true,
     });
-    let config = StakingConfig {
+    let msg = StakingConfig {
         minimum_stake_to_register:               100u128.into(),
         minimum_stake_for_committee_eligibility: 100u128.into(),
         allowlist_enabled:                       true,
     };
 
-    assert_json_ok(config, serialized);
+    assert_json_deser(msg, expected_json);
 }
 
 #[test]
@@ -64,7 +64,7 @@ fn json_staker_and_seq() {
         seq:    100u128.into(),
     };
 
-    assert_json_ok(staker_and_seq_with_no_staker, serialized_with_no_staker);
+    assert_json_deser(staker_and_seq_with_no_staker, serialized_with_no_staker);
 
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -88,5 +88,5 @@ fn json_staker_and_seq() {
         seq:    100u128.into(),
     };
 
-    assert_json_ok(staker_and_seq_with_staker, serialized_with_staker);
+    assert_json_deser(staker_and_seq_with_staker, serialized_with_staker);
 }

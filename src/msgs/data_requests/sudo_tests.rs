@@ -4,7 +4,7 @@ use serde_json::json;
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
 use super::{sudo::*, DataResult, SudoMsg};
-use crate::msgs::assert_json_ok;
+use crate::msgs::*;
 
 #[test]
 fn json_post_result() {
@@ -58,5 +58,8 @@ fn json_post_result() {
         exit_code: 0,
     }
     .into();
-    assert_json_ok(msg, expected_json);
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }

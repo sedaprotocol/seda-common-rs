@@ -4,7 +4,7 @@ use serde_json::json;
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
 use super::{execute::*, ExecuteMsg, PostDataRequestArgs, RevealBody};
-use crate::msgs::assert_json_ok;
+use crate::msgs::*;
 
 #[test]
 fn json_commit_result() {
@@ -23,7 +23,10 @@ fn json_commit_result() {
         proof:      "proof".to_string(),
     }
     .into();
-    assert_json_ok(msg, expected_json);
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }
 
 #[test]
@@ -98,7 +101,10 @@ fn json_post_request() {
         payback_address,
     }
     .into();
-    assert_json_ok(msg, expected_json);
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }
 
 #[test]
@@ -140,5 +146,8 @@ fn json_reveal_result() {
         stdout: vec!["some-output".to_string()],
     }
     .into();
-    assert_json_ok(msg, expected_json);
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }

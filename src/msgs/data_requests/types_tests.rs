@@ -5,7 +5,7 @@ use serde_json::json;
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
 use super::{DataRequest, DataResult, HashSelf, PostDataRequestArgs, RevealBody, U128};
-use crate::msgs::assert_json_ok;
+use crate::msgs::*;
 
 #[test]
 fn json_data_request() {
@@ -44,7 +44,7 @@ fn json_data_request() {
     let reveals = HashMap::new();
     let height = 1;
 
-    let serialized = json!({
+    let expected_json = json!({
       "id": id,
       "version": version,
       "dr_binary_id": dr_binary_id,
@@ -63,7 +63,7 @@ fn json_data_request() {
       "height": height,
     });
 
-    let data_request = DataRequest {
+    let msg = DataRequest {
         id,
         version: version.parse().unwrap(),
         dr_binary_id,
@@ -82,7 +82,10 @@ fn json_data_request() {
         height,
     };
 
-    assert_json_ok(data_request, serialized);
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }
 
 #[test]
@@ -106,7 +109,7 @@ fn json_data_result() {
     #[cfg(feature = "cosmwasm")]
     let seda_payload: Bytes = "seda_payload".as_bytes().into();
 
-    let serialized = json!({
+    let expected_json = json!({
       "version": version,
       "dr_id": dr_id,
       "consensus": consensus,
@@ -117,7 +120,7 @@ fn json_data_result() {
       "payback_address": payback_address,
       "seda_payload": seda_payload,
     });
-    let result = DataResult {
+    let msg = DataResult {
         version: version.parse().unwrap(),
         dr_id,
         consensus,
@@ -129,7 +132,10 @@ fn json_data_result() {
         seda_payload,
     };
 
-    assert_json_ok(result, serialized);
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }
 
 #[test]
@@ -142,21 +148,24 @@ fn json_reveal_body() {
     #[cfg(feature = "cosmwasm")]
     let reveal: Bytes = "reveal".as_bytes().into();
 
-    let serialized = json!({
+    let expected_json = json!({
       "salt": salt,
       "exit_code": exit_code,
       "gas_used": gas_used,
       "reveal": reveal,
     });
 
-    let reveal_body = RevealBody {
+    let msg = RevealBody {
         salt,
         exit_code,
         gas_used,
         reveal,
     };
 
-    assert_json_ok(reveal_body, serialized);
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }
 
 // pub struct PostDataRequestArgs {
@@ -197,7 +206,7 @@ fn json_post_data_request_args() {
     #[cfg(feature = "cosmwasm")]
     let memo: Bytes = "memo".as_bytes().into();
 
-    let serialized = json!({
+    let expected_json = json!({
         "version": version,
         "dr_binary_id": dr_binary_id,
         "dr_inputs": dr_inputs,
@@ -210,7 +219,7 @@ fn json_post_data_request_args() {
         "memo": memo,
     });
 
-    let args = PostDataRequestArgs {
+    let msg = PostDataRequestArgs {
         version: version.parse().unwrap(),
         dr_binary_id,
         dr_inputs,
@@ -223,5 +232,5 @@ fn json_post_data_request_args() {
         memo,
     };
 
-    assert_json_ok(args, serialized);
+    assert_json_ser(msg, expected_json);
 }
