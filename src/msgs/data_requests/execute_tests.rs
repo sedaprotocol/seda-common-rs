@@ -1,9 +1,9 @@
 use semver::Version;
 use serde_json::json;
 
-use super::{execute::*, ExecuteMsg, PostDataRequestArgs, RevealBody};
 #[cfg(feature = "cosmwasm")]
-use super::{Bytes, U128};
+use super::Bytes;
+use super::{execute::*, ExecuteMsg, PostDataRequestArgs, RevealBody};
 use crate::msgs::assert_json_ok;
 
 #[test]
@@ -43,15 +43,9 @@ fn json_post_request() {
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
 
-    #[cfg(not(feature = "cosmwasm"))]
     let gas_price = 100u128.into();
-    #[cfg(feature = "cosmwasm")]
-    let gas_price: U128 = 100u128.into();
 
-    #[cfg(not(feature = "cosmwasm"))]
     let gas_limit = 100u128.into();
-    #[cfg(feature = "cosmwasm")]
-    let gas_limit: U128 = 100u128.into();
 
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -109,10 +103,7 @@ fn json_post_request() {
 
 #[test]
 fn json_reveal_result() {
-    #[cfg(not(feature = "cosmwasm"))]
     let gas_used = 100u128.into();
-    #[cfg(feature = "cosmwasm")]
-    let gas_used: U128 = 100u128.into();
 
     #[cfg(not(feature = "cosmwasm"))]
     let reveal = "reveal".to_string();

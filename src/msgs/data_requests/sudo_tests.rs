@@ -1,9 +1,9 @@
 use semver::Version;
 use serde_json::json;
 
-use super::{sudo::*, DataResult, SudoMsg};
 #[cfg(feature = "cosmwasm")]
-use super::{Bytes, U128};
+use super::Bytes;
+use super::{sudo::*, DataResult, SudoMsg};
 use crate::msgs::assert_json_ok;
 
 #[test]
@@ -13,10 +13,7 @@ fn json_post_result() {
     #[cfg(feature = "cosmwasm")]
     let result_bytes: Bytes = "result".as_bytes().into();
 
-    #[cfg(not(feature = "cosmwasm"))]
     let gas_used = 100u128.into();
-    #[cfg(feature = "cosmwasm")]
-    let gas_used: U128 = 100u128.into();
 
     #[cfg(not(feature = "cosmwasm"))]
     let seda_payload = "seda_payload".to_string();

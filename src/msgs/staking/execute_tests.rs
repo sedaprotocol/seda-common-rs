@@ -43,9 +43,6 @@ fn json_stake() {
 
 #[test]
 fn json_unstake() {
-    #[cfg(not(feature = "cosmwasm"))]
-    let amount: U128 = 0u128.into();
-    #[cfg(feature = "cosmwasm")]
     let amount: U128 = 0u128.into();
     let serialized = json!({
       "unstake": {
@@ -65,9 +62,6 @@ fn json_unstake() {
 
 #[test]
 fn json_withdraw() {
-    #[cfg(not(feature = "cosmwasm"))]
-    let amount: U128 = 0u128.into();
-    #[cfg(feature = "cosmwasm")]
     let amount: U128 = 0u128.into();
     let serialized = json!({
       "withdraw": {
