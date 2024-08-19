@@ -6,7 +6,6 @@ use super::*;
 pub struct Execute {
     pub public_key: String,
     pub proof:      String,
-    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub amount:     U128,
 }
 

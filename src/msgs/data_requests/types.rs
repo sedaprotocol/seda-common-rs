@@ -129,7 +129,6 @@ pub struct DataResult {
     /// Block Height at which data request was finalized
     pub block_height: u64,
     /// Gas used by the complete data request execution
-    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_used:     U128,
 
     // Fields from Data Request Execution
@@ -197,7 +196,6 @@ impl TryHashSelf for DataResult {
 pub struct RevealBody {
     pub salt:      String,
     pub exit_code: u8,
-    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_used:  U128,
     pub reveal:    Bytes,
 }
@@ -235,9 +233,7 @@ pub struct PostDataRequestArgs {
     pub tally_inputs:       Bytes,
     pub replication_factor: u16,
     pub consensus_filter:   Bytes,
-    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_price:          U128,
-    #[cfg_attr(not(feature = "cosmwasm"), serde(serialize_with = "crate::types::serialize_as_str"))]
     pub gas_limit:          U128,
     pub memo:               Bytes,
 }

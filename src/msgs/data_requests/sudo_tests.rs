@@ -14,7 +14,7 @@ fn json_post_result() {
     let result_bytes: Bytes = "result".as_bytes().into();
 
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_used = 100;
+    let gas_used = 100u128.into();
     #[cfg(feature = "cosmwasm")]
     let gas_used: U128 = 100u128.into();
 

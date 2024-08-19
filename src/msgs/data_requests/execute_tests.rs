@@ -44,12 +44,12 @@ fn json_post_request() {
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
 
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_price = 100;
+    let gas_price = 100u128.into();
     #[cfg(feature = "cosmwasm")]
     let gas_price: U128 = 100u128.into();
 
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_limit = 100;
+    let gas_limit = 100u128.into();
     #[cfg(feature = "cosmwasm")]
     let gas_limit: U128 = 100u128.into();
 
@@ -110,7 +110,7 @@ fn json_post_request() {
 #[test]
 fn json_reveal_result() {
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_used = 100;
+    let gas_used = 100u128.into();
     #[cfg(feature = "cosmwasm")]
     let gas_used: U128 = 100u128.into();
 
