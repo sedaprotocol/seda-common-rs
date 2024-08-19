@@ -12,8 +12,10 @@ pub(crate) use verify_self::VerifySelf;
 
 #[cfg(feature = "cosmwasm")]
 pub(crate) type U128 = cosmwasm_std::Uint128;
+
+// Is required to be a String, JSON does not support u128 numbers
 #[cfg(not(feature = "cosmwasm"))]
-pub(crate) type U128 = u128;
+pub(crate) type U128 = String;
 
 pub fn serialize_as_str<S, V>(value: V, serializer: S) -> Result<S::Ok, S::Error>
 where

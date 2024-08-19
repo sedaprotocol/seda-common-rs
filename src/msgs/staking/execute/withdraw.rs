@@ -14,7 +14,13 @@ impl Execute {
     fn generate_hash(amount: U128, chain_id: &str, contract_addr: &str, sequence: u128) -> Hash {
         hash([
             "withdraw".as_bytes(),
+            #[cfg(feature = "cosmwasm")]
             &amount.to_be_bytes(),
+            #[cfg(not(feature = "cosmwasm"))]
+            &amount
+                .parse::<u128>()
+                .expect("`amount` should be parseable to u128")
+                .to_be_bytes(),
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
             &sequence.to_be_bytes(),
@@ -32,7 +38,14 @@ impl VerifySelf for Execute {
     fn msg_hash(&self, chain_id: &str, contract_addr: &str, sequence: Self::Extra) -> Result<Hash> {
         Ok(hash([
             "withdraw".as_bytes(),
+            #[cfg(feature = "cosmwasm")]
             &self.amount.to_be_bytes(),
+            #[cfg(not(feature = "cosmwasm"))]
+            &self
+                .amount
+                .parse::<u128>()
+                .expect("`amount` should be parseable to u128")
+                .to_be_bytes(),
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
             &sequence.to_be_bytes(),
@@ -68,7 +81,7 @@ impl Execute {
         contract_addr: &str,
         sequence: u128,
     ) -> ExecuteFactory {
-        let hash = Self::generate_hash(amount, chain_id, contract_addr, sequence);
+        let hash = Self::generate_hash(amount.clone(), chain_id, contract_addr, sequence);
         ExecuteFactory {
             public_key,
             amount,

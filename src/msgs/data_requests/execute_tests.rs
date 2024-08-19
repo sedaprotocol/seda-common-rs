@@ -44,12 +44,12 @@ fn json_post_request() {
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
 
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_price = 100;
+    let gas_price = "100".to_string();
     #[cfg(feature = "cosmwasm")]
     let gas_price: U128 = 100u128.into();
 
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_limit = 100;
+    let gas_limit = "100".to_string();
     #[cfg(feature = "cosmwasm")]
     let gas_limit: U128 = 100u128.into();
 
@@ -69,16 +69,16 @@ fn json_post_request() {
     let payback_address: Bytes = "payback_address".as_bytes().into();
 
     let args = PostDataRequestArgs {
-        version: Version::new(1, 0, 0),
-        dr_binary_id: "dr_binary_id".to_string(),
-        dr_inputs: dr_inputs.clone(),
-        tally_binary_id: "tally_binary_id".to_string(),
-        tally_inputs: tally_inputs.clone(),
+        version:            Version::new(1, 0, 0),
+        dr_binary_id:       "dr_binary_id".to_string(),
+        dr_inputs:          dr_inputs.clone(),
+        tally_binary_id:    "tally_binary_id".to_string(),
+        tally_inputs:       tally_inputs.clone(),
         replication_factor: 1,
-        consensus_filter: consensus_filter.clone(),
-        gas_price,
-        gas_limit,
-        memo: memo.clone(),
+        consensus_filter:   consensus_filter.clone(),
+        gas_price:          gas_price.clone(),
+        gas_limit:          gas_limit.clone(),
+        memo:               memo.clone(),
     };
     let expected_json = json!({
       "post_data_request": {
@@ -110,7 +110,7 @@ fn json_post_request() {
 #[test]
 fn json_reveal_result() {
     #[cfg(not(feature = "cosmwasm"))]
-    let gas_used = 100;
+    let gas_used = "100".to_string();
     #[cfg(feature = "cosmwasm")]
     let gas_used: U128 = 100u128.into();
 
@@ -120,10 +120,10 @@ fn json_reveal_result() {
     let reveal: Bytes = "reveal".as_bytes().into();
 
     let reveal_body = RevealBody {
-        salt: "salt".to_string(),
+        salt:      "salt".to_string(),
         exit_code: 0,
-        gas_used,
-        reveal: reveal.clone(),
+        gas_used:  gas_used.clone(),
+        reveal:    reveal.clone(),
     };
     let expected_json = json!({
       "reveal_data_result": {
