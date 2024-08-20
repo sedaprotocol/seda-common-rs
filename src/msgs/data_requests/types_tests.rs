@@ -147,12 +147,14 @@ fn json_reveal_body() {
     let reveal = "reveal".to_string();
     #[cfg(feature = "cosmwasm")]
     let reveal: Bytes = "reveal".as_bytes().into();
+    let proxy_public_keys = vec!["key1".to_string(), "key2".to_string()];
 
     let expected_json = json!({
       "salt": salt,
       "exit_code": exit_code,
       "gas_used": gas_used,
       "reveal": reveal,
+      "proxy_public_keys": proxy_public_keys,
     });
 
     let msg = RevealBody {
@@ -160,6 +162,7 @@ fn json_reveal_body() {
         exit_code,
         gas_used,
         reveal,
+        proxy_public_keys,
     };
 
     #[cfg(not(feature = "cosmwasm"))]
