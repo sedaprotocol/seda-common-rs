@@ -1,5 +1,7 @@
 use super::*;
 
+pub mod is_executor_eligible;
+
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
 #[cfg_attr(feature = "cosmwasm", derive(QueryResponses))]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
@@ -12,7 +14,9 @@ pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm", returns(StakerAndSeq))]
     GetStakerAndSeq { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(bool))]
-    IsExecutorEligible { proof: String, dr_id: String },
+    IsExecutorCommitteeEligible { public_key: String },
+    #[cfg_attr(feature = "cosmwasm", returns(bool))]
+    IsExecutorEligible(is_executor_eligible::Query),
     #[cfg_attr(feature = "cosmwasm", returns(StakingConfig))]
     GetStakingConfig {},
 }
