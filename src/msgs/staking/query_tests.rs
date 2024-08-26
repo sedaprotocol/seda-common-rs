@@ -62,6 +62,23 @@ fn json_get_staker_and_seq() {
 }
 
 #[test]
+fn json_is_executor_committee_eligible() {
+    let expected_json = json!({
+    "is_executor_committee_eligible": {
+      "public_key": "public_key",
+    }
+    });
+    let msg: QueryMsg = StakingQueryMsg::IsExecutorCommitteeEligible {
+        public_key: "public_key".to_string(),
+    }
+    .into();
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
+}
+
+#[test]
 fn json_is_executor_eligible() {
     #[cfg(not(feature = "cosmwasm"))]
     let data = "data".to_string();
