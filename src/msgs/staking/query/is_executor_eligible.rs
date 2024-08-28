@@ -84,13 +84,17 @@ impl QueryFactory {
         Binary(data.as_bytes().to_vec())
     }
 
-    pub fn create_message(self, proof: Vec<u8>) -> crate::msgs::QueryMsg {
+    pub fn create_message(self, proof: Vec<u8>) -> (crate::msgs::QueryMsg, String) {
         let data = format!("{}:{}:{}", self.public_key, self.dr_id, proof.to_hex());
+        let base64_data = Self::encode_data(&data);
 
-        Query {
-            data: Self::encode_data(&data),
-        }
-        .into()
+        (
+            Query {
+                data: base64_data.clone(),
+            }
+            .into(),
+            base64_data,
+        )
     }
 }
 
