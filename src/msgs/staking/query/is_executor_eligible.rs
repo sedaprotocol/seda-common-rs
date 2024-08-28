@@ -61,9 +61,9 @@ impl VerifySelf for Query {
 }
 
 pub struct QueryFactory {
-    dr_id:      String,
-    public_key: String,
-    hash:       Hash,
+    pub(crate) dr_id:      String,
+    pub(crate) public_key: String,
+    pub(crate) hash:       Hash,
 }
 
 impl QueryFactory {
@@ -72,25 +72,16 @@ impl QueryFactory {
     }
 
     #[cfg(not(feature = "cosmwasm"))]
-    fn encode_data(data: &str) -> Bytes {
+    pub(crate) fn encode_data(data: &str) -> Bytes {
         use base64::{prelude::BASE64_STANDARD, Engine};
 
         BASE64_STANDARD.encode(data)
     }
 
     #[cfg(feature = "cosmwasm")]
-    fn encode_data(data: &str) -> Bytes {
+    pub(crate) fn encode_data(data: &str) -> Bytes {
         use cosmwasm_std::Binary;
         Binary(data.as_bytes().to_vec())
-    }
-
-    #[cfg(test)]
-    pub(crate) fn create_query(self, proof: Vec<u8>) -> Query {
-        let data = format!("{}:{}:{}", self.public_key, self.dr_id, proof.to_hex());
-
-        Query {
-            data: Self::encode_data(&data),
-        }
     }
 
     pub fn create_message(self, proof: Vec<u8>) -> crate::msgs::QueryMsg {

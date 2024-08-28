@@ -5,7 +5,10 @@ use k256::{
 use serde_json::json;
 
 use super::{
-    query::{is_executor_eligible, QueryMsg as StakingQueryMsg},
+    query::{
+        is_executor_eligible::{self, Query, QueryFactory},
+        QueryMsg as StakingQueryMsg,
+    },
     QueryMsg,
 };
 use crate::{crypto::VRF, msgs::*};
@@ -119,6 +122,16 @@ fn new_public_key() -> (SigningKey, [u8; 33]) {
 
 fn prove(signing_key: &[u8], hash: &[u8]) -> Vec<u8> {
     VRF.prove(signing_key, hash).unwrap()
+}
+
+impl QueryFactory {
+    fn create_query(self, proof: Vec<u8>) -> Query {
+        let data = format!("{}:{}:{}", self.public_key, self.dr_id, proof.to_hex());
+
+        Query {
+            data: Self::encode_data(&data),
+        }
+    }
 }
 
 #[test]
