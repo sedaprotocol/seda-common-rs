@@ -14,7 +14,7 @@ pub enum QueryMsg {
     #[cfg_attr(feature = "cosmwasm", returns(StakerAndSeq))]
     GetStakerAndSeq { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(bool))]
-    IsExecutorCommitteeEligible { public_key: String },
+    IsStakerExecutor { public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(bool))]
     IsExecutorEligible(is_executor_eligible::Query),
     #[cfg_attr(feature = "cosmwasm", returns(StakingConfig))]

@@ -65,13 +65,13 @@ fn json_get_staker_and_seq() {
 }
 
 #[test]
-fn json_is_executor_committee_eligible() {
+fn json_is_staker_executor() {
     let expected_json = json!({
-    "is_executor_committee_eligible": {
+    "is_staker_executor": {
       "public_key": "public_key",
     }
     });
-    let msg: QueryMsg = StakingQueryMsg::IsExecutorCommitteeEligible {
+    let msg: QueryMsg = StakingQueryMsg::IsStakerExecutor {
         public_key: "public_key".to_string(),
     }
     .into();
