@@ -151,6 +151,7 @@ fn json_reveal_body() {
     let proxy_public_keys = vec!["key1".to_string(), "key2".to_string()];
 
     let expected_json = json!({
+      "id": id,
       "salt": salt,
       "exit_code": exit_code,
       "gas_used": gas_used,

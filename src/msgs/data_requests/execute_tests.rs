@@ -128,6 +128,7 @@ fn json_reveal_result() {
       "reveal_data_result": {
         "dr_id": "dr_id",
         "reveal_body": {
+          "id": "dr_id",
           "salt": "salt",
           "exit_code": 0,
           "gas_used": gas_used.to_string(),
