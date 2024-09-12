@@ -117,6 +117,7 @@ fn json_reveal_result() {
     let reveal: Bytes = "reveal".as_bytes().into();
 
     let reveal_body = RevealBody {
+        id: "dr_id".to_string(),
         salt: "salt".to_string(),
         exit_code: 0,
         gas_used,

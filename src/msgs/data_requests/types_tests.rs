@@ -140,6 +140,7 @@ fn json_data_result() {
 
 #[test]
 fn json_reveal_body() {
+    let id = "id".to_string();
     let salt = "salt".to_string();
     let exit_code = 0;
     let gas_used: U128 = 1u128.into();
@@ -158,6 +159,7 @@ fn json_reveal_body() {
     });
 
     let msg = RevealBody {
+        id,
         salt,
         exit_code,
         gas_used,

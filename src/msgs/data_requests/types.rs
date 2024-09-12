@@ -194,6 +194,7 @@ impl TryHashSelf for DataResult {
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct RevealBody {
+    pub id:                String,
     pub salt:              String,
     pub exit_code:         u8,
     pub gas_used:          U128,
@@ -211,6 +212,7 @@ impl TryHashSelf for RevealBody {
         let reveal_hash = reveal_hasher.finalize();
 
         let mut hasher = Keccak256::new();
+        hasher.update(hex::decode(&self.id)?);
         hasher.update(&self.salt);
         hasher.update(self.exit_code.to_be_bytes());
         #[cfg(feature = "cosmwasm")]
