@@ -1,7 +1,5 @@
 use serde_json::json;
 
-#[cfg(feature = "cosmwasm")]
-use super::Bytes;
 use super::{sudo::*, SudoMsg};
 use crate::msgs::*;
 
