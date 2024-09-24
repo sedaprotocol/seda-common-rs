@@ -8,8 +8,6 @@ pub mod post_results;
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct PostResult {
     pub dr_id:     String,
-    pub result:    DataResult,
-    pub exit_code: u8,
 }
 
 impl From<PostResult> for crate::msgs::SudoMsg {
