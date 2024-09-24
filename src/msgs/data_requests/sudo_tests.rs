@@ -1,4 +1,3 @@
-use semver::Version;
 use serde_json::json;
 
 #[cfg(feature = "cosmwasm")]
