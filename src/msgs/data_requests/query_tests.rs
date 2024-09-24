@@ -93,23 +93,6 @@ fn json_get_data_request_reveals() {
 }
 
 #[test]
-fn json_get_data_result() {
-    let expected_json = json!({
-      "get_data_result": {
-        "dr_id": "dr_id",
-      }
-    });
-    let msg: QueryMsg = DrQueryMsg::GetDataResult {
-        dr_id: "dr_id".to_string(),
-    }
-    .into();
-    #[cfg(not(feature = "cosmwasm"))]
-    assert_json_ser(msg, expected_json);
-    #[cfg(feature = "cosmwasm")]
-    assert_json_deser(msg, expected_json);
-}
-
-#[test]
 fn json_get_data_requests_by_status() {
     let expected_json = json!({
       "get_data_requests_by_status": {
