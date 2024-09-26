@@ -1,5 +1,5 @@
 #[cfg(not(feature = "cosmwasm"))]
-use base64::{prelude::BASE64_STANDARD, Engine};
+use base64::{Engine, prelude::BASE64_STANDARD};
 #[cfg(feature = "cosmwasm")]
 use cw_storage_plus::{Key, Prefixer, PrimaryKey};
 use semver::Version;
@@ -295,5 +295,22 @@ impl TryHashSelf for PostDataRequestArgs {
         dr_hasher.update(memo_hash);
 
         Ok(dr_hasher.finalize().into())
+    }
+}
+
+/// Governance-controlled timeout configuration parameters
+#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
+#[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
+pub struct TimeoutConfig {
+    /// Number of blocks after which a data request is timed out while waiting for commits.
+    pub commit_timeout_in_blocks: u64,
+    /// Number of blocks after which a data request is timed out while waiting for reveals.
+    pub reveal_timeout_in_blocks: u64,
+}
+
+impl From<TimeoutConfig> for crate::msgs::ExecuteMsg {
+    fn from(config: TimeoutConfig) -> Self {
+        super::execute::ExecuteMsg::SetTimeoutConfig(config).into()
     }
 }

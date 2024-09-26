@@ -11,6 +11,7 @@ pub enum ExecuteMsg {
     CommitDataResult(commit_result::Execute),
     PostDataRequest(post_request::Execute),
     RevealDataResult(reveal_result::Execute),
+    SetTimeoutConfig(TimeoutConfig),
 }
 
 impl From<ExecuteMsg> for super::ExecuteMsg {

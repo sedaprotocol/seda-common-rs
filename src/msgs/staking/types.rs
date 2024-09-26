@@ -10,7 +10,7 @@ pub struct Staker {
     pub tokens_pending_withdrawal: U128,
 }
 
-/// Governance-controlled configuration parameters
+/// Governance-controlled staking configuration parameters
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]

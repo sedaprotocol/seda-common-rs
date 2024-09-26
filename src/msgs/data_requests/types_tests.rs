@@ -4,7 +4,7 @@ use serde_json::json;
 
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
-use super::{DataRequest, DataResult, HashSelf, PostDataRequestArgs, RevealBody, U128};
+use super::{DataRequest, DataResult, HashSelf, PostDataRequestArgs, RevealBody, TimeoutConfig, U128};
 use crate::msgs::*;
 
 #[test]
@@ -239,4 +239,22 @@ fn json_post_data_request_args() {
     };
 
     assert_json_ser(msg, expected_json);
+}
+
+#[test]
+fn json_timeout_config() {
+    let expected_json = json!({
+        "commit_timeout_in_blocks": 5,
+        "reveal_timeout_in_blocks": 10,
+    });
+
+    let msg = TimeoutConfig {
+        commit_timeout_in_blocks: 5,
+        reveal_timeout_in_blocks: 10,
+    };
+
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
 }
