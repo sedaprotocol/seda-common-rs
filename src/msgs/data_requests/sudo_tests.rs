@@ -3,7 +3,7 @@ use serde_json::json;
 
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
-use super::{sudo::*, DataResult, SudoMsg};
+use super::{DataResult, SudoMsg, sudo::*};
 use crate::msgs::*;
 
 #[test]
@@ -58,6 +58,16 @@ fn json_post_result() {
         exit_code: 0,
     }
     .into();
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
+}
+
+#[test]
+fn json_remove_timed_out_data_requests() {
+    let expected_json = json!("remove_timed_out_data_requests");
+    let msg: SudoMsg = data_requests::sudo::SudoMsg::RemoveTimedOutDataRequests.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]
