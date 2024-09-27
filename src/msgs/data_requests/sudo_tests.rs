@@ -3,7 +3,7 @@ use serde_json::json;
 
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
-use super::{DataResult, SudoMsg, sudo::*};
+use super::{sudo::*, DataResult, SudoMsg};
 use crate::msgs::*;
 
 #[test]

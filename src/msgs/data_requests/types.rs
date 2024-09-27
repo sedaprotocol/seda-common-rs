@@ -1,5 +1,5 @@
 #[cfg(not(feature = "cosmwasm"))]
-use base64::{Engine, prelude::BASE64_STANDARD};
+use base64::{prelude::BASE64_STANDARD, Engine};
 #[cfg(feature = "cosmwasm")]
 use cw_storage_plus::{Key, Prefixer, PrimaryKey};
 use semver::Version;
