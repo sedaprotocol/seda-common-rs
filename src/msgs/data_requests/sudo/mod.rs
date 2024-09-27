@@ -23,7 +23,7 @@ impl From<PostResult> for crate::msgs::SudoMsg {
 pub enum SudoMsg {
     PostDataResult(PostResult),
     PostDataResults(post_results::Sudo),
-    RemoveTimedOutDataRequests,
+    ExpireDataRequests,
 }
 
 impl From<SudoMsg> for super::SudoMsg {
