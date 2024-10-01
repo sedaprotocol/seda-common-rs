@@ -66,8 +66,8 @@ fn json_post_result() {
 
 #[test]
 fn json_remove_timed_out_data_requests() {
-    let expected_json = json!("expire_data_requests");
-    let msg: SudoMsg = data_requests::sudo::SudoMsg::ExpireDataRequests.into();
+    let expected_json = json!({"expire_data_requests": {}});
+    let msg: SudoMsg = expire_data_requests::Sudo {}.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]

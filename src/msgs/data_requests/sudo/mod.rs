@@ -1,5 +1,6 @@
 use super::*;
 
+pub mod expire_data_requests;
 pub mod post_results;
 
 #[cfg_attr(feature = "cosmwasm", cw_serde)]
@@ -23,7 +24,7 @@ impl From<PostResult> for crate::msgs::SudoMsg {
 pub enum SudoMsg {
     PostDataResult(PostResult),
     PostDataResults(post_results::Sudo),
-    ExpireDataRequests,
+    ExpireDataRequests(expire_data_requests::Sudo),
 }
 
 impl From<SudoMsg> for super::SudoMsg {
