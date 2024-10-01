@@ -11,12 +11,12 @@ use crate::msgs::*;
 fn json_data_request() {
     let id = "id".to_string();
     let version = "1.0.0".to_string();
-    let dr_binary_id = "dr_binary_id".to_string();
+    let exec_program_id = "exec_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
     let dr_inputs = "dr_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
     let dr_inputs: Bytes = "dr_inputs".as_bytes().into();
-    let tally_binary_id = "tally_binary_id".to_string();
+    let tally_program_id = "tally_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
     let tally_inputs = "tally_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
@@ -47,9 +47,9 @@ fn json_data_request() {
     let expected_json = json!({
       "id": id,
       "version": version,
-      "dr_binary_id": dr_binary_id,
+      "exec_program_id": exec_program_id,
       "dr_inputs": dr_inputs,
-      "tally_binary_id": tally_binary_id,
+      "tally_program_id": tally_program_id,
       "tally_inputs": tally_inputs,
       "replication_factor": replication_factor,
       "consensus_filter": consensus_filter,
@@ -66,9 +66,9 @@ fn json_data_request() {
     let msg = DataRequest {
         id,
         version: version.parse().unwrap(),
-        dr_binary_id,
+        exec_program_id,
         dr_inputs,
-        tally_binary_id,
+        tally_program_id,
         tally_inputs,
         replication_factor,
         consensus_filter,

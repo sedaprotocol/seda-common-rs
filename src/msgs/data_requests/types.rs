@@ -51,11 +51,11 @@ pub struct DataRequest {
     /// Semantic Version String
     pub version:            Version,
     /// Identifier of DR WASM binary
-    pub dr_binary_id:       String,
+    pub exec_program_id:    String,
     /// Inputs for DR WASM binary
     pub dr_inputs:          Bytes,
     /// Identifier of Tally WASM binary
-    pub tally_binary_id:    String,
+    pub tally_program_id:   String,
     /// Inputs for Tally WASM binary
     pub tally_inputs:       Bytes,
     /// Amount of required DR executors
