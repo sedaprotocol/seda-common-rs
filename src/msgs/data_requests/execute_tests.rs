@@ -66,9 +66,9 @@ fn json_post_request() {
 
     let args = PostDataRequestArgs {
         version: Version::new(1, 0, 0),
-        dr_binary_id: "dr_binary_id".to_string(),
+        exec_program_id: "exec_program_id".to_string(),
         dr_inputs: dr_inputs.clone(),
-        tally_binary_id: "tally_binary_id".to_string(),
+        tally_program_id: "tally_program_id".to_string(),
         tally_inputs: tally_inputs.clone(),
         replication_factor: 1,
         consensus_filter: consensus_filter.clone(),
@@ -80,9 +80,9 @@ fn json_post_request() {
       "post_data_request": {
         "posted_dr": {
           "version": "1.0.0",
-          "dr_binary_id": "dr_binary_id",
+          "exec_program_id": "exec_program_id",
           "dr_inputs": dr_inputs,
-          "tally_binary_id": "tally_binary_id",
+          "tally_program_id": "tally_program_id",
           "tally_inputs": tally_inputs,
           "replication_factor": 1,
           "consensus_filter": consensus_filter,

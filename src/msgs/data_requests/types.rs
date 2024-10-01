@@ -229,9 +229,9 @@ impl TryHashSelf for RevealBody {
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct PostDataRequestArgs {
     pub version:            Version,
-    pub dr_binary_id:       String,
+    pub exec_program_id:    String,
     pub dr_inputs:          Bytes,
-    pub tally_binary_id:    String,
+    pub tally_program_id:   String,
     pub tally_inputs:       Bytes,
     pub replication_factor: u16,
     pub consensus_filter:   Bytes,
@@ -275,9 +275,9 @@ impl TryHashSelf for PostDataRequestArgs {
         let mut dr_hasher = Keccak256::new();
         dr_hasher.update(self.version.hash());
         // I don't think we should decode to hash... expensive in cosmwasm no?
-        dr_hasher.update(hex::decode(&self.dr_binary_id)?);
+        dr_hasher.update(hex::decode(&self.exec_program_id)?);
         dr_hasher.update(dr_inputs_hash);
-        dr_hasher.update(hex::decode(&self.tally_binary_id)?);
+        dr_hasher.update(hex::decode(&self.tally_program_id)?);
         dr_hasher.update(tally_inputs_hash);
         dr_hasher.update(self.replication_factor.to_be_bytes());
         dr_hasher.update(consensus_filter_hash);
