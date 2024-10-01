@@ -63,9 +63,9 @@ pub struct DataRequest {
     /// Filter applied before tally execution
     pub consensus_filter:   Bytes,
     /// Amount of SEDA tokens per gas unit
-    pub gas_price:          U128,
+    pub gas_price:          u64,
     /// Maximum of gas units to be used by data request executors to resolve a data request
-    pub gas_limit:          U128,
+    pub gas_limit:          u64,
     /// Public info attached to DR
     pub memo:               Bytes,
 
@@ -129,7 +129,7 @@ pub struct DataResult {
     /// Block Height at which data request was finalized
     pub block_height: u64,
     /// Gas used by the complete data request execution
-    pub gas_used:     U128,
+    pub gas_used:     u64,
 
     // Fields from Data Request Execution
     /// Payback address set by the relayer
@@ -197,7 +197,7 @@ pub struct RevealBody {
     pub id:                String,
     pub salt:              String,
     pub exit_code:         u8,
-    pub gas_used:          U128,
+    pub gas_used:          u64,
     pub reveal:            Bytes,
     pub proxy_public_keys: Vec<String>,
 }
@@ -215,9 +215,6 @@ impl TryHashSelf for RevealBody {
         hasher.update(hex::decode(&self.id)?);
         hasher.update(&self.salt);
         hasher.update(self.exit_code.to_be_bytes());
-        #[cfg(feature = "cosmwasm")]
-        hasher.update(self.gas_used.to_be_bytes());
-        #[cfg(not(feature = "cosmwasm"))]
         hasher.update(self.gas_used.to_be_bytes());
         hasher.update(reveal_hash);
         let proxy_public_keys: &[String] = &self.proxy_public_keys;
@@ -238,8 +235,8 @@ pub struct PostDataRequestArgs {
     pub tally_inputs:       Bytes,
     pub replication_factor: u16,
     pub consensus_filter:   Bytes,
-    pub gas_price:          U128,
-    pub gas_limit:          U128,
+    pub gas_price:          u64,
+    pub gas_limit:          u64,
     pub memo:               Bytes,
 }
 
@@ -284,13 +281,7 @@ impl TryHashSelf for PostDataRequestArgs {
         dr_hasher.update(tally_inputs_hash);
         dr_hasher.update(self.replication_factor.to_be_bytes());
         dr_hasher.update(consensus_filter_hash);
-        #[cfg(feature = "cosmwasm")]
         dr_hasher.update(self.gas_price.to_be_bytes());
-        #[cfg(not(feature = "cosmwasm"))]
-        dr_hasher.update(self.gas_price.to_be_bytes());
-        #[cfg(feature = "cosmwasm")]
-        dr_hasher.update(self.gas_limit.to_be_bytes());
-        #[cfg(not(feature = "cosmwasm"))]
         dr_hasher.update(self.gas_limit.to_be_bytes());
         dr_hasher.update(memo_hash);
 

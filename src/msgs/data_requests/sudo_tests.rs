@@ -13,7 +13,7 @@ fn json_post_result() {
     #[cfg(feature = "cosmwasm")]
     let result_bytes: Bytes = "result".as_bytes().into();
 
-    let gas_used = 100u128.into();
+    let gas_used = 100;
 
     #[cfg(not(feature = "cosmwasm"))]
     let seda_payload = "seda_payload".to_string();
@@ -43,7 +43,7 @@ fn json_post_result() {
         "dr_id": "dr_id",
         "block_height": 100,
         "exit_code": 0,
-        "gas_used": gas_used.to_string(),
+        "gas_used": gas_used,
         "result": result_bytes,
         "payback_address": payback_address,
         "seda_payload": seda_payload,

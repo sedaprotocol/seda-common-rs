@@ -46,9 +46,8 @@ fn json_post_request() {
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
 
-    let gas_price = 100u128.into();
-
-    let gas_limit = 100u128.into();
+    let gas_price = 100;
+    let gas_limit = 100;
 
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -87,8 +86,8 @@ fn json_post_request() {
           "tally_inputs": tally_inputs,
           "replication_factor": 1,
           "consensus_filter": consensus_filter,
-          "gas_price": gas_price.to_string(),
-          "gas_limit": gas_limit.to_string(),
+          "gas_price": gas_price,
+          "gas_limit": gas_limit,
           "memo": memo
         },
         "seda_payload": seda_payload,
@@ -109,7 +108,7 @@ fn json_post_request() {
 
 #[test]
 fn json_reveal_result() {
-    let gas_used = 100u128.into();
+    let gas_used = 100;
 
     #[cfg(not(feature = "cosmwasm"))]
     let reveal = "reveal".to_string();
@@ -131,7 +130,7 @@ fn json_reveal_result() {
           "id": "dr_id",
           "salt": "salt",
           "exit_code": 0,
-          "gas_used": gas_used.to_string(),
+          "gas_used": gas_used,
           "reveal": reveal,
           "proxy_public_keys": ["proxy_public_key"]
         },

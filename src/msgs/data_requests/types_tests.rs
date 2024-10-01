@@ -4,7 +4,7 @@ use serde_json::json;
 
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
-use super::{DataRequest, DataResult, HashSelf, PostDataRequestArgs, RevealBody, TimeoutConfig, U128};
+use super::{DataRequest, DataResult, HashSelf, PostDataRequestArgs, RevealBody, TimeoutConfig};
 use crate::msgs::*;
 
 #[test]
@@ -26,8 +26,8 @@ fn json_data_request() {
     let consensus_filter = "consensus_filter".to_string();
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
-    let gas_price: U128 = 1u128.into();
-    let gas_limit: U128 = 1u128.into();
+    let gas_price = 1;
+    let gas_limit = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
     #[cfg(feature = "cosmwasm")]
@@ -99,7 +99,7 @@ fn json_data_result() {
     #[cfg(feature = "cosmwasm")]
     let result: Bytes = "result".as_bytes().into();
     let block_height = 1;
-    let gas_used: U128 = 1u128.into();
+    let gas_used = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let payback_address = "payback_address".to_string();
     #[cfg(feature = "cosmwasm")]
@@ -143,7 +143,7 @@ fn json_reveal_body() {
     let id = "id".to_string();
     let salt = "salt".to_string();
     let exit_code = 0;
-    let gas_used: U128 = 1u128.into();
+    let gas_used = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let reveal = "reveal".to_string();
     #[cfg(feature = "cosmwasm")]
@@ -174,19 +174,6 @@ fn json_reveal_body() {
     assert_json_deser(msg, expected_json);
 }
 
-// pub struct PostDataRequestArgs {
-// 	pub version:            Version,
-// 	pub dr_binary_id:       String,
-// 	pub dr_inputs:          Bytes,
-// 	pub tally_binary_id:    String,
-// 	pub tally_inputs:       Bytes,
-// 	pub replication_factor: u16,
-// 	pub consensus_filter:   Bytes,
-// 	pub gas_price:          U128,
-// 	pub gas_limit:          U128,
-// 	pub memo:               Bytes,
-// }
-
 #[test]
 fn json_post_data_request_args() {
     let version = "1.0.0".to_string();
@@ -205,8 +192,8 @@ fn json_post_data_request_args() {
     let consensus_filter = "consensus_filter".to_string();
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
-    let gas_price: U128 = 1u128.into();
-    let gas_limit: U128 = 1u128.into();
+    let gas_price = 1;
+    let gas_limit = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
     #[cfg(feature = "cosmwasm")]
