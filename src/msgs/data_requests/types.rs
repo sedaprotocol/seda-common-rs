@@ -53,7 +53,7 @@ pub struct DataRequest {
     /// Identifier of DR WASM binary
     pub exec_program_id:    String,
     /// Inputs for DR WASM binary
-    pub dr_inputs:          Bytes,
+    pub exec_inputs:        Bytes,
     /// Identifier of Tally WASM binary
     pub tally_program_id:   String,
     /// Inputs for Tally WASM binary
@@ -63,7 +63,7 @@ pub struct DataRequest {
     /// Filter applied before tally execution
     pub consensus_filter:   Bytes,
     /// Amount of SEDA tokens per gas unit
-    pub gas_price:          u64,
+    pub gas_price:          U128,
     /// Maximum of gas units to be used by data request executors to resolve a data request
     pub gas_limit:          u64,
     /// Public info attached to DR
@@ -230,12 +230,12 @@ impl TryHashSelf for RevealBody {
 pub struct PostDataRequestArgs {
     pub version:            Version,
     pub exec_program_id:    String,
-    pub dr_inputs:          Bytes,
+    pub exec_inputs:        Bytes,
     pub tally_program_id:   String,
     pub tally_inputs:       Bytes,
     pub replication_factor: u16,
     pub consensus_filter:   Bytes,
-    pub gas_price:          u64,
+    pub gas_price:          U128,
     pub gas_limit:          u64,
     pub memo:               Bytes,
 }
@@ -243,12 +243,12 @@ pub struct PostDataRequestArgs {
 impl TryHashSelf for PostDataRequestArgs {
     fn try_hash(&self) -> Result<Hash> {
         // hash non-fixed-length inputs
-        let mut dr_inputs_hasher = Keccak256::new();
+        let mut exec_inputs_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
-        dr_inputs_hasher.update(self.dr_inputs.as_slice());
+        exec_inputs_hasher.update(self.exec_inputs.as_slice());
         #[cfg(not(feature = "cosmwasm"))]
-        dr_inputs_hasher.update(BASE64_STANDARD.decode(&self.dr_inputs)?);
-        let dr_inputs_hash = dr_inputs_hasher.finalize();
+        exec_inputs_hasher.update(BASE64_STANDARD.decode(&self.exec_inputs)?);
+        let exec_inputs_hash = exec_inputs_hasher.finalize();
 
         let mut tally_inputs_hasher = Keccak256::new();
         #[cfg(feature = "cosmwasm")]
@@ -276,7 +276,7 @@ impl TryHashSelf for PostDataRequestArgs {
         dr_hasher.update(self.version.hash());
         // I don't think we should decode to hash... expensive in cosmwasm no?
         dr_hasher.update(hex::decode(&self.exec_program_id)?);
-        dr_hasher.update(dr_inputs_hash);
+        dr_hasher.update(exec_inputs_hash);
         dr_hasher.update(hex::decode(&self.tally_program_id)?);
         dr_hasher.update(tally_inputs_hash);
         dr_hasher.update(self.replication_factor.to_be_bytes());

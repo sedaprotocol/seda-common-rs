@@ -32,9 +32,9 @@ fn json_commit_result() {
 #[test]
 fn json_post_request() {
     #[cfg(not(feature = "cosmwasm"))]
-    let dr_inputs = "dr_inputs".to_string();
+    let exec_inputs = "exec_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
-    let dr_inputs: Bytes = "dr_inputs".as_bytes().into();
+    let exec_inputs: Bytes = "exec_inputs".as_bytes().into();
 
     #[cfg(not(feature = "cosmwasm"))]
     let tally_inputs = "tally_inputs".to_string();
@@ -46,7 +46,7 @@ fn json_post_request() {
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
 
-    let gas_price = 100;
+    let gas_price: U128 = 100u128.into();
     let gas_limit = 100;
 
     #[cfg(not(feature = "cosmwasm"))]
@@ -67,7 +67,7 @@ fn json_post_request() {
     let args = PostDataRequestArgs {
         version: Version::new(1, 0, 0),
         exec_program_id: "exec_program_id".to_string(),
-        dr_inputs: dr_inputs.clone(),
+        exec_inputs: exec_inputs.clone(),
         tally_program_id: "tally_program_id".to_string(),
         tally_inputs: tally_inputs.clone(),
         replication_factor: 1,
@@ -81,12 +81,12 @@ fn json_post_request() {
         "posted_dr": {
           "version": "1.0.0",
           "exec_program_id": "exec_program_id",
-          "dr_inputs": dr_inputs,
+          "exec_inputs": exec_inputs,
           "tally_program_id": "tally_program_id",
           "tally_inputs": tally_inputs,
           "replication_factor": 1,
           "consensus_filter": consensus_filter,
-          "gas_price": gas_price,
+          "gas_price": gas_price.to_string(),
           "gas_limit": gas_limit,
           "memo": memo
         },

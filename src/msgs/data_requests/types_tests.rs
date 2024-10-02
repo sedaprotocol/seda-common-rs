@@ -13,9 +13,9 @@ fn json_data_request() {
     let version = "1.0.0".to_string();
     let exec_program_id = "exec_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
-    let dr_inputs = "dr_inputs".to_string();
+    let exec_inputs = "exec_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
-    let dr_inputs: Bytes = "dr_inputs".as_bytes().into();
+    let exec_inputs: Bytes = "exec_inputs".as_bytes().into();
     let tally_program_id = "tally_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
     let tally_inputs = "tally_inputs".to_string();
@@ -26,7 +26,7 @@ fn json_data_request() {
     let consensus_filter = "consensus_filter".to_string();
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
-    let gas_price = 1;
+    let gas_price: U128 = 1u128.into();
     let gas_limit = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -48,7 +48,7 @@ fn json_data_request() {
       "id": id,
       "version": version,
       "exec_program_id": exec_program_id,
-      "dr_inputs": dr_inputs,
+      "exec_inputs": exec_inputs,
       "tally_program_id": tally_program_id,
       "tally_inputs": tally_inputs,
       "replication_factor": replication_factor,
@@ -67,7 +67,7 @@ fn json_data_request() {
         id,
         version: version.parse().unwrap(),
         exec_program_id,
-        dr_inputs,
+        exec_inputs,
         tally_program_id,
         tally_inputs,
         replication_factor,
@@ -179,9 +179,9 @@ fn json_post_data_request_args() {
     let version = "1.0.0".to_string();
     let exec_program_id = "exec_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
-    let dr_inputs = "dr_inputs".to_string();
+    let exec_inputs = "exec_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
-    let dr_inputs: Bytes = "dr_inputs".as_bytes().into();
+    let exec_inputs: Bytes = "exec_inputs".as_bytes().into();
     let tally_program_id = "tally_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
     let tally_inputs = "tally_inputs".to_string();
@@ -192,7 +192,7 @@ fn json_post_data_request_args() {
     let consensus_filter = "consensus_filter".to_string();
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
-    let gas_price = 1;
+    let gas_price: U128 = 1u128.into();
     let gas_limit = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -202,7 +202,7 @@ fn json_post_data_request_args() {
     let expected_json = json!({
         "version": version,
         "exec_program_id": exec_program_id,
-        "dr_inputs": dr_inputs,
+        "exec_inputs": exec_inputs,
         "tally_program_id": tally_program_id,
         "tally_inputs": tally_inputs,
         "replication_factor": replication_factor,
@@ -215,7 +215,7 @@ fn json_post_data_request_args() {
     let msg = PostDataRequestArgs {
         version: version.parse().unwrap(),
         exec_program_id,
-        dr_inputs,
+        exec_inputs,
         tally_program_id,
         tally_inputs,
         replication_factor,
