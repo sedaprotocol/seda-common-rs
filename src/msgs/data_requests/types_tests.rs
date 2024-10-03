@@ -4,7 +4,7 @@ use serde_json::json;
 
 #[cfg(feature = "cosmwasm")]
 use super::Bytes;
-use super::{DataRequest, DataResult, HashSelf, PostDataRequestArgs, RevealBody, TimeoutConfig};
+use super::{DataRequest, HashSelf, PostDataRequestArgs, RevealBody, TimeoutConfig};
 use crate::msgs::*;
 
 #[test]
@@ -80,56 +80,6 @@ fn json_data_request() {
         commits,
         reveals,
         height,
-    };
-
-    #[cfg(not(feature = "cosmwasm"))]
-    assert_json_ser(msg, expected_json);
-    #[cfg(feature = "cosmwasm")]
-    assert_json_deser(msg, expected_json);
-}
-
-#[test]
-fn json_data_result() {
-    let version = "1.0.0".to_string();
-    let dr_id = "dr_id".to_string();
-    let consensus = true;
-    let exit_code = 0;
-    #[cfg(not(feature = "cosmwasm"))]
-    let result = "result".to_string();
-    #[cfg(feature = "cosmwasm")]
-    let result: Bytes = "result".as_bytes().into();
-    let block_height = 1;
-    let gas_used = 1;
-    #[cfg(not(feature = "cosmwasm"))]
-    let payback_address = "payback_address".to_string();
-    #[cfg(feature = "cosmwasm")]
-    let payback_address: Bytes = "payback_address".as_bytes().into();
-    #[cfg(not(feature = "cosmwasm"))]
-    let seda_payload = "seda_payload".to_string();
-    #[cfg(feature = "cosmwasm")]
-    let seda_payload: Bytes = "seda_payload".as_bytes().into();
-
-    let expected_json = json!({
-      "version": version,
-      "dr_id": dr_id,
-      "consensus": consensus,
-      "exit_code": exit_code,
-      "result": result,
-      "block_height": block_height,
-      "gas_used": gas_used,
-      "payback_address": payback_address,
-      "seda_payload": seda_payload,
-    });
-    let msg = DataResult {
-        version: version.parse().unwrap(),
-        dr_id,
-        consensus,
-        exit_code,
-        result,
-        block_height,
-        gas_used,
-        payback_address,
-        seda_payload,
     };
 
     #[cfg(not(feature = "cosmwasm"))]
