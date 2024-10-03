@@ -1,7 +1,5 @@
 #[cfg(not(feature = "cosmwasm"))]
 use base64::{prelude::BASE64_STANDARD, Engine};
-#[cfg(feature = "cosmwasm")]
-use cw_storage_plus::{Key, Prefixer, PrimaryKey};
 use semver::Version;
 use sha3::{Digest, Keccak256};
 
@@ -14,29 +12,6 @@ pub enum DataRequestStatus {
     Committing,
     Revealing,
     Tallying,
-}
-
-#[cfg(feature = "cosmwasm")]
-impl<'a> PrimaryKey<'a> for DataRequestStatus {
-    type Prefix = ();
-    type SubPrefix = ();
-    type Suffix = &'static str;
-    type SuperSuffix = &'static str;
-
-    fn key(&self) -> Vec<Key> {
-        vec![Key::Val8(match self {
-            DataRequestStatus::Committing => [0],
-            DataRequestStatus::Revealing => [1],
-            DataRequestStatus::Tallying => [2],
-        })]
-    }
-}
-
-#[cfg(feature = "cosmwasm")]
-impl<'a> Prefixer<'a> for DataRequestStatus {
-    fn prefix(&self) -> Vec<Key> {
-        self.key()
-    }
 }
 
 /// Represents a data request at creation time
