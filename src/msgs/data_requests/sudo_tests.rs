@@ -10,7 +10,7 @@ fn json_remove_request() {
       "dr_id": "dr_id",
     }
     });
-    let msg: SudoMsg = PostResult {
+    let msg: SudoMsg = RemoveDataRequest {
         dr_id: "dr_id".to_string(),
     }
     .into();

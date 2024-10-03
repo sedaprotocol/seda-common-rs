@@ -4,12 +4,12 @@ pub mod remove_requests;
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
-pub struct PostResult {
+pub struct RemoveDataRequest {
     pub dr_id: String,
 }
 
-impl From<PostResult> for crate::msgs::SudoMsg {
-    fn from(value: PostResult) -> Self {
+impl From<RemoveDataRequest> for crate::msgs::SudoMsg {
+    fn from(value: RemoveDataRequest) -> Self {
         SudoMsg::RemoveDataRequest(value).into()
     }
 }
@@ -18,7 +18,7 @@ impl From<PostResult> for crate::msgs::SudoMsg {
 #[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum SudoMsg {
-    RemoveDataRequest(PostResult),
+    RemoveDataRequest(RemoveDataRequest),
     RemoveDataRequests(remove_requests::Sudo),
     ExpireDataRequests(expire_data_requests::Sudo),
 }
