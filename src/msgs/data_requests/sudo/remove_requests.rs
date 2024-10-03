@@ -9,6 +9,6 @@ pub struct Sudo {
 
 impl From<Sudo> for crate::msgs::SudoMsg {
     fn from(value: Sudo) -> Self {
-        super::SudoMsg::PostDataResults(value).into()
+        super::SudoMsg::RemoveDataRequests(value).into()
     }
 }

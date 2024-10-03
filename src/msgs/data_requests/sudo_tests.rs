@@ -4,9 +4,9 @@ use super::{sudo::*, SudoMsg};
 use crate::msgs::*;
 
 #[test]
-fn json_post_result() {
+fn json_remove_request() {
     let expected_json = json!({
-    "post_data_result": {
+    "remove_data_request": {
       "dr_id": "dr_id",
     }
     });
