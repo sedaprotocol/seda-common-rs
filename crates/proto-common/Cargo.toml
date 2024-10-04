@@ -1,0 +1,15 @@
+[package]
+name = "seda-proto-common"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# prost.workspace = true
+# prost-types.workspace = true
+prost = { version = "0.13", default-features = false }
+prost-types = { version = "0.13", default-features = false }
+cosmos-sdk-proto = { version = "0.25", default-features = false }
+
+[features]
+default = []
+## @@protoc_insertion_point(features)
