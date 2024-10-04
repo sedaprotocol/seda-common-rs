@@ -1,6 +1,6 @@
 use serde_json::json;
 
-use super::{data_requests::DataRequestStatus, query::QueryMsg as DrQueryMsg, QueryMsg};
+use super::{query::QueryMsg as DrQueryMsg, DataRequestStatus};
 use crate::msgs::*;
 
 #[test]

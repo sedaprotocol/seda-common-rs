@@ -2,10 +2,10 @@ use std::collections::HashMap;
 
 use serde_json::json;
 
+use super::{DataRequest, PostDataRequestArgs, RevealBody, TimeoutConfig};
 #[cfg(feature = "cosmwasm")]
-use super::Bytes;
-use super::{DataRequest, HashSelf, PostDataRequestArgs, RevealBody, TimeoutConfig};
-use crate::msgs::*;
+use crate::msgs::assert_json_deser;
+use crate::{msgs::assert_json_ser, types::*};
 
 #[test]
 fn json_data_request() {

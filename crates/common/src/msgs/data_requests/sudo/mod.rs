@@ -23,7 +23,7 @@ pub enum SudoMsg {
     ExpireDataRequests(expire_data_requests::Sudo),
 }
 
-impl From<SudoMsg> for super::SudoMsg {
+impl From<SudoMsg> for crate::msgs::SudoMsg {
     fn from(value: SudoMsg) -> Self {
         Self::DataRequest(value)
     }

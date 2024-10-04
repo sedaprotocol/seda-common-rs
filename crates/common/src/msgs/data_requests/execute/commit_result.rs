@@ -1,7 +1,7 @@
-use super::*;
+use crate::{error::Result, types::*};
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Execute {
     pub dr_id:      String,
@@ -12,7 +12,7 @@ pub struct Execute {
 
 impl Execute {
     fn generate_hash(dr_id: &str, commitment: &str, chain_id: &str, contract_addr: &str, dr_height: u64) -> Hash {
-        hash([
+        crate::crypto::hash([
             "commit_data_result".as_bytes(),
             dr_id.as_bytes(),
             &dr_height.to_be_bytes(),

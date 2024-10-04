@@ -1,6 +1,3 @@
-use semver::Version;
-use sha3::{Digest, Keccak256};
-
 mod to_hex;
 pub use to_hex::ToHexStr;
 

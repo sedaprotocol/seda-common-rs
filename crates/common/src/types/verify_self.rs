@@ -1,5 +1,4 @@
-use super::*;
-use crate::{crypto::verify_proof, error::Result};
+use crate::{crypto::verify_proof, error::Result, types::Hash};
 
 pub(crate) trait VerifySelf {
     type Extra;

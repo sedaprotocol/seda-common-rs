@@ -15,6 +15,10 @@ pub struct DataRequestWasm {
     #[prost(int64, tag="4")]
     pub expiration_height: i64,
 }
+impl ::prost::Name for DataRequestWasm {
+const NAME: &'static str = "DataRequestWasm";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.DataRequestWasm".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.DataRequestWasm".into() }}
 /// ExecutorWasm represents a wasm used for some execution in the protocol.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -26,6 +30,10 @@ pub struct ExecutorWasm {
     #[prost(message, optional, tag="3")]
     pub added_at: ::core::option::Option<::prost_types::Timestamp>,
 }
+impl ::prost::Name for ExecutorWasm {
+const NAME: &'static str = "ExecutorWasm";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.ExecutorWasm".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.ExecutorWasm".into() }}
 /// Params to define the max wasm size allowed.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -37,6 +45,10 @@ pub struct Params {
     #[prost(int64, tag="2")]
     pub wasm_ttl: i64,
 }
+impl ::prost::Name for Params {
+const NAME: &'static str = "Params";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.Params".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.Params".into() }}
 /// GenesisState defines the wasm module's genesis state(i.e wasms stored at
 /// genesis.)
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -51,6 +63,10 @@ pub struct GenesisState {
     #[prost(string, tag="4")]
     pub core_contract_registry: ::prost::alloc::string::String,
 }
+impl ::prost::Name for GenesisState {
+const NAME: &'static str = "GenesisState";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.GenesisState".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.GenesisState".into() }}
 /// The request message for QueryDataRequestWasm RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -58,6 +74,10 @@ pub struct QueryDataRequestWasmRequest {
     #[prost(string, tag="1")]
     pub hash: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryDataRequestWasmRequest {
+const NAME: &'static str = "QueryDataRequestWasmRequest";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryDataRequestWasmRequest".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryDataRequestWasmRequest".into() }}
 /// The response message for QueryDataRequestWasm RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -65,11 +85,19 @@ pub struct QueryDataRequestWasmResponse {
     #[prost(message, optional, tag="1")]
     pub wasm: ::core::option::Option<DataRequestWasm>,
 }
+impl ::prost::Name for QueryDataRequestWasmResponse {
+const NAME: &'static str = "QueryDataRequestWasmResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryDataRequestWasmResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryDataRequestWasmResponse".into() }}
 /// The request message for QueryDataRequestWasms RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct QueryDataRequestWasmsRequest {
 }
+impl ::prost::Name for QueryDataRequestWasmsRequest {
+const NAME: &'static str = "QueryDataRequestWasmsRequest";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryDataRequestWasmsRequest".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryDataRequestWasmsRequest".into() }}
 /// The response message for QueryDataRequestWasms RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -77,6 +105,10 @@ pub struct QueryDataRequestWasmsResponse {
     #[prost(string, repeated, tag="1")]
     pub list: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for QueryDataRequestWasmsResponse {
+const NAME: &'static str = "QueryDataRequestWasmsResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryDataRequestWasmsResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryDataRequestWasmsResponse".into() }}
 /// The request message for QueryExecutorWasm RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -84,6 +116,10 @@ pub struct QueryExecutorWasmRequest {
     #[prost(string, tag="1")]
     pub hash: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryExecutorWasmRequest {
+const NAME: &'static str = "QueryExecutorWasmRequest";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryExecutorWasmRequest".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryExecutorWasmRequest".into() }}
 /// The response message for QueryExecutorWasm RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -91,11 +127,19 @@ pub struct QueryExecutorWasmResponse {
     #[prost(message, optional, tag="1")]
     pub wasm: ::core::option::Option<ExecutorWasm>,
 }
+impl ::prost::Name for QueryExecutorWasmResponse {
+const NAME: &'static str = "QueryExecutorWasmResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryExecutorWasmResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryExecutorWasmResponse".into() }}
 /// The request message for QueryExecutorWasms RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct QueryExecutorWasmsRequest {
 }
+impl ::prost::Name for QueryExecutorWasmsRequest {
+const NAME: &'static str = "QueryExecutorWasmsRequest";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryExecutorWasmsRequest".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryExecutorWasmsRequest".into() }}
 /// The response message for QueryExecutorWasms RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -103,11 +147,19 @@ pub struct QueryExecutorWasmsResponse {
     #[prost(string, repeated, tag="1")]
     pub list: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for QueryExecutorWasmsResponse {
+const NAME: &'static str = "QueryExecutorWasmsResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryExecutorWasmsResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryExecutorWasmsResponse".into() }}
 /// The request message for QueryCoreContractRegistry RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct QueryCoreContractRegistryRequest {
 }
+impl ::prost::Name for QueryCoreContractRegistryRequest {
+const NAME: &'static str = "QueryCoreContractRegistryRequest";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryCoreContractRegistryRequest".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryCoreContractRegistryRequest".into() }}
 /// The response message for QueryCoreContractRegistry RPC.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -115,6 +167,10 @@ pub struct QueryCoreContractRegistryResponse {
     #[prost(string, tag="1")]
     pub address: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryCoreContractRegistryResponse {
+const NAME: &'static str = "QueryCoreContractRegistryResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.QueryCoreContractRegistryResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.QueryCoreContractRegistryResponse".into() }}
 /// The request message for the StoreDataRequestWasm method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -124,6 +180,10 @@ pub struct MsgStoreDataRequestWasm {
     #[prost(bytes="bytes", tag="2")]
     pub wasm: ::prost::bytes::Bytes,
 }
+impl ::prost::Name for MsgStoreDataRequestWasm {
+const NAME: &'static str = "MsgStoreDataRequestWasm";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgStoreDataRequestWasm".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgStoreDataRequestWasm".into() }}
 /// The response message for the StoreDataRequestWasm method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -131,6 +191,10 @@ pub struct MsgStoreDataRequestWasmResponse {
     #[prost(string, tag="1")]
     pub hash: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgStoreDataRequestWasmResponse {
+const NAME: &'static str = "MsgStoreDataRequestWasmResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgStoreDataRequestWasmResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgStoreDataRequestWasmResponse".into() }}
 /// The request message for the StoreExecutorWasm method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -140,6 +204,10 @@ pub struct MsgStoreExecutorWasm {
     #[prost(bytes="bytes", tag="2")]
     pub wasm: ::prost::bytes::Bytes,
 }
+impl ::prost::Name for MsgStoreExecutorWasm {
+const NAME: &'static str = "MsgStoreExecutorWasm";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgStoreExecutorWasm".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgStoreExecutorWasm".into() }}
 /// The response message for the StoreExecutorWasm method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -147,6 +215,10 @@ pub struct MsgStoreExecutorWasmResponse {
     #[prost(string, tag="1")]
     pub hash: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgStoreExecutorWasmResponse {
+const NAME: &'static str = "MsgStoreExecutorWasmResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgStoreExecutorWasmResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgStoreExecutorWasmResponse".into() }}
 /// The request message for the InstantiateCoreContract method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -168,6 +240,10 @@ pub struct MsgInstantiateCoreContract {
     #[prost(bool, tag="8")]
     pub fix_msg: bool,
 }
+impl ::prost::Name for MsgInstantiateCoreContract {
+const NAME: &'static str = "MsgInstantiateCoreContract";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgInstantiateCoreContract".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgInstantiateCoreContract".into() }}
 /// The response message for the InstantiateCoreContract method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -175,6 +251,10 @@ pub struct MsgInstantiateCoreContractResponse {
     #[prost(string, tag="1")]
     pub contract_address: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgInstantiateCoreContractResponse {
+const NAME: &'static str = "MsgInstantiateCoreContractResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgInstantiateCoreContractResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgInstantiateCoreContractResponse".into() }}
 /// The request message for the UpdateParams method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -186,9 +266,17 @@ pub struct MsgUpdateParams {
     #[prost(message, optional, tag="2")]
     pub params: ::core::option::Option<Params>,
 }
+impl ::prost::Name for MsgUpdateParams {
+const NAME: &'static str = "MsgUpdateParams";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgUpdateParams".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgUpdateParams".into() }}
 /// no data needs to be returned
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParamsResponse {
 }
+impl ::prost::Name for MsgUpdateParamsResponse {
+const NAME: &'static str = "MsgUpdateParamsResponse";
+const PACKAGE: &'static str = "sedachain.wasm_storage.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.wasm_storage.v1.MsgUpdateParamsResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.wasm_storage.v1.MsgUpdateParamsResponse".into() }}
 // @@protoc_insertion_point(module)

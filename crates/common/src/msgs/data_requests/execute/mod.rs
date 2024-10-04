@@ -1,11 +1,11 @@
-use super::*;
+use super::TimeoutConfig;
 
 pub mod commit_result;
 pub mod post_request;
 pub mod reveal_result;
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum ExecuteMsg {
     CommitDataResult(commit_result::Execute),
@@ -14,7 +14,7 @@ pub enum ExecuteMsg {
     SetTimeoutConfig(TimeoutConfig),
 }
 
-impl From<ExecuteMsg> for super::ExecuteMsg {
+impl From<ExecuteMsg> for crate::msgs::ExecuteMsg {
     fn from(value: ExecuteMsg) -> Self {
         Self::DataRequest(Box::new(value))
     }

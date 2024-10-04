@@ -25,9 +25,17 @@ pub struct MsgCreateValidatorWithVrf {
     #[prost(message, optional, tag="8")]
     pub vrf_pubkey: ::core::option::Option<::prost_types::Any>,
 }
+impl ::prost::Name for MsgCreateValidatorWithVrf {
+const NAME: &'static str = "MsgCreateValidatorWithVRF";
+const PACKAGE: &'static str = "sedachain.staking.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.staking.v1.MsgCreateValidatorWithVRF".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.staking.v1.MsgCreateValidatorWithVRF".into() }}
 /// MsgCreateValidatorResponse defines the Msg/CreateValidator response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct MsgCreateValidatorWithVrfResponse {
 }
+impl ::prost::Name for MsgCreateValidatorWithVrfResponse {
+const NAME: &'static str = "MsgCreateValidatorWithVRFResponse";
+const PACKAGE: &'static str = "sedachain.staking.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.staking.v1.MsgCreateValidatorWithVRFResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.staking.v1.MsgCreateValidatorWithVRFResponse".into() }}
 // @@protoc_insertion_point(module)

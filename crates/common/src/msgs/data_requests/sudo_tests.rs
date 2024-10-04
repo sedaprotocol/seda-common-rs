@@ -1,7 +1,11 @@
 use serde_json::json;
 
-use super::{sudo::*, SudoMsg};
-use crate::msgs::*;
+use super::sudo::*;
+use crate::msgs;
+#[cfg(feature = "cosmwasm")]
+use crate::msgs::assert_json_deser;
+#[cfg(not(feature = "cosmwasm"))]
+use crate::msgs::assert_json_ser;
 
 #[test]
 fn json_remove_request() {
@@ -10,7 +14,7 @@ fn json_remove_request() {
       "dr_id": "dr_id",
     }
     });
-    let msg: SudoMsg = RemoveDataRequest {
+    let msg: msgs::SudoMsg = RemoveDataRequest {
         dr_id: "dr_id".to_string(),
     }
     .into();
@@ -23,7 +27,7 @@ fn json_remove_request() {
 #[test]
 fn json_remove_timed_out_data_requests() {
     let expected_json = json!({"expire_data_requests": {}});
-    let msg: SudoMsg = expire_data_requests::Sudo {}.into();
+    let msg: msgs::SudoMsg = expire_data_requests::Sudo {}.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]

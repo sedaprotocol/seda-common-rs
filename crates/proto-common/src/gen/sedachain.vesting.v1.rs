@@ -17,12 +17,20 @@ pub struct MsgCreateVestingAccount {
     #[prost(bool, tag="5")]
     pub disable_clawback: bool,
 }
+impl ::prost::Name for MsgCreateVestingAccount {
+const NAME: &'static str = "MsgCreateVestingAccount";
+const PACKAGE: &'static str = "sedachain.vesting.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.vesting.v1.MsgCreateVestingAccount".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.vesting.v1.MsgCreateVestingAccount".into() }}
 /// MsgCreateVestingAccountResponse defines the CreateVestingAccount response
 /// type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct MsgCreateVestingAccountResponse {
 }
+impl ::prost::Name for MsgCreateVestingAccountResponse {
+const NAME: &'static str = "MsgCreateVestingAccountResponse";
+const PACKAGE: &'static str = "sedachain.vesting.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.vesting.v1.MsgCreateVestingAccountResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.vesting.v1.MsgCreateVestingAccountResponse".into() }}
 /// MsgClawback defines a message that returns the vesting funds to the funder.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -34,6 +42,10 @@ pub struct MsgClawback {
     #[prost(string, tag="2")]
     pub account_address: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgClawback {
+const NAME: &'static str = "MsgClawback";
+const PACKAGE: &'static str = "sedachain.vesting.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.vesting.v1.MsgClawback".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.vesting.v1.MsgClawback".into() }}
 /// MsgClawbackResponse defines the MsgClawback response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -45,6 +57,10 @@ pub struct MsgClawbackResponse {
     #[prost(message, repeated, tag="3")]
     pub clawed_bonded: ::prost::alloc::vec::Vec<::cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
+impl ::prost::Name for MsgClawbackResponse {
+const NAME: &'static str = "MsgClawbackResponse";
+const PACKAGE: &'static str = "sedachain.vesting.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.vesting.v1.MsgClawbackResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.vesting.v1.MsgClawbackResponse".into() }}
 /// ClawbackContinuousVestingAccount implements the VestingAccount interface.
 /// It wraps a ContinuousVestingAccount provided by Cosmos SDK to provide
 /// additional support for clawback.
@@ -56,4 +72,8 @@ pub struct ClawbackContinuousVestingAccount {
     #[prost(string, tag="2")]
     pub funder_address: ::prost::alloc::string::String,
 }
+impl ::prost::Name for ClawbackContinuousVestingAccount {
+const NAME: &'static str = "ClawbackContinuousVestingAccount";
+const PACKAGE: &'static str = "sedachain.vesting.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.vesting.v1.ClawbackContinuousVestingAccount".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.vesting.v1.ClawbackContinuousVestingAccount".into() }}
 // @@protoc_insertion_point(module)

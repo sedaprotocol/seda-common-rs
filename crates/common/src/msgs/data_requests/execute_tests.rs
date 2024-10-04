@@ -1,10 +1,12 @@
 use semver::Version;
 use serde_json::json;
 
+use super::{execute::*, PostDataRequestArgs, RevealBody};
+#[cfg(not(feature = "cosmwasm"))]
+use crate::msgs::assert_json_ser;
+use crate::{msgs, types::U128};
 #[cfg(feature = "cosmwasm")]
-use super::Bytes;
-use super::{execute::*, ExecuteMsg, PostDataRequestArgs, RevealBody};
-use crate::msgs::*;
+use crate::{msgs::assert_json_deser, types::Bytes};
 
 #[test]
 fn json_commit_result() {
@@ -16,7 +18,7 @@ fn json_commit_result() {
         "proof": "proof"
       }
     });
-    let msg: ExecuteMsg = commit_result::Execute {
+    let msg: msgs::ExecuteMsg = commit_result::Execute {
         dr_id:      "dr_id".to_string(),
         commitment: "commitment".to_string(),
         public_key: "public_key".to_string(),
@@ -94,7 +96,7 @@ fn json_post_request() {
         "payback_address": payback_address,
       }
     });
-    let msg: ExecuteMsg = post_request::Execute {
+    let msg: msgs::ExecuteMsg = post_request::Execute {
         posted_dr: args,
         seda_payload,
         payback_address,
@@ -140,7 +142,7 @@ fn json_reveal_result() {
         "stdout": vec!["some-output".to_string()],
       }
     });
-    let msg: ExecuteMsg = reveal_result::Execute {
+    let msg: msgs::ExecuteMsg = reveal_result::Execute {
         dr_id: "dr_id".to_string(),
         reveal_body,
         public_key: "public_key".to_string(),

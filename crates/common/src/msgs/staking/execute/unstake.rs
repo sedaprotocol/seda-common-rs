@@ -1,7 +1,7 @@
-use super::*;
+use crate::{error::Result, types::*};
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Execute {
     pub public_key: String,
@@ -11,7 +11,7 @@ pub struct Execute {
 
 impl Execute {
     fn generate_hash(amount: U128, chain_id: &str, contract_addr: &str, sequence: U128) -> Hash {
-        hash([
+        crate::crypto::hash([
             "unstake".as_bytes(),
             &amount.to_be_bytes(),
             chain_id.as_bytes(),

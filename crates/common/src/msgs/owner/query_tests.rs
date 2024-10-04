@@ -1,15 +1,18 @@
 use serde_json::json;
 
-use super::{query::QueryMsg as OwnerQueryMsg, QueryMsg};
-use crate::msgs::*;
-
+use super::query::QueryMsg as OwnerQueryMsg;
+use crate::msgs;
+#[cfg(feature = "cosmwasm")]
+use crate::msgs::assert_json_deser;
+#[cfg(not(feature = "cosmwasm"))]
+use crate::msgs::assert_json_ser;
 #[test]
 fn json_get_owner() {
     let expected_json = json!(
     {
       "get_owner": {}
     });
-    let msg: QueryMsg = OwnerQueryMsg::GetOwner {}.into();
+    let msg: msgs::QueryMsg = OwnerQueryMsg::GetOwner {}.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]
@@ -22,7 +25,7 @@ fn json_get_pending_owner() {
     {
         "get_pending_owner": {}
     });
-    let msg: QueryMsg = OwnerQueryMsg::GetPendingOwner {}.into();
+    let msg: msgs::QueryMsg = OwnerQueryMsg::GetPendingOwner {}.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]

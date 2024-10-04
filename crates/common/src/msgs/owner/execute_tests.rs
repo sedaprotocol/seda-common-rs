@@ -1,7 +1,11 @@
 use serde_json::json;
 
-use super::{execute::*, ExecuteMsg};
-use crate::msgs::*;
+use super::execute::*;
+use crate::msgs;
+#[cfg(feature = "cosmwasm")]
+use crate::msgs::assert_json_deser;
+#[cfg(not(feature = "cosmwasm"))]
+use crate::msgs::assert_json_ser;
 
 #[test]
 fn json_accept_ownership() {
@@ -9,7 +13,7 @@ fn json_accept_ownership() {
     {
         "accept_ownership": {}
     });
-    let msg: ExecuteMsg = accept_ownership::Execute {}.into();
+    let msg: msgs::ExecuteMsg = accept_ownership::Execute {}.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]
@@ -23,7 +27,7 @@ fn json_add_to_allowlist() {
         "public_key": "public_key"
       }
     });
-    let msg: ExecuteMsg = add_to_allowlist::Execute {
+    let msg: msgs::ExecuteMsg = add_to_allowlist::Execute {
         public_key: "public_key".to_string(),
     }
     .into();
@@ -40,7 +44,7 @@ fn json_remove_from_allowlist() {
         "public_key": "public_key"
       }
     });
-    let msg: ExecuteMsg = remove_from_allowlist::Execute {
+    let msg: msgs::ExecuteMsg = remove_from_allowlist::Execute {
         public_key: "public_key".to_string(),
     }
     .into();
@@ -57,7 +61,7 @@ fn json_transfer_ownership() {
         "new_owner": "new_owner"
       }
     });
-    let msg: ExecuteMsg = transfer_ownership::Execute {
+    let msg: msgs::ExecuteMsg = transfer_ownership::Execute {
         new_owner: "new_owner".to_string(),
     }
     .into();

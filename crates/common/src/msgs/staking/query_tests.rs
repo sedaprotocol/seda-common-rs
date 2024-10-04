@@ -4,14 +4,15 @@ use k256::{
 };
 use serde_json::json;
 
-use super::{
-    query::{
-        is_executor_eligible::{self, Query, QueryFactory},
-        QueryMsg as StakingQueryMsg,
-    },
-    QueryMsg,
+use super::query::{
+    is_executor_eligible::{self, Query, QueryFactory},
+    QueryMsg as StakingQueryMsg,
 };
-use crate::{crypto::VRF, msgs::*};
+#[cfg(feature = "cosmwasm")]
+use crate::msgs::assert_json_deser;
+#[cfg(not(feature = "cosmwasm"))]
+use crate::msgs::assert_json_ser;
+use crate::{crypto::VRF, msgs, types::*};
 
 #[test]
 fn json_get_staker() {
@@ -20,7 +21,7 @@ fn json_get_staker() {
         "public_key": "public_key"
       }
     });
-    let msg: QueryMsg = StakingQueryMsg::GetStaker {
+    let msg: msgs::QueryMsg = StakingQueryMsg::GetStaker {
         public_key: "public_key".to_string(),
     }
     .into();
@@ -37,7 +38,7 @@ fn json_get_account_seq() {
         "public_key": "public_key"
       }
     });
-    let msg: QueryMsg = StakingQueryMsg::GetAccountSeq {
+    let msg: msgs::QueryMsg = StakingQueryMsg::GetAccountSeq {
         public_key: "public_key".to_string(),
     }
     .into();
@@ -54,7 +55,7 @@ fn json_get_staker_and_seq() {
         "public_key": "public_key"
       }
     });
-    let msg: QueryMsg = StakingQueryMsg::GetStakerAndSeq {
+    let msg: msgs::QueryMsg = StakingQueryMsg::GetStakerAndSeq {
         public_key: "public_key".to_string(),
     }
     .into();
@@ -71,7 +72,7 @@ fn json_is_staker_executor() {
       "public_key": "public_key",
     }
     });
-    let msg: QueryMsg = StakingQueryMsg::IsStakerExecutor {
+    let msg: msgs::QueryMsg = StakingQueryMsg::IsStakerExecutor {
         public_key: "public_key".to_string(),
     }
     .into();
@@ -93,7 +94,7 @@ fn json_is_executor_eligible() {
       "data": data,
     }
     });
-    let msg: QueryMsg = is_executor_eligible::Query { data }.into();
+    let msg: msgs::QueryMsg = is_executor_eligible::Query { data }.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]
@@ -105,7 +106,7 @@ fn json_get_staking_config() {
     let expected_json = json!({
       "get_staking_config": {}
     });
-    let msg: QueryMsg = StakingQueryMsg::GetStakingConfig {}.into();
+    let msg: msgs::QueryMsg = StakingQueryMsg::GetStakingConfig {}.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]

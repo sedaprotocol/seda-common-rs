@@ -4,8 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-default = ["serde", "base64"]
-cosmwasm = ["cosmwasm-schema", "cosmwasm-std", "cw-storage-plus"]
+default = ["dep:serde", "dep:base64"]
+cosmwasm = [
+	"dep:cosmwasm-schema",
+	"dep:cosmwasm-std",
+	"dep:cw-storage-plus",
+	"dep:schemars",
+]
 test-utils = []
 
 [dependencies]
@@ -15,13 +20,13 @@ cosmwasm-std = { workspace = true, optional = true }
 cw-storage-plus = { workspace = true, optional = true }
 hex.workspace = true
 lazy_static.workspace = true
+schemars = { workspace = true, features = ["semver"], optional = true }
 sha3.workspace = true
 semver = { workspace = true, features = ["serde"] }
-serde = { workspace = true, optional = true }
+serde = { workspace = true, features = ["derive"], optional = true }
 thiserror.workspace = true
 vrf-rs.workspace = true
 
 [dev-dependencies]
-schemars = { workspace = true, features = ["semver"] }
 serde_json.workspace = true
 k256.workspace = true

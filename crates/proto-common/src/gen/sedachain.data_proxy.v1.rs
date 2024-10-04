@@ -9,6 +9,10 @@ pub struct Params {
     #[prost(uint32, tag="1")]
     pub min_fee_update_delay: u32,
 }
+impl ::prost::Name for Params {
+const NAME: &'static str = "Params";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.Params".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.Params".into() }}
 /// ProxyConfig defines a data-proxy entry in the registry.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -31,6 +35,10 @@ pub struct ProxyConfig {
     #[prost(message, optional, tag="5")]
     pub fee_update: ::core::option::Option<FeeUpdate>,
 }
+impl ::prost::Name for ProxyConfig {
+const NAME: &'static str = "ProxyConfig";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.ProxyConfig".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.ProxyConfig".into() }}
 /// FeeUpdate defines a new fee amount and the height at which it will take
 /// effect.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -43,6 +51,10 @@ pub struct FeeUpdate {
     #[prost(int64, tag="2")]
     pub update_height: i64,
 }
+impl ::prost::Name for FeeUpdate {
+const NAME: &'static str = "FeeUpdate";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.FeeUpdate".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.FeeUpdate".into() }}
 /// GenesisState defines data_proxy module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -54,6 +66,10 @@ pub struct GenesisState {
     #[prost(message, repeated, tag="3")]
     pub fee_update_queue: ::prost::alloc::vec::Vec<FeeUpdateQueueRecord>,
 }
+impl ::prost::Name for GenesisState {
+const NAME: &'static str = "GenesisState";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.GenesisState".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.GenesisState".into() }}
 /// DataProxyConfigs define the data proxy entries in the registry.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -63,6 +79,10 @@ pub struct DataProxyConfig {
     #[prost(message, optional, tag="2")]
     pub config: ::core::option::Option<ProxyConfig>,
 }
+impl ::prost::Name for DataProxyConfig {
+const NAME: &'static str = "DataProxyConfig";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.DataProxyConfig".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.DataProxyConfig".into() }}
 /// FeeUpdateQueueRecord defines an entry in the data proxy update queue.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -72,6 +92,10 @@ pub struct FeeUpdateQueueRecord {
     #[prost(int64, tag="2")]
     pub update_height: i64,
 }
+impl ::prost::Name for FeeUpdateQueueRecord {
+const NAME: &'static str = "FeeUpdateQueueRecord";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.FeeUpdateQueueRecord".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.FeeUpdateQueueRecord".into() }}
 /// The request message for QueryDataProxyConfig RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -80,6 +104,10 @@ pub struct QueryDataProxyConfigRequest {
     #[prost(string, tag="1")]
     pub pub_key: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryDataProxyConfigRequest {
+const NAME: &'static str = "QueryDataProxyConfigRequest";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.QueryDataProxyConfigRequest".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.QueryDataProxyConfigRequest".into() }}
 /// The response message for QueryDataProxyConfig RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -87,6 +115,10 @@ pub struct QueryDataProxyConfigResponse {
     #[prost(message, optional, tag="1")]
     pub config: ::core::option::Option<ProxyConfig>,
 }
+impl ::prost::Name for QueryDataProxyConfigResponse {
+const NAME: &'static str = "QueryDataProxyConfigResponse";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.QueryDataProxyConfigResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.QueryDataProxyConfigResponse".into() }}
 /// All data required for a new data proxy.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -113,11 +145,19 @@ pub struct MsgRegisterDataProxy {
     #[prost(string, tag="6")]
     pub signature: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgRegisterDataProxy {
+const NAME: &'static str = "MsgRegisterDataProxy";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgRegisterDataProxy".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgRegisterDataProxy".into() }}
 /// No response required.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct MsgRegisterDataProxyResponse {
 }
+impl ::prost::Name for MsgRegisterDataProxyResponse {
+const NAME: &'static str = "MsgRegisterDataProxyResponse";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgRegisterDataProxyResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgRegisterDataProxyResponse".into() }}
 /// Allow updating memo and payout address instantly and/or scheduling a fee
 /// update.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -139,6 +179,10 @@ pub struct MsgEditDataProxy {
     #[prost(string, tag="6")]
     pub pub_key: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgEditDataProxy {
+const NAME: &'static str = "MsgEditDataProxy";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgEditDataProxy".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgEditDataProxy".into() }}
 /// Allow transferring the admin role to a different address.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -152,11 +196,19 @@ pub struct MsgTransferAdmin {
     #[prost(string, tag="3")]
     pub pub_key: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgTransferAdmin {
+const NAME: &'static str = "MsgTransferAdmin";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgTransferAdmin".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgTransferAdmin".into() }}
 /// No response required.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct MsgTransferAdminResponse {
 }
+impl ::prost::Name for MsgTransferAdminResponse {
+const NAME: &'static str = "MsgTransferAdminResponse";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgTransferAdminResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgTransferAdminResponse".into() }}
 /// Returns the height after which the fee update will go into effect.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
@@ -164,6 +216,10 @@ pub struct MsgEditDataProxyResponse {
     #[prost(int64, tag="1")]
     pub fee_update_height: i64,
 }
+impl ::prost::Name for MsgEditDataProxyResponse {
+const NAME: &'static str = "MsgEditDataProxyResponse";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgEditDataProxyResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgEditDataProxyResponse".into() }}
 /// The request message for the UpdateParams method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -175,9 +231,17 @@ pub struct MsgUpdateParams {
     #[prost(message, optional, tag="2")]
     pub params: ::core::option::Option<Params>,
 }
+impl ::prost::Name for MsgUpdateParams {
+const NAME: &'static str = "MsgUpdateParams";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgUpdateParams".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgUpdateParams".into() }}
 /// No response required.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParamsResponse {
 }
+impl ::prost::Name for MsgUpdateParamsResponse {
+const NAME: &'static str = "MsgUpdateParamsResponse";
+const PACKAGE: &'static str = "sedachain.data_proxy.v1";
+fn full_name() -> ::prost::alloc::string::String { "sedachain.data_proxy.v1.MsgUpdateParamsResponse".into() }fn type_url() -> ::prost::alloc::string::String { "/sedachain.data_proxy.v1.MsgUpdateParamsResponse".into() }}
 // @@protoc_insertion_point(module)

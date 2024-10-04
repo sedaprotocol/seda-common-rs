@@ -1,7 +1,11 @@
 use serde_json::json;
 
-use super::{execute::*, ExecuteMsg, U128};
-use crate::msgs::*;
+use super::execute::*;
+#[cfg(feature = "cosmwasm")]
+use crate::msgs::assert_json_deser;
+#[cfg(not(feature = "cosmwasm"))]
+use crate::msgs::assert_json_ser;
+use crate::{msgs, types::U128};
 
 #[test]
 fn json_stake() {
@@ -12,7 +16,7 @@ fn json_stake() {
         "public_key": "public",
       }
     });
-    let msg_no_memo: ExecuteMsg = stake::Execute {
+    let msg_no_memo: msgs::ExecuteMsg = stake::Execute {
         public_key: "public".to_string(),
         proof:      "proof".to_string(),
         memo:       None,
@@ -35,7 +39,7 @@ fn json_stake() {
             "memo": memo,
         }
     });
-    let msg_with_memo: ExecuteMsg = stake::Execute {
+    let msg_with_memo: msgs::ExecuteMsg = stake::Execute {
         public_key: "public".to_string(),
         proof:      "proof".to_string(),
         memo:       Some(memo),
@@ -57,7 +61,7 @@ fn json_unstake() {
         "amount": amount.to_string(),
       }
     });
-    let msg: ExecuteMsg = unstake::Execute {
+    let msg: msgs::ExecuteMsg = unstake::Execute {
         public_key: "public".to_string(),
         proof: "proof".to_string(),
         amount,
@@ -79,7 +83,7 @@ fn json_withdraw() {
         "amount": amount.to_string(),
       }
     });
-    let msg: ExecuteMsg = withdraw::Execute {
+    let msg: msgs::ExecuteMsg = withdraw::Execute {
         public_key: "public".to_string(),
         proof: "proof".to_string(),
         amount,

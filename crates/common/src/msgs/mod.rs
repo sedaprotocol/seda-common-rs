@@ -1,9 +1,5 @@
-#[cfg(feature = "cosmwasm")]
-use cosmwasm_schema::{cw_serde, QueryResponses};
 #[cfg(not(feature = "cosmwasm"))]
-use serde::{Deserialize, Serialize};
-
-use crate::{crypto::hash, error::*, types::*};
+use serde::Serialize;
 
 pub mod data_requests;
 pub mod owner;
@@ -14,7 +10,7 @@ mod assert_json;
 #[cfg(test)]
 pub use assert_json::*;
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 #[serde(untagged)]
@@ -25,10 +21,10 @@ pub enum ExecuteMsg {
 }
 
 // https://github.com/CosmWasm/cosmwasm/issues/2030
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(feature = "cosmwasm", derive(QueryResponses))]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(feature = "cosmwasm", derive(cosmwasm_schema::QueryResponses))]
 #[cfg_attr(feature = "cosmwasm", query_responses(nested))]
-#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 #[serde(untagged)]
 pub enum QueryMsg {
@@ -37,15 +33,15 @@ pub enum QueryMsg {
     Owner(owner::query::QueryMsg),
 }
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 pub struct InstantiateMsg {
     pub token:    String,
     pub owner:    String,
     pub chain_id: String,
 }
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 #[serde(untagged)]
 pub enum SudoMsg {

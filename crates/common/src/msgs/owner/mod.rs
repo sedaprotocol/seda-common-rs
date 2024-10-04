@@ -1,8 +1,6 @@
 pub mod execute;
 pub mod query;
 
-use super::*;
-
 #[path = ""]
 #[cfg(test)]
 mod test {

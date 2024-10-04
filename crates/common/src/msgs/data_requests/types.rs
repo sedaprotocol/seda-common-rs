@@ -1,11 +1,15 @@
+use std::collections::HashMap;
+
 #[cfg(not(feature = "cosmwasm"))]
 use base64::{prelude::BASE64_STANDARD, Engine};
 use semver::Version;
+#[cfg(not(feature = "cosmwasm"))]
+use serde::{Deserialize, Serialize};
 use sha3::{Digest, Keccak256};
 
-use super::*;
+use crate::{error::Result, types::*};
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum DataRequestStatus {
@@ -15,7 +19,7 @@ pub enum DataRequestStatus {
 }
 
 /// Represents a data request at creation time
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DataRequest {
@@ -85,7 +89,7 @@ impl DataRequest {
 }
 
 /// A revealed data request result that is hashed and signed by the executor
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Clone, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct RevealBody {
@@ -119,7 +123,7 @@ impl TryHashSelf for RevealBody {
     }
 }
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct PostDataRequestArgs {
@@ -185,7 +189,7 @@ impl TryHashSelf for PostDataRequestArgs {
 }
 
 /// Governance-controlled timeout configuration parameters
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct TimeoutConfig {

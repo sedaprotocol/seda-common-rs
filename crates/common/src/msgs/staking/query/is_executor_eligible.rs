@@ -1,9 +1,9 @@
 use core::str;
 
-use super::*;
+use crate::{error::Result, types::*};
 
-#[cfg_attr(feature = "cosmwasm", cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Query {
     pub data: Bytes,
@@ -11,7 +11,7 @@ pub struct Query {
 
 impl Query {
     fn generate_hash(dr_id: &str, chain_id: &str, contract_addr: &str) -> Hash {
-        hash([
+        crate::crypto::hash([
             "is_executor_eligible".as_bytes(),
             dr_id.as_bytes(),
             chain_id.as_bytes(),

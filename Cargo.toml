@@ -3,19 +3,20 @@ resolver = "2"
 members = ["crates/common", "crates/proto-common"]
 
 [workspace.dependencies]
-base64 = { version = "0.22.1" }
-cosmwasm-schema = { version = "1.5.7" }
-cosmwasm-std = { version = "1.5.7" }
+base64 = "0.22.1"
+cosmos-sdk-proto = "0.25"
+cosmwasm-schema = "1.5"
+cosmwasm-std = "1.5"
 cw-storage-plus = "1.2.0"
 hex = "0.4.3"
-k256 = { version = "0.13" }
+k256 = "0.13"
 lazy_static = "1.5.0"
 prost = "0.13"
 prost-types = "0.13"
 schemars = { version = "0.8", features = ["semver"] }
 sha3 = "0.10"
 semver = { version = "1.0", features = ["serde"] }
-serde = { version = "1.0" }
-serde_json = { version = "1.0" }
-thiserror = { version = "1.0" }
-vrf-rs = { version = "0.0.0" }
+serde = "1.0"
+serde_json = "1.0"
+thiserror = "1.0"
+vrf-rs = "0.0.0"

@@ -1,5 +1,7 @@
-use super::*;
-use crate::error::Result;
+use semver::Version;
+use sha3::{Digest, Keccak256};
+
+use crate::{error::Result, types::Hash};
 
 pub trait TryHashSelf {
     fn try_hash(&self) -> Result<Hash>;
