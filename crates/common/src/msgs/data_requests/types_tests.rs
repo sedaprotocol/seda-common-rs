@@ -7,18 +7,20 @@ use super::{DataRequest, PostDataRequestArgs, RevealBody, TimeoutConfig};
 use crate::msgs::assert_json_deser;
 use crate::{msgs::assert_json_ser, types::*};
 
-// Not cosmwasm since cosmwasm denies unknown fields in json
-#[cfg(not(feature = "cosmwasm"))]
+#[derive(Debug, serde::Deserialize)]
+struct DRIdTestCase {
+    request_id: String,
+    args:       PostDataRequestArgs,
+}
+
 #[test]
 fn data_request_id_vector() {
     let test_vector = include_str!("dr_id.test_vector.json");
-    let cases: Vec<serde_json::Value> = serde_json::from_str(test_vector).unwrap();
+    let cases: Vec<DRIdTestCase> = serde_json::from_str(test_vector).unwrap();
 
     cases.into_iter().for_each(|case| {
-        let expected_dr_id = case["requestId"].as_str().unwrap();
-        let post_data_request_args: PostDataRequestArgs = serde_json::from_value(case.clone()).unwrap();
-        let dr_id = post_data_request_args.try_hash().unwrap();
-        assert_eq!(expected_dr_id, dr_id.to_hex());
+        let dr_id = case.args.try_hash().unwrap();
+        assert_eq!(case.request_id, dr_id.to_hex());
     });
 }
 
