@@ -126,6 +126,7 @@ impl TryHashSelf for RevealBody {
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
+#[cfg_attr(all(not(feature = "cosmwasm"), test), derive(Deserialize))]
 pub struct PostDataRequestArgs {
     pub version:            Version,
     pub exec_program_id:    String,
