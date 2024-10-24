@@ -4,16 +4,26 @@ version = "0.4.0-dev.0"
 edition = "2021"
 
 [dependencies]
-prost = { workspace = true, default-features = false }
-prost-types = { workspace = true, default-features = false, optional = true }
-cosmos-sdk-proto = { version = "0.25", default-features = false, optional = true }
+prost = { workspace = true }
+prost-types = { workspace = true, optional = true }
+cosmos-sdk-proto = { workspace = true, optional = true }
 
 [features]
 default = []
-all = ["data_proxy", "randomness", "staking", "vesting", "wasm_storage"]
+all = [
+	"batching",
+	"data_proxy",
+	"pubkey",
+	"randomness",
+	"staking",
+	"vesting",
+	"wasm_storage",
+]
+batching = ["cosmos"]
 cosmos = ["dep:cosmos-sdk-proto"]
 cosmwasm = ["cosmos", "cosmos-sdk-proto/cosmwasm"]
 data_proxy = []
+pubkey = ["dep:prost-types"]
 randomness = ["dep:prost-types"]
 staking = ["dep:prost-types"]
 vesting = []

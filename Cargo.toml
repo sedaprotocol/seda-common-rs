@@ -4,15 +4,15 @@ members = ["crates/common", "crates/proto-common"]
 
 [workspace.dependencies]
 base64 = "0.22.1"
-cosmos-sdk-proto = "0.25"
+cosmos-sdk-proto = { version = "0.26", default-features = false }
 cosmwasm-schema = "1.5"
 cosmwasm-std = "1.5"
 cw-storage-plus = "1.2.0"
 hex = "0.4.3"
 k256 = "0.13"
 lazy_static = "1.5.0"
-prost = "0.13"
-prost-types = "0.13"
+prost = { version = "0.13", default-features = false }
+prost-types = { version = "0.13", default-features = false }
 schemars = { version = "0.8", features = ["semver"] }
 sha3 = "0.10"
 semver = { version = "1.0", features = ["serde"] }
