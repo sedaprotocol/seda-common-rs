@@ -12,19 +12,23 @@ pub struct Batch {
     /// block_height is the height at which the batch was created.
     #[prost(int64, tag="2")]
     pub block_height: i64,
-    /// data_result_root is the hex-encoded root of the data result
+    /// current_data_result_root is the hex-encoded root of the data result
     /// merkle tree.
     #[prost(string, tag="3")]
+    pub current_data_result_root: ::prost::alloc::string::String,
+    /// data_result_root is the hex-encoded "super root" of the previous
+    /// data result and current data result roots.
+    #[prost(string, tag="4")]
     pub data_result_root: ::prost::alloc::string::String,
     /// validator_root is the hex-encoded root of the validator merkle
     /// tree.
-    #[prost(string, tag="4")]
+    #[prost(string, tag="5")]
     pub validator_root: ::prost::alloc::string::String,
     /// batch_id is the Keccack-256 hash of the batch content.
-    #[prost(bytes="bytes", tag="5")]
+    #[prost(bytes="bytes", tag="6")]
     pub batch_id: ::prost::bytes::Bytes,
     /// proving_medatada is a field for additional proving data.
-    #[prost(bytes="bytes", tag="6")]
+    #[prost(bytes="bytes", tag="7")]
     pub proving_medatada: ::prost::bytes::Bytes,
 }
 impl ::prost::Name for Batch {
@@ -59,9 +63,7 @@ fn full_name() -> ::prost::alloc::string::String { "sedachain.batching.v1.TreeEn
 pub struct BatchSignatures {
     #[prost(string, tag="1")]
     pub validator_addr: ::prost::alloc::string::String,
-    #[prost(int64, tag="2")]
-    pub voting_power: i64,
-    #[prost(bytes="bytes", tag="3")]
+    #[prost(bytes="bytes", tag="2")]
     pub signatures: ::prost::bytes::Bytes,
 }
 impl ::prost::Name for BatchSignatures {
