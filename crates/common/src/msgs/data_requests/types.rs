@@ -33,18 +33,20 @@ pub struct DataRequest {
     pub exec_program_id:    String,
     /// Inputs for DR WASM binary
     pub exec_inputs:        Bytes,
+    /// The limit to how much gas should be used for executing the DR
+    pub exec_gas_limit:     u64,
     /// Identifier of Tally WASM binary
     pub tally_program_id:   String,
     /// Inputs for Tally WASM binary
     pub tally_inputs:       Bytes,
+    /// The limit to how much gas should be used for tallying the DR
+    pub tally_gas_limit:    u64,
     /// Amount of required DR executors
     pub replication_factor: u16,
     /// Filter applied before tally execution
     pub consensus_filter:   Bytes,
     /// Amount of SEDA tokens per gas unit
     pub gas_price:          U128,
-    /// Maximum of gas units to be used by data request executors to resolve a data request
-    pub gas_limit:          u64,
     /// Public info attached to DR
     pub memo:               Bytes,
 
@@ -131,12 +133,13 @@ pub struct PostDataRequestArgs {
     pub version:            Version,
     pub exec_program_id:    String,
     pub exec_inputs:        Bytes,
+    pub exec_gas_limit:     u64,
     pub tally_program_id:   String,
     pub tally_inputs:       Bytes,
+    pub tally_gas_limit:    u64,
     pub replication_factor: u16,
     pub consensus_filter:   Bytes,
     pub gas_price:          U128,
-    pub gas_limit:          u64,
     pub memo:               Bytes,
 }
 
@@ -177,12 +180,13 @@ impl TryHashSelf for PostDataRequestArgs {
         // I don't think we should decode to hash... expensive in cosmwasm no?
         dr_hasher.update(hex::decode(&self.exec_program_id)?);
         dr_hasher.update(exec_inputs_hash);
+        dr_hasher.update(self.exec_gas_limit.to_be_bytes());
         dr_hasher.update(hex::decode(&self.tally_program_id)?);
         dr_hasher.update(tally_inputs_hash);
+        dr_hasher.update(self.tally_gas_limit.to_be_bytes());
         dr_hasher.update(self.replication_factor.to_be_bytes());
         dr_hasher.update(consensus_filter_hash);
         dr_hasher.update(self.gas_price.to_be_bytes());
-        dr_hasher.update(self.gas_limit.to_be_bytes());
         dr_hasher.update(memo_hash);
 
         Ok(dr_hasher.finalize().into())

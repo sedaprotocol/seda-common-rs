@@ -33,18 +33,19 @@ fn json_data_request() {
     let exec_inputs = "exec_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
     let exec_inputs: Bytes = "exec_inputs".as_bytes().into();
+    let exec_gas_limit = 1;
     let tally_program_id = "tally_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
     let tally_inputs = "tally_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
     let tally_inputs: Bytes = "tally_inputs".as_bytes().into();
+    let tally_gas_limit = 1;
     let replication_factor = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let consensus_filter = "consensus_filter".to_string();
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
     let gas_price: U128 = 1u128.into();
-    let gas_limit = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
     #[cfg(feature = "cosmwasm")]
@@ -66,12 +67,13 @@ fn json_data_request() {
       "version": version,
       "exec_program_id": exec_program_id,
       "exec_inputs": exec_inputs,
+      "exec_gas_limit": exec_gas_limit,
       "tally_program_id": tally_program_id,
       "tally_inputs": tally_inputs,
+      "tally_gas_limit": tally_gas_limit,
       "replication_factor": replication_factor,
       "consensus_filter": consensus_filter,
       "gas_price": gas_price,
-      "gas_limit": gas_limit,
       "memo": memo,
       "payback_address": payback_address,
       "seda_payload": seda_payload,
@@ -85,12 +87,13 @@ fn json_data_request() {
         version: version.parse().unwrap(),
         exec_program_id,
         exec_inputs,
+        exec_gas_limit,
         tally_program_id,
         tally_inputs,
+        tally_gas_limit,
         replication_factor,
         consensus_filter,
         gas_price,
-        gas_limit,
         memo,
         payback_address,
         seda_payload,
@@ -149,18 +152,19 @@ fn json_post_data_request_args() {
     let exec_inputs = "exec_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
     let exec_inputs: Bytes = "exec_inputs".as_bytes().into();
+    let exec_gas_limit = 1;
     let tally_program_id = "tally_program_id".to_string();
     #[cfg(not(feature = "cosmwasm"))]
     let tally_inputs = "tally_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
     let tally_inputs: Bytes = "tally_inputs".as_bytes().into();
+    let tally_gas_limit = 1;
     let replication_factor = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let consensus_filter = "consensus_filter".to_string();
     #[cfg(feature = "cosmwasm")]
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
     let gas_price: U128 = 1u128.into();
-    let gas_limit = 1;
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
     #[cfg(feature = "cosmwasm")]
@@ -170,12 +174,13 @@ fn json_post_data_request_args() {
         "version": version,
         "exec_program_id": exec_program_id,
         "exec_inputs": exec_inputs,
+        "exec_gas_limit": exec_gas_limit,
         "tally_program_id": tally_program_id,
         "tally_inputs": tally_inputs,
+        "tally_gas_limit": tally_gas_limit,
         "replication_factor": replication_factor,
         "consensus_filter": consensus_filter,
         "gas_price": gas_price,
-        "gas_limit": gas_limit,
         "memo": memo,
     });
 
@@ -183,12 +188,13 @@ fn json_post_data_request_args() {
         version: version.parse().unwrap(),
         exec_program_id,
         exec_inputs,
+        exec_gas_limit,
         tally_program_id,
         tally_inputs,
+        tally_gas_limit,
         replication_factor,
         consensus_filter,
         gas_price,
-        gas_limit,
         memo,
     };
 

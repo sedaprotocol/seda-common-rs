@@ -37,11 +37,13 @@ fn json_post_request() {
     let exec_inputs = "exec_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
     let exec_inputs: Bytes = "exec_inputs".as_bytes().into();
+    let exec_gas_limit = 100;
 
     #[cfg(not(feature = "cosmwasm"))]
     let tally_inputs = "tally_inputs".to_string();
     #[cfg(feature = "cosmwasm")]
     let tally_inputs: Bytes = "tally_inputs".as_bytes().into();
+    let tally_gas_limit = 100;
 
     #[cfg(not(feature = "cosmwasm"))]
     let consensus_filter = "consensus_filter".to_string();
@@ -49,7 +51,6 @@ fn json_post_request() {
     let consensus_filter: Bytes = "consensus_filter".as_bytes().into();
 
     let gas_price: U128 = 100u128.into();
-    let gas_limit = 100;
 
     #[cfg(not(feature = "cosmwasm"))]
     let memo = "memo".to_string();
@@ -70,12 +71,13 @@ fn json_post_request() {
         version: Version::new(1, 0, 0),
         exec_program_id: "exec_program_id".to_string(),
         exec_inputs: exec_inputs.clone(),
+        exec_gas_limit,
         tally_program_id: "tally_program_id".to_string(),
         tally_inputs: tally_inputs.clone(),
+        tally_gas_limit,
         replication_factor: 1,
         consensus_filter: consensus_filter.clone(),
         gas_price,
-        gas_limit,
         memo: memo.clone(),
     };
     let expected_json = json!({
@@ -84,12 +86,13 @@ fn json_post_request() {
           "version": "1.0.0",
           "exec_program_id": "exec_program_id",
           "exec_inputs": exec_inputs,
+          "exec_gas_limit": exec_gas_limit,
           "tally_program_id": "tally_program_id",
           "tally_inputs": tally_inputs,
+          "tally_gas_limit": tally_gas_limit,
           "replication_factor": 1,
           "consensus_filter": consensus_filter,
           "gas_price": gas_price.to_string(),
-          "gas_limit": gas_limit,
           "memo": memo
         },
         "seda_payload": seda_payload,
