@@ -35,9 +35,11 @@ pub enum QueryMsg {
 
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 pub struct InstantiateMsg {
-    pub token:    String,
-    pub owner:    String,
-    pub chain_id: String,
+    pub token:          String,
+    pub owner:          String,
+    pub chain_id:       String,
+    pub staking_config: Option<staking::StakingConfig>,
+    pub timeout_config: Option<data_requests::TimeoutConfig>,
 }
 
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
