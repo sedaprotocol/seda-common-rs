@@ -81,7 +81,7 @@ impl QueryFactory {
     #[cfg(feature = "cosmwasm")]
     pub(crate) fn encode_data(data: &str) -> Bytes {
         use cosmwasm_std::Binary;
-        Binary(data.as_bytes().to_vec())
+        Binary::new(data.as_bytes().to_vec())
     }
 
     pub fn create_message(self, proof: Vec<u8>) -> (crate::msgs::QueryMsg, Bytes) {
