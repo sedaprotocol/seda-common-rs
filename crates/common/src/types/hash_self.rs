@@ -40,7 +40,7 @@ impl HashSelf for Vec<u8> {
     }
 }
 
-impl<'a, T> HashSelf for &'a [T]
+impl<T> HashSelf for &[T]
 where
     T: HashSelf,
 {

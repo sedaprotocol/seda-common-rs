@@ -1,23 +1,70 @@
+use std::collections::HashMap;
+
 use serde_json::json;
 
 use super::sudo::*;
-use crate::msgs;
 #[cfg(feature = "cosmwasm")]
 use crate::msgs::assert_json_deser;
 #[cfg(not(feature = "cosmwasm"))]
 use crate::msgs::assert_json_ser;
+use crate::{msgs, types::Bytes};
 
 #[test]
-fn json_remove_request() {
+fn json_remove_requests() {
+    #[cfg(not(feature = "cosmwasm"))]
+    let to: Bytes = "to".to_string();
+    #[cfg(feature = "cosmwasm")]
+    let to: Bytes = "to".as_bytes().into();
+
     let expected_json = json!({
-    "remove_data_request": {
-      "dr_id": "dr_id",
+    "remove_data_requests": {
+        "requests": {
+            "dr_id1": {
+                "messages": [
+                    {
+                        "kind": {
+                            "burn": {
+                                "amount": "100"
+                            }
+                        },
+                        "type": "executor_reward"
+                    },
+                    {
+                        "kind": {
+                            "send": {
+                                "amount": "100",
+                                "to": to
+                            }
+                        },
+                        "type": "executor_reward"
+                    }
+                ],
+                "refund_type": "remainder_refund"
+            },
+        }
     }
     });
-    let msg: msgs::SudoMsg = RemoveDataRequest {
-        dr_id: "dr_id".to_string(),
-    }
-    .into();
+    let mut requests = HashMap::new();
+    requests.insert(
+        "dr_id1".to_string(),
+        DistributionMessages {
+            messages:    vec![
+                DistributionMessage {
+                    kind:  DistributionKind::Burn(DistributionBurn { amount: 100u128.into() }),
+                    type_: DistributionType::ExecutorReward,
+                },
+                DistributionMessage {
+                    kind:  DistributionKind::Send(DistributionSend {
+                        amount: 100u128.into(),
+                        to,
+                    }),
+                    type_: DistributionType::ExecutorReward,
+                },
+            ],
+            refund_type: DistributionType::RemainderRefund,
+        },
+    );
+    let msg: msgs::SudoMsg = remove_requests::Sudo { requests }.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
     #[cfg(feature = "cosmwasm")]
