@@ -31,6 +31,15 @@ fn json_remove_requests() {
                     },
                     {
                         "kind": {
+                            "executor_reward": {
+                                "amount": "100",
+                                "identity": "identity"
+                            }
+                        },
+                        "type": "executor_reward"
+                    },
+                    {
+                        "kind": {
                             "send": {
                                 "amount": "100",
                                 "to": to
@@ -51,6 +60,13 @@ fn json_remove_requests() {
             messages:    vec![
                 DistributionMessage {
                     kind:  DistributionKind::Burn(DistributionBurn { amount: 100u128.into() }),
+                    type_: DistributionType::ExecutorReward,
+                },
+                DistributionMessage {
+                    kind:  DistributionKind::ExecutorReward(DistributionExecutorReward {
+                        amount:   100u128.into(),
+                        identity: "identity".to_string(),
+                    }),
                     type_: DistributionType::ExecutorReward,
                 },
                 DistributionMessage {
