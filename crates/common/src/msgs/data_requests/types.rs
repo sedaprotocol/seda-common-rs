@@ -12,6 +12,14 @@ use crate::{error::Result, types::*};
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
+pub struct PostRequestResponsePayload {
+    pub dr_id:  String,
+    pub height: u64,
+}
+
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Debug, PartialEq))]
+#[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum DataRequestStatus {
     Committing,
     Revealing,
