@@ -8,6 +8,15 @@ use super::types::*;
 #[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub enum QueryMsg {
+    #[cfg_attr(feature = "cosmwasm", returns(bool))]
+    CanExecutorCommit {
+        dr_id:      String,
+        public_key: String,
+        commitment: String,
+        proof:      String,
+    },
+    #[cfg_attr(feature = "cosmwasm", returns(bool))]
+    CanExecutorReveal { dr_id: String, public_key: String },
     #[cfg_attr(feature = "cosmwasm", returns(Option<DataRequest>))]
     GetDataRequest { dr_id: String },
     #[cfg_attr(feature = "cosmwasm",  returns(Option<String>))]
