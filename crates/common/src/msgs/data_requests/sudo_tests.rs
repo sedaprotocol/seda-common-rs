@@ -19,8 +19,7 @@ fn json_remove_requests() {
     let expected_json = json!({
     "remove_data_requests": {
         "requests": {
-            "dr_id1": {
-                "messages": [
+            "dr_id1": [
                     {
                         "burn": {
                             "amount": "100"
@@ -39,50 +38,25 @@ fn json_remove_requests() {
                         },
                     }
                 ],
-                "refund_type": "remainder"
-            },
-            "dr_id2": {
-                "messages": [],
-                "refund_type": "timeout"
-            },
-            "dr_id3": {
-                "messages": [],
-                "refund_type": "no_consensus"
-            }
-        }
-    }});
+        },
+    }
+    });
     let mut requests = HashMap::new();
     requests.insert(
         "dr_id1".to_string(),
-        DistributionMessages {
-            messages:    vec![
-                DistributionMessage::Burn(DistributionBurn { amount: 100u128.into() }),
-                DistributionMessage::ExecutorReward(DistributionExecutorReward {
-                    amount:   100u128.into(),
-                    identity: "identity".to_string(),
-                }),
-                DistributionMessage::DataProxyReward(DistributionDataProxyReward {
-                    amount: 100u128.into(),
-                    to,
-                }),
-            ],
-            refund_type: RefundType::Remainder,
-        },
+        vec![
+            DistributionMessage::Burn(DistributionBurn { amount: 100u128.into() }),
+            DistributionMessage::ExecutorReward(DistributionExecutorReward {
+                amount:   100u128.into(),
+                identity: "identity".to_string(),
+            }),
+            DistributionMessage::DataProxyReward(DistributionDataProxyReward {
+                amount: 100u128.into(),
+                to,
+            }),
+        ],
     );
-    requests.insert(
-        "dr_id2".to_string(),
-        DistributionMessages {
-            messages:    vec![],
-            refund_type: RefundType::Timeout,
-        },
-    );
-    requests.insert(
-        "dr_id3".to_string(),
-        DistributionMessages {
-            messages:    vec![],
-            refund_type: RefundType::NoConsensus,
-        },
-    );
+
     let msg: msgs::SudoMsg = remove_requests::Sudo { requests }.into();
     #[cfg(not(feature = "cosmwasm"))]
     assert_json_ser(msg, expected_json);
