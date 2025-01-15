@@ -22,62 +22,65 @@ fn json_remove_requests() {
             "dr_id1": {
                 "messages": [
                     {
-                        "kind": {
-                            "burn": {
-                                "amount": "100"
-                            }
-                        },
-                        "type": "executor_reward"
+                        "burn": {
+                            "amount": "100"
+                        }
                     },
                     {
-                        "kind": {
-                            "executor_reward": {
-                                "amount": "100",
-                                "identity": "identity"
-                            }
-                        },
-                        "type": "executor_reward"
+                        "executor_reward": {
+                            "amount": "100",
+                            "identity": "identity"
+                        }
                     },
                     {
-                        "kind": {
-                            "send": {
-                                "amount": "100",
-                                "to": to
-                            }
+                        "data_proxy_reward": {
+                            "amount": "100",
+                            "to": to
                         },
-                        "type": "executor_reward"
                     }
                 ],
-                "refund_type": "remainder_refund"
+                "refund_type": "remainder"
             },
+            "dr_id2": {
+                "messages": [],
+                "refund_type": "timeout"
+            },
+            "dr_id3": {
+                "messages": [],
+                "refund_type": "no_consensus"
+            }
         }
-    }
-    });
+    }});
     let mut requests = HashMap::new();
     requests.insert(
         "dr_id1".to_string(),
         DistributionMessages {
             messages:    vec![
-                DistributionMessage {
-                    kind:  DistributionKind::Burn(DistributionBurn { amount: 100u128.into() }),
-                    type_: DistributionType::ExecutorReward,
-                },
-                DistributionMessage {
-                    kind:  DistributionKind::ExecutorReward(DistributionExecutorReward {
-                        amount:   100u128.into(),
-                        identity: "identity".to_string(),
-                    }),
-                    type_: DistributionType::ExecutorReward,
-                },
-                DistributionMessage {
-                    kind:  DistributionKind::Send(DistributionSend {
-                        amount: 100u128.into(),
-                        to,
-                    }),
-                    type_: DistributionType::ExecutorReward,
-                },
+                DistributionMessage::Burn(DistributionBurn { amount: 100u128.into() }),
+                DistributionMessage::ExecutorReward(DistributionExecutorReward {
+                    amount:   100u128.into(),
+                    identity: "identity".to_string(),
+                }),
+                DistributionMessage::DataProxyReward(DistributionDataProxyReward {
+                    amount: 100u128.into(),
+                    to,
+                }),
             ],
-            refund_type: DistributionType::RemainderRefund,
+            refund_type: RefundType::Remainder,
+        },
+    );
+    requests.insert(
+        "dr_id2".to_string(),
+        DistributionMessages {
+            messages:    vec![],
+            refund_type: RefundType::Timeout,
+        },
+    );
+    requests.insert(
+        "dr_id3".to_string(),
+        DistributionMessages {
+            messages:    vec![],
+            refund_type: RefundType::NoConsensus,
         },
     );
     let msg: msgs::SudoMsg = remove_requests::Sudo { requests }.into();

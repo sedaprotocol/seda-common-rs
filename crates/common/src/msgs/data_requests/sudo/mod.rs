@@ -24,7 +24,7 @@ pub struct DistributionBurn {
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
-pub struct DistributionSend {
+pub struct DistributionDataProxyReward {
     /// The address to send the funds to.
     pub to:     Bytes,
     /// The amount to send to the address.
@@ -34,32 +34,22 @@ pub struct DistributionSend {
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
-pub enum DistributionKind {
+pub enum DistributionMessage {
     /// For burning funds
     Burn(DistributionBurn),
     /// For rewarding an executor
     ExecutorReward(DistributionExecutorReward),
-    /// For sending the funds to someone
-    Send(DistributionSend),
+    /// For rewarding a data proxy
+    DataProxyReward(DistributionDataProxyReward),
 }
 
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
 #[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
-pub enum DistributionType {
-    TallyReward,
-    ExecutorReward,
-    TimedOut,
+pub enum RefundType {
+    Timeout,
     NoConsensus,
-    RemainderRefund,
-}
-#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
-#[cfg_attr(not(feature = "cosmwasm"), derive(serde::Serialize, Debug, PartialEq))]
-#[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
-pub struct DistributionMessage {
-    pub kind:  DistributionKind,
-    #[serde(rename = "type")]
-    pub type_: DistributionType,
+    Remainder,
 }
 
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
@@ -67,7 +57,7 @@ pub struct DistributionMessage {
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DistributionMessages {
     pub messages:    Vec<DistributionMessage>,
-    pub refund_type: DistributionType,
+    pub refund_type: RefundType,
 }
 
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
