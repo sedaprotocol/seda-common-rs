@@ -11,4 +11,6 @@ mod test {
     mod execute_tests;
     mod query_tests;
     mod types_tests;
+
+    mod proof_tests;
 }

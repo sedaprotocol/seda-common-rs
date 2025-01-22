@@ -1,3 +1,7 @@
+#[cfg(not(feature = "cosmwasm"))]
+use base64::{prelude::BASE64_STANDARD, Engine};
+use sha3::{Digest, Keccak256};
+
 use crate::{error::Result, types::*};
 
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
@@ -10,14 +14,23 @@ pub struct Execute {
 }
 
 impl Execute {
-    fn generate_hash(memo: Option<&Bytes>, chain_id: &str, contract_addr: &str, sequence: U128) -> Hash {
-        crate::crypto::hash([
+    fn generate_hash(memo: Option<&Bytes>, chain_id: &str, contract_addr: &str, sequence: U128) -> Result<Hash> {
+        let mut memo_hasher = Keccak256::new();
+        if let Some(memo) = memo.as_ref() {
+            #[cfg(feature = "cosmwasm")]
+            memo_hasher.update(memo.as_slice());
+            #[cfg(not(feature = "cosmwasm"))]
+            memo_hasher.update(BASE64_STANDARD.decode(memo)?);
+        }
+        let memo_hash = memo_hasher.finalize();
+
+        Ok(crate::crypto::hash([
             "stake".as_bytes(),
-            &memo.hash(),
+            &memo_hash,
             chain_id.as_bytes(),
             contract_addr.as_bytes(),
             &sequence.to_be_bytes(),
-        ])
+        ]))
     }
 }
 
@@ -29,12 +42,7 @@ impl VerifySelf for Execute {
     }
 
     fn msg_hash(&self, chain_id: &str, contract_addr: &str, sequence: Self::Extra) -> Result<Hash> {
-        Ok(Self::generate_hash(
-            self.memo.as_ref(),
-            chain_id,
-            contract_addr,
-            sequence,
-        ))
+        Self::generate_hash(self.memo.as_ref(), chain_id, contract_addr, sequence)
     }
 }
 
@@ -66,9 +74,9 @@ impl Execute {
         chain_id: &str,
         contract_addr: &str,
         sequence: U128,
-    ) -> ExecuteFactory {
-        let hash = Self::generate_hash(memo.as_ref(), chain_id, contract_addr, sequence);
-        ExecuteFactory { public_key, memo, hash }
+    ) -> Result<ExecuteFactory> {
+        let hash = Self::generate_hash(memo.as_ref(), chain_id, contract_addr, sequence)?;
+        Ok(ExecuteFactory { public_key, memo, hash })
     }
 
     pub fn verify(&self, public_key: &[u8], chain_id: &str, contract_addr: &str, sequence: U128) -> Result<()> {
