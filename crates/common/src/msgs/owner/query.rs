@@ -7,6 +7,8 @@ pub enum QueryMsg {
     GetOwner {},
     #[cfg_attr(feature = "cosmwasm", returns(Option<cosmwasm_std::Addr>))]
     GetPendingOwner {},
+    #[cfg_attr(feature = "cosmwasm", returns(bool))]
+    IsPaused {},
 }
 
 impl From<QueryMsg> for crate::msgs::QueryMsg {
