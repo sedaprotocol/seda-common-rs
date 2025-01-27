@@ -70,3 +70,29 @@ fn json_transfer_ownership() {
     #[cfg(feature = "cosmwasm")]
     assert_json_deser(msg, expected_json);
 }
+
+#[test]
+fn json_pause() {
+    let expected_json = json!(
+    {
+        "pause": {}
+    });
+    let msg: msgs::ExecuteMsg = pause::Execute {}.into();
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
+}
+
+#[test]
+fn json_unpause() {
+    let expected_json = json!(
+    {
+        "unpause": {}
+    });
+    let msg: msgs::ExecuteMsg = unpause::Execute {}.into();
+    #[cfg(not(feature = "cosmwasm"))]
+    assert_json_ser(msg, expected_json);
+    #[cfg(feature = "cosmwasm")]
+    assert_json_deser(msg, expected_json);
+}
