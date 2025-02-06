@@ -217,3 +217,10 @@ impl From<TimeoutConfig> for crate::msgs::ExecuteMsg {
         super::execute::ExecuteMsg::SetTimeoutConfig(config).into()
     }
 }
+
+#[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
+#[cfg_attr(not(feature = "cosmwasm"), derive(Serialize, Deserialize, Debug, PartialEq))]
+pub struct GetDataRequestsByStatusResponse {
+    pub is_paused: bool,
+    pub data_requests: Vec<DataRequest>,
+}
