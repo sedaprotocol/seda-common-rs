@@ -29,7 +29,7 @@ fn json_remove_requests() {
                     {
                         "data_proxy_reward": {
                             "amount": "100",
-                            "to": "to"
+                            "payout_address": "payout_address"
                         },
                     }
                 ],
@@ -46,8 +46,8 @@ fn json_remove_requests() {
                 identity: "identity".to_string(),
             }),
             DistributionMessage::DataProxyReward(DistributionDataProxyReward {
-                amount: 100u128.into(),
-                to:     "to".to_string(),
+                amount:         100u128.into(),
+                payout_address: "payout_address".to_string(),
             }),
         ],
     );

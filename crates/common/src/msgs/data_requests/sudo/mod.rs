@@ -26,9 +26,9 @@ pub struct DistributionBurn {
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DistributionDataProxyReward {
     /// The address to send the funds to.
-    pub to:     String,
+    pub payout_address: String,
     /// The amount to send to the address.
-    pub amount: U128,
+    pub amount:         U128,
 }
 
 #[cfg_attr(feature = "cosmwasm", cosmwasm_schema::cw_serde)]
