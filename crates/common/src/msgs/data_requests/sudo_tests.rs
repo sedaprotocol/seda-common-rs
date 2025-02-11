@@ -3,19 +3,14 @@ use std::collections::HashMap;
 use serde_json::json;
 
 use super::sudo::*;
+use crate::msgs;
 #[cfg(feature = "cosmwasm")]
 use crate::msgs::assert_json_deser;
 #[cfg(not(feature = "cosmwasm"))]
 use crate::msgs::assert_json_ser;
-use crate::{msgs, types::Bytes};
 
 #[test]
 fn json_remove_requests() {
-    #[cfg(not(feature = "cosmwasm"))]
-    let to: Bytes = "to".to_string();
-    #[cfg(feature = "cosmwasm")]
-    let to: Bytes = "to".as_bytes().into();
-
     let expected_json = json!({
     "remove_data_requests": {
         "requests": {
@@ -34,7 +29,7 @@ fn json_remove_requests() {
                     {
                         "data_proxy_reward": {
                             "amount": "100",
-                            "to": to
+                            "to": "to"
                         },
                     }
                 ],
@@ -52,7 +47,7 @@ fn json_remove_requests() {
             }),
             DistributionMessage::DataProxyReward(DistributionDataProxyReward {
                 amount: 100u128.into(),
-                to,
+                to:     "to".to_string(),
             }),
         ],
     );

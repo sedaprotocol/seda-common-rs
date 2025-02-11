@@ -1,4 +1,4 @@
-use crate::types::{Bytes, U128};
+use crate::types::U128;
 
 pub mod expire_data_requests;
 pub mod remove_requests;
@@ -26,7 +26,7 @@ pub struct DistributionBurn {
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct DistributionDataProxyReward {
     /// The address to send the funds to.
-    pub to:     Bytes,
+    pub to:     String,
     /// The amount to send to the address.
     pub amount: U128,
 }
