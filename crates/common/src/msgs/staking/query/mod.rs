@@ -21,6 +21,8 @@ pub enum QueryMsg {
     IsExecutorEligible(is_executor_eligible::Query),
     #[cfg_attr(feature = "cosmwasm", returns(StakingConfig))]
     GetStakingConfig {},
+    #[cfg_attr(feature = "cosmwasm", returns(GetExecutorsResponse))]
+    GetExecutors { offset: u32, limit: u32 },
 }
 
 impl From<QueryMsg> for crate::msgs::QueryMsg {
