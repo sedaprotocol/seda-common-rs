@@ -5,6 +5,7 @@ use crate::{error::Result, types::*};
 #[cfg_attr(not(feature = "cosmwasm"), serde(rename_all = "snake_case"))]
 pub struct Execute {
     pub dr_id:      String,
+    /// A hash of the reveal message, not just the reveal body
     pub commitment: String,
     pub public_key: String,
     pub proof:      String,
